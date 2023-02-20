@@ -1,0 +1,7 @@
+本题如果用unlink做的话，不能使用unlink普适版本脚本，必须使用unlink_atoi_存在show函数版本脚本
+
+原因是在edit函数中修改内容时会在结尾一个8个字节补一个0，此时如果修改free_got表的地址会覆盖puts_got表的地址
+
+（ida查看到free_got和puts_got相邻），此时puts_got被覆盖为0，再调用puts时报错导致程序崩溃
+
+所以只用采用覆盖atoi_got的方法（下一个是exit_got不会被调用，被覆盖不影响程序）

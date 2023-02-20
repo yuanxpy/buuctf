@@ -1,0 +1,28 @@
+https://squarepants0.github.io/2020/12/04/ciscn-2019-final-2/
+
+
+https://blog.csdn.net/m0_51251108/article/details/121107787
+
+
+https://blog.csdn.net/A951860555/article/details/116425824
+
+
+
+步骤：
+
+
+1.分配足够多的 tcachebin 使其合并进入 unorted bin 。
+2.通过 unsorted bin 的 fd 指针泄露 libc 的基址，并计算出 fileno 的地址。
+3.运用 double free 与 house of spirit 技术将 stdin 的 fileno 改为 666 ，这样 scanf 的时候就会从 flag 文件中读取数据。
+4.触发 leave 函数，打印 flag 。
+
+
+记录：
+
+本题难点
+
+1.想到劫持filno指针
+
+2.本地为低字节读写，如何拼凑高低字节
+
+3.tcache的低字节double free

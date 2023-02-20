@@ -1,0 +1,17 @@
+
+<SCRIPT language=javascript src="/dynaform/help.js" type=text/javascript></SCRIPT>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<SCRIPT type="text/javascript">
+dohelp("帮助－LAN口设置", 150, 452);
+	begin();
+		writeline("MAC地址：", "本路由器对局域网的MAC地址，此值不可更改。");
+		writeline("IP地址：", "本路由器对局域网的IP地址，局域网中所有计算机的默认网关必须设置为该IP地址。");
+		writeline("子网掩码：", "本路由器对局域网的子网掩码，一般为255.255.255.0，局域网中所有计算机的子网掩码必须与此处设置相同。");
+		blank();
+		writeline("注意：", "1、如果您改变了LAN口的IP地址，那么您必须用新的IP地址才能登录本路由器进行WEB界面管理。<BR>	2、若您所设置的新的LAN口IP地址与原来的LAN口IP地址不在同一网段，则路由器的动态IP服务将会自动更改到新LAN口IP所在的网段，但是虚拟服务器和DMZ主机功能将失效。如果您希望启用这些功能，请重新对其进行设置。");
+	end();				
+done();
+</SCRIPT>
+</body></html>

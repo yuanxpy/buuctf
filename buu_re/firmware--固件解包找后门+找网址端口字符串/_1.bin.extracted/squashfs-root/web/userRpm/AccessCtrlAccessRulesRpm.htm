@@ -1,0 +1,196 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="Javascript"><!--
+var LP = location.pathname;
+function doAll(val){if(val=="DelAll"){if(!confirm("删除所有条目?")) return;} location.href="AccessCtrlAccessRulesRpm.htm?doAll="+val+"&Page="+curPage;}
+function doAdd(nPage){location.href="AccessCtrlAccessRulesRpm.htm?Add=Add&Page="+nPage;}
+function doPage(nPage){location.href="AccessCtrlAccessRulesRpm.htm?Page="+nPage;}
+function doHelp(){location.href="/help/AccessCtrlAccessRulesHelpRpm.htm";}
+
+function ResetStatus(strInfo){window.status='';return true;}
+/*
+function enableId(id){
+	var enable;
+	if(document.forms[0].elements['enable'+id].checked == true)
+		enable = 1;
+	else
+		enable = 0;
+	location.href = LP + "?enable=" + enable + "&enableId=" + id +"&Page=" + access_rules_page_param[1];
+}
+*/
+function doSave()
+{
+	var DF = document.forms[0];
+	var n = DF.elements['enableCtrl'].checked?1:0;
+	var defrule = DF.elements['defRule'][0].checked?1:0;
+	location.href = LP + "?enableCtrl=" + n + "&defRule=" + defrule + "&Page=" + access_rules_page_param[0];
+	return true;
+}
+function moveItem(nPage)
+{
+	var dstIndex = document.forms[0].DestIndex.value;
+	var srcIndex = document.forms[0].SrcIndex.value;
+	
+	if (false == is_number(srcIndex, 1,access_rules_page_param[4]))
+	{
+		alert("源条目序号输入错误！");
+		var element = document.forms[0].SrcIndex;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	if (false == is_number(dstIndex, 1,access_rules_page_param[4]))
+	{
+		alert("目的条目序号输入错误！");
+		var element = document.forms[0].DestIndex;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	if (srcIndex == dstIndex)
+	{
+		alert("条目序号相同，无需移动！");
+		return false;
+	}
+	location.href="AccessCtrlAccessRulesRpm.htm?moveItem=1&srcIndex="+srcIndex+"&dstIndex="+dstIndex+"&Page="+nPage;
+	return true;
+}
+//--></script>
+</head>
+<body><center><form action="AccessCtrlAccessRulesRpm.htm" enctype="multipart/form-data" method="get" >
+<table width="802" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="780" align="left" valign="middle" class="title">上网控制规则管理</td></tr>
+<tr><td colspan="2"><table width="802" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="800">
+<table width="750" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>路由器可以限制内网主机的上网行为。在本页面，您可以打开或者关闭此功能，并且设定默认的规则。更为有效的是，您可以设置灵活的组合规则，通过选择合适的“主机列表”、“访问目标”、“日程计划”，构成完整而又强大的上网控制规则。</td></tr></table>
+<table width="750" border="1" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>
+<table border="0" width="740" align="center" cellspacing="0" cellpadding="2" class="space">
+<tr><td width="720" colspan="2"><input name="enableCtrl" type="checkbox" value="1"  >&nbsp;开启上网控制</td></tr>
+<tr><td></td></tr><tr><td></td></tr>
+<tr><td width="720" align="left" colspan="2"><p>&nbsp;&nbsp; 缺省过滤规则</td></tr>
+<tr><td align="right"><input name="defRule" type="radio" value="1"  ></td>
+<td >只有符合已设上网控制规则的数据包，<font color="#FF0000">允许</font>通过本路由器</td></tr>
+<tr><td  align="right"><input name="defRule" type="radio" value="0" Checked></td>
+<td >只有符合已设上网控制规则的数据包，<font color="#FF0000">禁止</font>通过本路由器</td></tr>
+	<tr><td></td></tr>
+<tr><td align="left" colspan="2">&nbsp;
+<input type="button" value="保 存" name="save" class="button" onclick="doSave();">
+</td></tr>
+</table>
+</td></tr>
+</table>
+<table width="750" border="1" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr>
+	<td align="center">ID</td>
+	<td align="center" width="150">规则描述</td>
+	<td align="center" width="150">主机列表</td>
+	<td align="center" width="150">访问目标</td>
+	<td align="center" width="150">日程计划</td>
+	<td align="center" nowrap>状态</td>
+	<td align="center" nowrap>配置</td>
+</tr>
+<script language="JavaScript">
+if (access_rules_page_param[2] > 0)
+{
+	var row = 0;
+	var idStart = (access_rules_page_param[0] - 1) * 8;
+	for(var i = 0; i < access_rules_page_param[2]; i++)
+	{
+	idStart++;
+	row = i * access_rules_page_param[3];
+
+	document.write('<tr id="tr'+idStart+'"><td align="center">' + idStart + '<\/td>');
+	document.write('<td align="center">' + access_rules_data_param[row] + '<\/td>');
+	document.write('<td align="center"><a href=\"AccessCtrlHostsListsRpm.htm?Modify=' + (access_rules_data_param[row+1]%8) + 
+					'&Page=' + (Math.floor(access_rules_data_param[row+1]/8) + 1) + '&ManPage=' + access_rules_page_param[0] +'\">' +
+					access_rules_data_param[row + 4] + '<\/a><\/td>');
+	if (access_rules_data_param[row + 5] == "NA")
+	document.write('<td align="center">' + '任意' + '<\/td>');
+	else
+	{
+	document.write('<td align="center"><a href=\"AccessCtrlAccessTargetsRpm.htm?Modify=' + (access_rules_data_param[row+2]%8) + 
+					'&Page=' + (Math.floor(access_rules_data_param[row+2]/8) + 1) + '&ManPage=' + access_rules_page_param[0] +'\">' +
+					access_rules_data_param[row + 5] + '<\/a><\/td>');
+	}
+	if (access_rules_data_param[row + 6] == "NA")
+	document.write('<td align="center">' + '永久' + '<\/td>');
+	else{
+	document.write('<td align="center"><a href=\"AccessCtrlTimeSchedRpm.htm?Modify=' + (access_rules_data_param[row+3]%8) + 
+					'&Page=' + (Math.floor(access_rules_data_param[row+3]/8) + 1) + '&ManPage=' + access_rules_page_param[0] +'\">' +
+					access_rules_data_param[row + 6] + '<\/a><\/td>');
+	}
+	if (access_rules_data_param[row+7] == 0)
+		document.write('<td align="center">' + '失效' + '<\/td>');
+	else
+		document.write('<td align="center">' + '生效' + '<\/td>');
+	document.write('<td align="center"><a href=\"AccessCtrlAccessRulesRpm.htm?Modify=' +
+					i+'&Page='+access_rules_page_param[0]+
+					'\" OnMouseOver=\"return ResetStatus(\'modify\');\">编辑<\/a>&nbsp;<a href=\"AccessCtrlAccessRulesRpm.htm?Del='+
+				 	i+'&Page='+access_rules_page_param[0]+
+					'\" OnMouseOver=\"return ResetStatus(\'delete\');\">删除<\/a><\/td><\/tr>');
+	}
+	}
+else
+{
+	document.write('<tr><td align="center" colspan=8>当前列表为空<\/td>');
+}
+</script>
+</table>
+<table width="750" align="center" border="0" cellpadding="0" cellspacing="0" class="space">
+<tr><td colspan="3" width="748">
+<input type="button" value="增加单个条目" name="Add" class="button" onClick="doAdd(curPage);">
+<input type="button" value="使所有条目生效" name="EnAll" class="button" onClick="doAll('EnAll');">
+<input type="button" value="使所有条目失效" name="DisAll" class="button" onClick="doAll('DisAll');">
+<input type="button" value="删除所有条目" name="DelAll" class="button" onClick="doAll('DelAll');">
+<!--<input type="button" value="查找指定条目" name="Find" class="button" onClick="location.href=LP + '?Find=Find';">-->
+</td></tr>
+<tr><td colspan="3">&nbsp;</td></tr>
+<tr><td colspan="2"><input type="button" value="移 动" name="MoveTo" class="button" onClick="return moveItem(curPage);"></td><td>&nbsp;第&nbsp;<input type="text" name="SrcIndex" size="3" maxlength="3" class="textspecial">&nbsp;条到第&nbsp;<input type="text" name="DestIndex" size="3" maxlength="3" class="textspecial">&nbsp;条</td></tr>
+</table>
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">&nbsp;
+<input name="previous" type="button" class="button" onClick="doPage(prePage);" value="上一页" Disabled>
+&nbsp;<input name="next" type="button" class="button" onClick="doPage(NextPage);" value="下一页" Disabled>
+&nbsp;当前第
+<select onchange="doPage(document.forms[0].selPage.value);" size="1" name="selPage" class="list">
+<script language="JavaScript">
+var pageNum = access_rules_page_param[4]/8 + 1;
+var pIndex = 1;
+do
+{
+	document.write("<option value='" + pIndex + "' selected>"+ pIndex +"<\/option>");
+}while(++pIndex < pageNum)
+</script>
+</select>
+页
+&nbsp; <input name="Page" type="hidden" value="1">
+<input name="help" type="button" class="button" onClick="doHelp();" value="帮 助"></td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr></table></form></center>
+<script language="JavaScript">
+var curPage = access_rules_page_param[0];
+var prePage = (access_rules_page_param[0] == 1)?1:access_rules_page_param[0]-1;
+var NextPage = access_rules_page_param[0]+1;
+//document.forms[0].arpServer[0].checked = access_rules_page_param[0]?0:1;
+document.forms[0].enableCtrl.checked =access_global_cfg_dyn_array[0];
+if (access_global_cfg_dyn_array[1] == 1)	document.forms[0].defRule[0].checked =true;
+else document.forms[0].defRule[1].checked =true;
+document.forms[0].Page.value = curPage;
+document.forms[0].previous.disabled = (access_rules_page_param[0] < 2)?true:false;
+document.forms[0].next.disabled = (access_rules_page_param[1] >0)?false:true;
+document.forms[0].EnAll.disabled = (access_rules_page_param[2] >0)?false:true;
+document.forms[0].DisAll.disabled = (access_rules_page_param[2] >0)?false:true;
+document.forms[0].DelAll.disabled = (access_rules_page_param[2] >0)?false:true;
+document.forms[0].selPage.value = curPage;
+</script>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>

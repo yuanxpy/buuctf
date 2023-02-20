@@ -1,0 +1,107 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doHelp(){location.href="/help/SpecialAppHelpRpm.htm";}
+function doAll(val)
+{
+    if(specAppPara[2] == 0) // not required
+    {
+        alert("特殊应用程序列表为空！");
+        return;
+    }
+    if(val=="DelAll")
+    {
+        if(!confirm("确定删除所有条目？")) return;
+    }
+    location.href="/userRpm/SpecialAppRpm.htm?doAll="+val+"&Page="+curPage;}
+function doAdd(nPage){location.href="/userRpm/SpecialAppRpm.htm?Add=Add&Page="+nPage;}
+function doPage(nPage){location.href="SpecialAppRpm.htm?Page="+nPage;}
+function ResetStatus(strInfo){window.status=strInfo; return true;}
+var protocolList = new Array(
+"",
+"ALL",
+"TCP",
+"UDP"
+);
+//--></script></head>
+
+<body>
+<center>
+<form action="SpecialAppRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="552" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="545" align="left" valign="middle" class="title">特殊应用程序</td>
+</tr><tr>
+<td colspan="2"><table width="552" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"></td>
+<td width="550">
+<table width="480" border="0" align="center" cellpadding="0" cellspacing="0" class="
+space">
+<tr><td>某些程序需要多条连接，如Internet游戏，视频会议，网络电话等。由于防火墙的存在，这些程序无法在简单的NAT
+路由下工作。特殊应用程序使得某些这样的应用程序能够在NAT路由下工作。</td></tr>
+</table>
+<table width="480" border="1" align="center" cellspacing="0" cellpadding="0" class="space">
+<TD align="center">ID</TD>
+<TD align="center" style = "white-space:nowrap">触发端口</TD>
+<TD align="center" style = "white-space:nowrap">触发协议</TD>
+<TD align="center" style = "white-space:nowrap">开放端口</TD>
+<TD align="center" style = "white-space:nowrap">开放协议</TD>
+<TD align="center" style = "white-space:nowrap">状态</TD>
+<TD align="center" style = "white-space:nowrap">编辑</TD></TR>
+<script language="JavaScript">
+if (specAppPara[2]>0){
+var row=0;
+var StatusString;
+var IdStart = (specAppPara[0]-1)*specAppPara[4];
+var modifyId;
+var oprotocolType;
+var iprotocolType;
+for (i=0;i< specAppPara[2];i++){
+	modifyId = IdStart;
+	IdStart++;
+	row = i*specAppPara[3];
+	StatusString = (specAppList[row+4]==0)?"失效":"生效";
+	oprotocolType = specAppList[row+1];
+	iprotocolType = specAppList[row+3];
+	document.write('<tr><td align="center">'+ IdStart + '</td>');
+	document.write('<td align="center">'+ specAppList[row] +'</td>');
+	document.write('<td align="center">'+ protocolList[oprotocolType] +'</td>');
+	document.write('<td align="center" style = "white-space:nowrap">'+ specAppList[row+2] +'</td>');
+	document.write('<td align="center">'+ protocolList[iprotocolType] +'</td>');
+	document.write('<td align="center">'+ StatusString +'</td>');
+	document.write('<td align="center" style = "white-space:nowrap"><a href=\"/userRpm/SpecialAppRpm.htm?Modify=' + 
+					modifyId+'&Page='+specAppPara[0]+
+					'\" OnMouseOver=\"return ResetStatus(\'modify\');\">编辑</a>&nbsp;<a href=\"/userRpm/SpecialAppRpm.htm?Del='+
+				 	modifyId+'&Page='+specAppPara[0]+
+					'\" OnMouseOver=\"return ResetStatus(\'delete\');\">删除</a></td></tr>');
+
+}
+}
+</script>
+</table>
+<table width="480" align="center" border="0" cellpadding="0" cellspacing="0" class="space">
+<tr><td colspan="3" width="468"><input type="button" value="添加新条目" name="Add" class="button" onClick="doAdd(curPage);">&nbsp;<input type="button" value="使所有条目生效" name="EnAll" class="button" onClick="doAll('EnAll');">&nbsp;<input type="button" value="使所有条目失效" name="DisAll" class="button" onClick="doAll('DisAll');">&nbsp;<input type="button" value="删除所有条目" name="DelAll" class="button" onClick="doAll('DelAll');"></td></tr>
+</table>
+
+</td>
+<td class="vline" rowspan="15"></td></tr><tr>
+<td class="hline"><img src="../images/empty.gif" width="1" height="1"></td>
+</tr><tr><td class="tail" height="30">&nbsp;
+<input name="previous" type="button" class="button" onClick="doPage(prePage);" value="上一页" Disabled>
+&nbsp;<input name="next" type="button" class="button" onClick="doPage(NextPage);" value="下一页" Disabled>&nbsp;<input name="Page" type="hidden" value="1">
+<input name="help" type="button" class="button" onClick="doHelp();" value="帮 助"></td></tr>
+</tr><tr><td class="hline"><img src="../images/empty.gif" width="1" height="1"></td>
+</tr></table></td></tr></table>
+</form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript">
+var  curPage = specAppPara[0];
+var  prePage = (specAppPara[0] == 1)?1:specAppPara[0]-1;
+var  NextPage = specAppPara[0]+1;
+document.forms[0].Page.value = curPage;
+document.forms[0].previous.disabled = (specAppPara[0] < 2)?true:false;
+document.forms[0].next.disabled = (specAppPara[1] > 0)?false:true;
+document.forms[0].EnAll.disabled = (specAppPara[2] > 0)? false : true;
+document.forms[0].DisAll.disabled = (specAppPara[2] > 0)? false : true;
+document.forms[0].DelAll.disabled = (specAppPara[2] > 0)? false : true;
+</script>

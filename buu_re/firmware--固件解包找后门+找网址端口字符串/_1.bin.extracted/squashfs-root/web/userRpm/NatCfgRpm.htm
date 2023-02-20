@@ -1,0 +1,47 @@
+
+<SCRIPT type="text/javascript">
+<!--//
+function doSubmit()
+{
+	return true;
+}
+function doHelp()
+{
+	location.href="../help/NatCfgHelpRpm.htm";
+}
+//-->
+</SCRIPT>
+</HEAD>
+<body ><center><form action="NatCfgRpm.htm" enctype="multipart/form-data" method="get" onsubmit = "return doSubmit()">
+<table width="502" border="0" cellspacing="0" cellpadding="0"><tr><td width="7" class="title"><IMG height=24 src="/images/arc.gif" width=7></td>
+<td width="495" align="left" valign="center" class="title" id = "tag_title">NAT…Ë÷√</td></tr><tr> <td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br> </td><td width="500">
+<TABLE width=450 border = 0 align="center" cellpadding="0" cellspacing="2" class="space">
+      <TR>
+        <TD id = "t_enb_nat" class = "Item" width="25%">NAT◊¥Ã¨£∫</TD>
+		<TD>
+			<INPUT type="radio" value="1" name="enable" >
+			<SPAN id = "t_enable">∆Ù ”√</SPAN>
+			<INPUT type="radio" value="0" name="enable" checked>
+			<SPAN id = "t_disable">Õ£ ”√</SPAN>
+		</TD>
+      </TR>
+ </TABLE>
+
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td  class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr><tr>
+<td height="30" class="tail"> 
+&nbsp;&nbsp;
+<INPUT name="Save" type="submit" class="button" value="±£¥Ê">&nbsp;
+<INPUT class="button" type="button" name="Help"  value="∞Ô ÷˙"  onclick="doHelp();">&nbsp;
+</td></tr>
+<tr><td class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr>
+</table></td></tr></table>
+</form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<SCRIPT type="text/javascript">
+<!--
+document.forms[0].enable[0].checked = NatCfgPara[0];
+document.forms[0].enable[1].checked = !(NatCfgPara[0]);
+-->
+</SCRIPT>

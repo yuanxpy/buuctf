@@ -1,0 +1,65 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+
+<script language="JavaScript"><!--
+function Click(){ window.event.returnValue=false;}
+document.oncontextmenu=Click;
+//--></script>
+<SCRIPT language=Javascript src="../dynaform/custom.js" type=text/javascript></SCRIPT>
+<script language="JavaScript"><!-- 
+function doLoad()
+{
+	if (window.parent == window)
+	{
+		if(wzdStartInf[0]==0 || wzdStartInf[2]==1)
+		{
+			window.close();
+		}
+	}
+	else if(wzdStartInf[2]==1)
+	{
+		parent.bottomLeftFrame.collapseAll();
+		wzd_end_go_url();
+	}
+}
+//--></script>
+
+</head>
+<body onLoad="doLoad();"><center><form action="WzdStartRpm.htm" enctype="multipart/form-data" method="get">
+
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td><td width="495" align="left" valign="middle" class="title">设置向导</td></tr>
+<tr><td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0"><tr><td class="vline" rowspan="15"><br> </td>
+<td width="500">
+
+
+<table width="410" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本向导可设置上网所需的基本网络参数，请单击“下一步”继续。若要详细设置某项功能或参数，请点击左侧相关栏目。</td></tr></table>
+<!--
+<table width="410" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td>要继续，请单击“下一步”。</td></tr></table>
+<table width="410" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td>要退出设置向导，请单击“退出向导”。</td></tr></table>--><br>
+<table width="410" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr style="display:none"><td><input name="notPopUp" type="checkbox" value="2">
+下次登录不再自动弹出向导
+</td></tr></table><br>
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail" align="right" nowrap>
+<input type="hidden" name="ClientId" value="">
+<!--<input name="Exit" type="submit" class="button" value="退出向导">&nbsp;-->
+<input name="Next" type="submit" class="button" value="下一步">&nbsp;&nbsp;
+</td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr></table>
+</form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript">
+document.forms[0].ClientId.value = wzdStartInf[1];
+document.forms[0].notPopUp.checked = (wzdStartInf[0])?0:1;
+if (window.parent == window)
+{
+	window.resizeTo(550,340);
+}
+</script>

@@ -1,0 +1,174 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doHelp(){location.href="/help/WlanMacFilterHelpRpm.htm";}
+function doModifyStatus(){	
+	var btn = (wlanFilterPara[0] == 0)?"Enfilter":"Disfilter";
+	location.href="/userRpm/WlanMacFilterRpm.htm?Page="+curPage+"&"+btn+"=1";
+}
+function showKey(enable){
+if (sRule != enable)
+	location.href="/userRpm/WlanMacFilterRpm.htm?Page="+curPage+"&ShowKey="+enable;
+}
+function ResetStatus(strInfo){window.status = strInfo;return true;}
+function doAll(val)
+{
+    if(wlanFilterPara[5] ==0 )	// not required
+    {
+        alert("无线网络MAC地址过滤列表为空！");
+        return;
+    }
+    if((val=="DelAll")&&(!confirm("您确定要删除当前所有条目吗?")))
+    return false;
+    location.href="/userRpm/WlanMacFilterRpm.htm?Page="+curPage+"&DoAll="+val;
+    return true;
+}
+function doAdd(nPage){location.href="/userRpm/WlanMacFilterRpm.htm?Add=Add&Page="+nPage;}
+function doPage(nPage){location.href="/userRpm/WlanMacFilterRpm.htm?Page="+nPage;}
+function doClick(a){
+	if ((filterRule != a)&&!confirm("您确定要更改当前过滤规则?")){
+		if (a == 0){
+			document.forms[0].ExcludeUnlisted[1].checked = 1;
+			document.forms[0].ExcludeUnlisted[1].focus();
+		}
+		else{
+			document.forms[0].ExcludeUnlisted[0].checked = 1;
+			document.forms[0].ExcludeUnlisted[0].focus();
+		}
+	}
+	else if (filterRule != a)
+		location.href="/userRpm/WlanMacFilterRpm.htm?Page="+curPage+"&exclusive="+a;
+}
+var wlanFIlterStringArray = new Array( 
+" ",
+"允许",
+"禁止",
+"64位密钥",
+"128位密钥",
+"152位密钥"
+);
+//--></script></head>
+<BODY>
+<center><form action="WlanMacFilterRpm.htm" enctype="multipart/form-data" method="get" >
+<table width="562" border="0" cellpadding="0" cellspacing="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="455" align="left" valign="middle" class="title">无线网络MAC地址过滤设置</td>
+</tr>
+<tr><td colspan="2"><table width="562" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="1" rowspan="15" class="vline"><br></td>
+<td width="560">
+<table width="510" align="center" border="0">
+<tr><td colspan="2">&nbsp;</td></tr>
+<tr><td colspan="2">本页设置 MAC 地址过滤来控制计算机对本无线网络的访问。</td> </tr> 
+<tr><td colspan="2">
+<table border="0" cellspacing="0" align="center" width="510" class="space">
+<TR align="left"><TD width="160">MAC 地址过滤功能：<script>(wlanFilterPara[0]== 0)?(document.write("已关闭")):(document.write("已开启"));</script></td><td>
+<input name="Enfilter" type="button" class="button" value="启用过滤"  onClick="doModifyStatus();" style="display:none">
+<input name="Disfilter" type="button" class="button" value="关闭过滤"  onClick="doModifyStatus();" style="display:none"></TD></TR>
+</table></td></tr>
+<tr><td colspan="2">
+<table border="1" cellspacing="0" align="center" width="510">
+<tr><td><table border="0">
+<TR><TD colspan=2>过滤规则</TD></TR>
+<TR><TD colspan=2>
+<input name="ExcludeUnlisted" type="radio" value="1"  onClick="doClick(0);" >&nbsp<font color="#FF0000">禁止</font> 列表中生效的MAC地址访问本无线网络</TD></TR>
+<TR><TD colspan=2>
+<input name="ExcludeUnlisted" type="radio" value="2" onClick="doClick(1);">&nbsp<font color="#FF0000">允许</font> 列表中生效的MAC地址访问本无线网络</TD></TR>
+</table ></td>
+<td width="123" style="display:none"><table border="0" align="left">
+<tr><td width="81">显示内容：</td></tr>
+<tr><td>&nbsp;<input name="ShowRule" type="radio" value="1" onClick="showKey(0);">描述 </td></tr><tr><td>&nbsp;<input name="ShowRule" type="radio" value="2" onClick="showKey(1);" >密钥</TD></tr>
+</table></td>
+</tr></table>
+</td></tr>
+<TR><TD  colspan=2></TD></TR >
+<TR><TD colspan=2>
+<table  width="510" border=0 cellspacing="0" cellpadding="0" align="center" >
+<tr><td>
+<table  width="510" border=1 cellspacing="0" cellpadding="0" align="center">
+<TR align="center"><TD >ID</TD><TD width="120" nowrap>MAC 地址</TD><TD width="65" >状态</TD>
+<script language="JavaScript">
+if (8 != wlanFilterPara[7])
+{
+	document.write('<TD width="60">类型</TD>');
+	document.write('<TD width="60">WEP密钥</TD>');
+}
+</script>
+<TD>描 述</TD><TD width="60" >编 辑</TD></TR>
+<script language="JavaScript">
+if (wlanFilterPara[5] > 0)	{
+var row = 0;
+var statusString;
+var idStart = (wlanFilterPara[3]-1)*8;
+var privilegeIndex;
+var modifyId;
+for(var i = 0; i < wlanFilterPara[5]; i++){
+	modifyId = idStart;
+	idStart++;
+	row = i * wlanFilterPara[6];
+	privilegeIndex = wlanFilterList[row+2];
+	statusString = (wlanFilterList[row+1] == 1)?"生效":"失效";
+	document.write('<tr align="center"><td >' + idStart + '</td>');
+	document.write('<td >'
+				 + wlanFilterList[row] + '</td>');
+	document.write('<td >'
+				 + statusString + '</td>');
+	if (8 != wlanFilterPara[7])
+	{
+		document.write('<td >' + wlanFIlterStringArray[privilegeIndex] + '</td>');
+		document.write('<td >&nbsp;' + wlanFilterList[row+3] + '</td>');
+	}
+	document.write('<td >&nbsp;' + wlanFilterList[row+4] + '</td>');
+	document.write('<td ><a href=\"/userRpm/WlanMacFilterRpm.htm?Modify=' + 
+					modifyId+'&Page='+wlanFilterPara[3]+
+					'\" OnMouseOver=\"return ResetStatus(\'modify\');\">编辑</a>&nbsp;<a href=\"/userRpm/WlanMacFilterRpm.htm?Del='+
+				 	modifyId + '&Page='+wlanFilterPara[3]+
+					'\" OnMouseOver=\"return ResetStatus(\'delete\');\">删除</a></td></tr>');
+}}
+</script>
+</table></td></tr>
+<tr><td colspan="2" height="10"></td></tr>
+<TR><TD colspan=2>
+<input type="button" value="添加新条目" name="Add" class="button" onClick="doAdd(curPage);"  >&nbsp; 
+<input type="button" value="所有条目生效" name="EnAll" class="button" onClick="doAll('EnAll');">&nbsp;
+<input type="button" value="所有条目失效" name="DisAll" class="button" onClick="doAll('DisAll');">&nbsp;
+<input type="button" value="删除所有条目" name="DelAll" class="button" onClick="doAll('DelAll');"></TD></TR>
+</table></TD></TR>
+<TR><TD headers="10" colspan=2></TD></TR>
+</table>
+<td class="vline" rowspan="15"><br></td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+&nbsp;<input name="Prev" type="button" class="button" onClick="doPage(prePage);" value="上一页">
+&nbsp;<input name="Next" type="button" class="button" onClick="doPage(NextPage);" value="下一页">
+&nbsp;<input name="Help" type="button" class="button" onClick="doHelp();" value="帮 助">
+</td></tr><tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr></table>
+</form></center></BODY><head><meta http-equiv="pragma" content="no-cache"></head></HTML>
+<script language="JavaScript">
+var  curPage = wlanFilterPara[3];
+var  prePage = (wlanFilterPara[3] == 1)?1:(wlanFilterPara[3]-1);
+var  NextPage = wlanFilterPara[3]+1;
+document.forms[0].Prev.disabled = (wlanFilterPara[3] < 2)?true:false;
+document.forms[0].Next.disabled = (wlanFilterPara[4] == 0)?true:false;
+document.forms[0].EnAll.disabled = (wlanFilterPara[5] > 0)? false : true;
+document.forms[0].DisAll.disabled = (wlanFilterPara[5] > 0)? false : true;
+document.forms[0].DelAll.disabled = (wlanFilterPara[5] > 0)? false : true;
+var filterRule = wlanFilterPara[1];
+if (filterRule != 0) filterRule=1;
+document.forms[0].ExcludeUnlisted[filterRule].checked =true;
+var sRule =wlanFilterPara[2];
+if (sRule != 0) sRule=1;
+document.forms[0].ShowRule[sRule].checked =true;
+//Modified -- only needed in Chinese Vision
+//document.getElementById("sRuleTitle").innerHTML = (0 == sRule)?"描述":"密钥";
+
+if (wlanFilterPara[0]== 0)
+{
+document.forms[0].Enfilter.style.display = "block";
+}
+else
+{
+document.forms[0].Disfilter.style.display = "block";
+}
+</script>

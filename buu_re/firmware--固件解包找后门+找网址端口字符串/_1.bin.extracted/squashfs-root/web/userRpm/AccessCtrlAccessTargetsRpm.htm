@@ -1,0 +1,122 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="Javascript"><!--
+var LP = location.pathname;
+function doAll(val){if(val=="DelAll"){if(!confirm("删除所有条目?")) return;} location.href="AccessCtrlAccessTargetsRpm.htm?doAll="+val+"&Page="+curPage;}
+function doAdd(nPage){location.href="AccessCtrlAccessTargetsRpm.htm?Add=Add&Page="+nPage;}
+function doPage(nPage){location.href="AccessCtrlAccessTargetsRpm.htm?Page="+nPage;}
+function doHelp(){location.href="/help/AccessCtrlAccessTargetsHelpRpm.htm";}
+
+function ResetStatus(strInfo){window.status='';return true;}
+/*
+function enableId(id){
+	var enable;
+	if(document.forms[0].elements['enable'+id].checked == true)
+		enable = 1;
+	else
+		enable = 0;
+	location.href = LP + "?enable=" + enable + "&enableId=" + id +"&Page=" + access_targets_page_param[1];
+}
+*/
+/*
+function doSave()
+{
+	var DF = document.forms[0];
+	var n = DF.elements['arpServer'][1].checked?1:0;
+	location.href = LP + "?arpServer=" + n +"&Page=" + access_targets_page_param[1];
+	return true;
+}
+*/
+//--></script>
+</head>
+<body><center><form action="AccessCtrlAccessTargetsRpm.htm" enctype="multipart/form-data" method="get" >
+<table width="602" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="580" align="left" valign="middle" class="title">访问目标设置</td></tr>
+<tr><td colspan="2"><table width="602" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="600">
+<table width="570" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本页设置访问目标信息</td></tr></table>
+	
+<table width="570" border="1" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr>
+	<td align="center">ID</td>
+	<td align="center" width="200">目标描述</td>
+	<td align="center" >详细信息</td>
+	<td align="center" width="70">配置</td>
+</tr>
+<script language="JavaScript">
+if (access_targets_page_param[2] > 0)
+{
+	var row = 0;
+	var idStart = (access_targets_page_param[0] - 1) * 8;
+	for(var i = 0; i < access_targets_page_param[2]; i++)
+	{
+	idStart++;
+	row = i * access_targets_page_param[3];
+
+	document.write('<tr id="tr'+idStart+'"><td align="center">' + idStart + '<\/td>');
+	document.write('<td align="center">' + access_targets_data_param[row+1] + '<\/td>');
+	if (access_targets_data_param[row] == 1)
+	document.write('<td align="center">'
+				 + access_targets_data_param[row+2] + '&nbsp;<\/td>');
+	else
+	document.write('<td align="center">'
+				 + access_targets_data_param[row+3] + '&nbsp;<\/td>');	
+	document.write('<td align="center"><a href=\"AccessCtrlAccessTargetsRpm.htm?Modify=' +
+					i+'&Page='+access_targets_page_param[0]+
+					'\" OnMouseOver=\"return ResetStatus(\'modify\');\">编辑<\/a>&nbsp;<a href=\"AccessCtrlAccessTargetsRpm.htm?Del='+
+				 	i+'&Page='+access_targets_page_param[0]+
+					'\" OnMouseOver=\"return ResetStatus(\'delete\');\">删除<\/a><\/td><\/tr>');
+	}
+	}
+else
+{
+	document.write('<tr><td align="center" colspan=5>当前列表为空<\/td>');
+}
+</script>
+</table>
+<table width="570" align="center" border="0" cellpadding="0" cellspacing="0" class="space">
+<tr><td colspan="3" width="568">
+<input type="button" value="增加单个条目" name="Add" class="button" onClick="doAdd(curPage);">
+<!--<input type="button" value="使所有条目生效" name="EnAll" class="button" onClick="doAll('EnAll');">-->
+<input type="button" value="删除所有条目" name="DelAll" class="button" onClick="doAll('DelAll');">
+<!--<input type="button" value="查找指定条目" name="Find" class="button" onClick="location.href=LP + '?Find=Find';">-->
+</td></tr>
+</table>
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">&nbsp;
+<input name="previous" type="button" class="button" onClick="doPage(prePage);" value="上一页" Disabled>
+&nbsp;<input name="next" type="button" class="button" onClick="doPage(NextPage);" value="下一页" Disabled>
+&nbsp;当前第
+<select onchange="doPage(document.forms[0].selPage.value);" size="1" name="selPage" class="list">
+<script language="JavaScript">
+var pageNum = access_targets_page_param[4]/8 + 1;
+var pIndex = 1;
+do
+{
+	document.write("<option value='" + pIndex + "' selected>"+ pIndex +"<\/option>");
+}while(++pIndex < pageNum)
+</script>
+</select>
+页
+&nbsp; <input name="Page" type="hidden" value="1">
+<input name="help" type="button" class="button" onClick="doHelp();" value="帮 助"></td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr></table></form></center>
+<script language="JavaScript">
+var curPage = access_targets_page_param[0];
+var prePage = (access_targets_page_param[0] == 1)?1:access_targets_page_param[0]-1;
+var NextPage = access_targets_page_param[0]+1;
+//document.forms[0].arpServer[0].checked = access_targets_page_param[0]?0:1;
+document.forms[0].Page.value = curPage;
+document.forms[0].previous.disabled = (access_targets_page_param[0] < 2)?true:false;
+document.forms[0].next.disabled = (access_targets_page_param[1] >0)?false:true;
+//document.forms[0].EnAll.disabled = (access_targets_page_param[2] >0)?false:true;
+document.forms[0].DelAll.disabled = (access_targets_page_param[2] >0)?false:true;
+//document.forms[0].Find.disabled = (access_targets_page_param[2] >0)?false:true;
+
+document.forms[0].selPage.value = curPage;
+</script>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>

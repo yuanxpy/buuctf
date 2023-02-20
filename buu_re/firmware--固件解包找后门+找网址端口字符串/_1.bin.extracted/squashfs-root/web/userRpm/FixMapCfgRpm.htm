@@ -1,0 +1,96 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doAll(val)
+{
+     if(DHCPStaticPara[2] == 0)	// not required
+    {
+        alert("DHCP服务器的静态地址列表为空！");
+        return;
+    }
+    if(val=="DelAll")
+    {
+        if(!confirm("确认要删除所有条目？"))
+        return;
+    }
+    alert("注意：只有在您重启路由器后，您所做的修改才能生效！");
+    location.href="FixMapCfgRpm.htm?doAll="+val+"&Page="+curPage;}
+//temp enable
+//function doAdd(nPage){location.href="FixMapCfgAdvRpm.htm?";}
+//temp disable
+function doAdd(nPage)
+{
+    location.href="FixMapCfgRpm.htm?Add=Add&Page="+nPage;
+}
+function doPage(nPage){location.href="FixMapCfgRpm.htm?Page="+nPage;}
+function ResetStatus(strInfo){window.status=strInfo; return true;}
+function doHelp(){location.href="/help/FixMapCfgHelpRpm.htm";}
+function showMsg()
+{
+    alert("注意：只有在您重启路由器后，您所做的修改才能生效！");
+}
+//--></script></head>
+
+<body><center><form action="FixMapCfgRpm.htm" enctype="multipart/form-data" method="get" >
+<table width="552" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="545" align="left" valign="middle" class="title">静态地址分配</td></tr>
+<tr><td colspan="2"><table width="552" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br> </td>
+<td width="550">
+<table width="470" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本页设置DHCP服务器的静态地址分配功能。</td></tr></table> 
+
+<table width="470" border="1" cellpadding="0" cellspacing="0" align="center" class="space">
+<TR><TD align="center">ID</TD><TD align="center">MAC地址</TD>
+<td align="center">IP地址</TD><td align="center" nowrap>状 态</td><td align="center">编 辑</td></tr>
+<script language="JavaScript">
+if (DHCPStaticPara[2]>0){
+var row=0;
+var StatusString;
+var IdStart = (DHCPStaticPara[0]-1)*DHCPStaticPara[4];
+var modifyId;
+for (i=0;i< DHCPStaticPara[2];i++){
+	modifyId = IdStart;
+	IdStart++;
+	row = i*DHCPStaticPara[3];
+	StatusString = (dhcpList[row+2]==0)?"失效":"生效";
+	document.write('<tr><td align="center">'+ IdStart + '</td>');
+	document.write('<td align="center">'+ dhcpList[row] +'</td>');
+	document.write('<td align="center">'+ dhcpList[row+1] +'</td>');
+	document.write('<td align="center">'+ StatusString +'</td>');
+	document.write('<td align="center"><a href=\"FixMapCfgRpm.htm?Modify=' + 
+					modifyId+'&Page='+DHCPStaticPara[0]+
+					'\" OnMouseOver=\"return ResetStatus(\'modify\');\">编辑</a>&nbsp;<a href=\"FixMapCfgRpm.htm?Del='+
+				 	modifyId+'&Page='+DHCPStaticPara[0]+
+					'\" OnMouseOver=\"return ResetStatus(\'delete\');\" onClick = "showMsg()">删除</a></td></tr>');
+}
+}
+</script>
+</table>
+
+<table width="470" align="center" border="0" cellpadding="0" cellspacing="0" class="space">
+<tr><td colspan="3" width="468"><input type="button" value="添加新条目" name="Add" class="button" onClick="doAdd(curPage);">&nbsp;<input type="button" value="使所有条目生效" name="EnAll" class="button" onClick="doAll('EnAll');">&nbsp;<input type="button" value="使所有条目失效" name="DisAll" class="button" onClick="doAll('DisAll');">&nbsp;<input type="button" value="删除所有条目" name="DelAll" class="button" onClick="doAll('DelAll');"></td></tr>
+</table>
+
+
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">&nbsp;
+<input name="previous" type="button" class="button" onClick="doPage(prePage);" value="上一页" Disabled>
+&nbsp;<input name="next" type="button" class="button" onClick="doPage(NextPage);" value="下一页" Disabled>&nbsp;<input name="Page" type="hidden" value="1">
+<input name="help" type="button" class="button" onClick="doHelp();" value="帮 助"></td></tr>
+</td></tr><tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>			
+</table></td></tr></table><input name="curpage" type="hidden" value =""></form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript">
+var  curPage = DHCPStaticPara[0];
+var  prePage = (DHCPStaticPara[0] == 1)?1:DHCPStaticPara[0]-1;
+var  NextPage = DHCPStaticPara[0]+1;
+document.forms[0].Page.value = curPage;
+document.forms[0].previous.disabled = (DHCPStaticPara[0] < 2)?true:false;
+document.forms[0].next.disabled = (DHCPStaticPara[1] > 0)?false:true;
+document.forms[0].EnAll.disabled = (DHCPStaticPara[2] > 0)? false : true;
+document.forms[0].DisAll.disabled = (DHCPStaticPara[2] > 0)? false : true;
+document.forms[0].DelAll.disabled = (DHCPStaticPara[2] > 0)? false : true;
+</script>

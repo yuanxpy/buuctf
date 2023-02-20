@@ -1,0 +1,26 @@
+0 immcode: reg=[sp+immcode]
+1 immcode: reg=immcode
+6 immcode: push bp; bp=sp; sp-=immcode
+8 immcode: leave; ret
+9        : reg=[reg]
+10       : reg=char([reg])
+11       : [sp]=reg(int64)
+12       : [sp]=reg(byte)
+13       : push reg
+14       : [sp]=[sp] | reg; pop reg
+15       : [sp]=[sp] ^ reg; pop reg
+16       : [sp]=[sp] & reg; pop reg
+17       : [sp]=[sp] == reg; pop reg
+18       : [sp]=[sp] != reg; pop reg
+19       : [sp]=[sp] < reg; pop reg
+20       : [sp]=[sp] > reg; pop reg
+21       : [sp]=[sp] <= reg; pop reg
+22       : [sp]=[sp] >= reg; pop reg
+23       : [sp]=[sp] << reg; pop reg
+24       : [sp]=[sp] >> reg; pop reg
+25       : [sp]=[sp] + reg; pop reg
+26       : [sp]=[sp] - reg; pop reg
+27       : [sp]=[sp] * reg; pop reg
+28       : [sp]=[sp] / reg; pop reg
+29       : [sp]=[sp] % reg; pop reg
+30       : exit

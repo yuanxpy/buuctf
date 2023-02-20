@@ -1,0 +1,385 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<SCRIPT  LANGUAGE="JAVASCRIPT"><!-- 
+function doHelp(){location.href="/help/AutoEmailHelpRpm.htm";}
+
+var addrChanged = 0;
+function doSMTPAddrAuto()
+{	
+	if(addrChanged == 1)
+	{
+		if(checkMailAddr(cf.FromAddr.value) && cf.SMTPAddr.value == "")
+		{
+			addrChanged = 0;	
+			cf.SMTPAddr.value = "smtp." + cf.FromAddr.value.substr(cf.FromAddr.value.lastIndexOf("@") + 1);
+		}
+	}
+}
+
+function checkMailAddr(addrStr)
+{
+	var re;
+	re = /^\w+([-+_+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/g;
+	if(addrStr.match(re) == null)
+	{
+		return false;
+	}
+	return true;
+}
+
+function checkServerAddr(addrStr)
+{
+	var re;
+	
+	re = /^\w+([-+_'\.]\w+)*\.\w+([-.]\w+)*\.\w+([-.]\w+)*$/g;
+
+	if(addrStr.match(re) == null)
+	{
+		return false;
+	}
+	
+	return true;
+}
+
+function doSubmit()
+{
+	if(cf.FromAddr.value != "" && checkMailAddr(cf.FromAddr.value) == false)
+	{
+		alert(js_fromaddr_error = "发信邮箱地址不正确，请重新输入!");
+		return false;
+	}
+
+	if(checkMailAddr(cf.ToAddr.value) == false)
+	{
+		alert(js_toaddr_error = "收信邮箱地址不正确，请重新输入!");
+		return false;
+	}
+	
+	if(checkServerAddr(cf.SMTPAddr.value) == false)
+	{
+		alert(js_smtp_error = "SMTP服务器地址不正确，请重新输入!");
+		return false;
+	}
+	
+	if(cf.Verify.checked == true)
+	{
+		if(cf.User.value =="")
+		{
+			alert(js_username_error = "请输入用户名!");
+			return false;
+		}
+		
+		if(cf.Password.value =="")
+		{
+			alert(js_password_error = "请输入密码!");
+			cf.Password.value = "";
+			cf.VeriPass.value = "";
+			return false;
+		}
+		
+		if(cf.Password.value != cf.VeriPass.value)
+		{
+			alert(js_verify_error = "密码验证不正确，请重新输入!");
+			cf.Password.value = "";
+			cf.VeriPass.value = "";
+			return false;
+		}
+	}
+		
+	if(cf.AutoMail.checked == true)
+	{
+		if(cf.TimeType[1].checked == true)
+		{
+			if(!is_number(cf.TimeLen.value,1,99) || cf.TimeLen.value == "")
+			{
+				alert(js_timelen_error = "间隔时间输入不正确，请输入(1-99)!");
+				return false;
+			}
+		}
+		else
+		{
+			if(!is_number(cf.Hour.value,0,23) || cf.Hour.value == "")
+			{
+
+				alert(js_hour_error = "小时数输入不正确，请输入(0-23)!");
+				return false;
+			}
+			
+			if(!is_number(cf.Minute.value,0,59) || cf.Minute.value == "")
+			{
+				alert(js_minute_error = "分钟数输入不正确，请输入(0-59)!");
+				return false;
+			}
+		}
+	}
+	
+	
+	if(cf.FromAddr.value == "")
+	{
+		if(!confirm("您的发件箱地址为空。只有支持匿名发信的邮件服务器才能在此情况下发送邮件。是否继续保存？"))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+function doRadio1()
+{
+	var cf = document.forms[0];
+	cf.Hour.disabled = false;
+	cf.Minute.disabled = false;
+	cf.TimeLen.disabled = true;
+}
+
+function doRadio2()
+{
+	var cf = document.forms[0];
+	cf.TimeLen.disabled = false;
+	cf.Hour.disabled = true;
+	cf.Minute.disabled = true;
+}
+function style_display_on()
+{
+	if (window.ActiveXObject)
+	{ // IE
+		return "block";
+	}
+	else if (window.XMLHttpRequest)
+	{ // Mozilla, Safari,...
+		return "table-row";
+	}
+}
+
+function doEnableVeri()
+{
+	str=style_display_on();
+	document.getElementById("UserRow").style.display = str;
+	document.getElementById("PasswordRow").style.display = str;
+	document.getElementById("VeriPassRow").style.display = str;
+	
+}
+
+function doDisableVeri()
+{
+	document.getElementById("UserRow").style.display = "none";
+	document.getElementById("PasswordRow").style.display = "none";
+	document.getElementById("VeriPassRow").style.display = "none";	
+}
+
+function doDisableTimeTb()
+{
+	cf.TimeType[0].disabled = true;
+	cf.TimeType[1].disabled = true;
+	cf.Hour.disabled = true;
+	cf.Minute.disabled = true;
+	cf.TimeLen.disabled = true;
+}
+
+function doEnableTimeTb()
+{
+	cf.TimeType[0].disabled = false;
+	cf.TimeType[1].disabled = false;
+	if (cf.TimeType[0].checked == true)
+	{
+		doRadio1();
+	}
+	else 
+	{
+		doRadio2();
+	}
+}
+
+function doMainClick()
+{
+	obj = document.getElementById("AutoMail");
+	if (obj.checked == true)
+	{
+		doEnableTimeTb();
+	}
+	else 
+	{
+		doDisableTimeTb();
+	}
+}
+
+function doVeriClick()
+{
+	obj = document.getElementById("Verify");
+	if (obj.checked == true)
+	{
+		doEnableVeri();
+	}
+	else 
+	{
+		doDisableVeri();
+	}
+}
+
+function twoDigit(i)
+{
+  var temp;
+  if (i < 10)
+  {
+  	temp = "0"+i;
+  }
+  else
+  {
+  	temp = i;
+  }
+  return temp;
+}
+//--></SCRIPT>
+</HEAD>
+<BODY ONLOAD="doVeriClick();doMainClick();">
+	<FORM ACTION="AutoEmailRpm.htm" ENCTYPE="multipart/form-data" METHOD="get">
+		<CENTER><TABLE WIDTH="580" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+			<TR>
+				<TD WIDTH="7" CLASS="title"><IMG SRC="/images/arc.gif" WIDTH="7" HEIGHT="24"></TD>
+				<TD WIDTH="570" ALIGN="left" VALIGN="middle" CLASS="title">邮件发送设置</TD>
+			</TR>
+			<TR><TD COLSPAN="2"><TABLE WIDTH="580" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+				<TR>
+					<TD CLASS="VLINE" ROWSPAN="15"><BR></TD>
+					
+					<TD WIDTH="578">
+						<TABLE WIDTH="520" BORDER="0" ALIGN="CENTER" CELLPADDING="0" CELLSPACING="0" CLASS="SPACE">
+							<TR><TD>本页设置邮件的发送，并可通过设置时间表来定时发送包含日志的邮件。</TD></TR>
+						</TABLE>
+						
+						<CENTER>
+							<TABLE BORDER="1" WIDTH="520" CELLSPACING="0" CELLPADDING="0" CLASS="SPACE">
+								<TR><TD WIDTH="520">
+									<TABLE BORDER="0" WIDTH="520" CELLSPACING="2" CELLPADDING="2" >
+										<TR><TD WIDTH="520" ALIGN="LEFT" COLSPAN="2">&nbsp;&nbsp; 邮件帐户设置</TD></TR>
+										<TR>
+											<TD>&nbsp;&nbsp; 发信邮箱地址：</TD>
+											<TD><INPUT NAME="FromAddr" TYPE="TEXT" CLASS="text" MAXLENGTH="63" ONCHANGE="addrChanged = 1" ONBLUR="doSMTPAddrAuto()"></TD>
+										</TR>
+										<TR>
+											<TD>&nbsp;&nbsp; 收信邮箱地址：</TD>
+											<TD><INPUT NAME="ToAddr" TYPE="TEXT" CLASS="text" MAXLENGTH="63"></TD>
+										</TR>
+										<TR>
+											<TD WIDTH="160" ALIGN="LEFT">&nbsp;&nbsp; SMTP服务器地址：</TD>
+											<TD WIDTH="260"><INPUT NAME="SMTPAddr" TYPE="TEXT" CLASS="text" MAXLENGTH="63" ONCLICK="doSMTPAddrAuto()"></TD>
+										</TR>
+										<TR>
+											<TD>&nbsp;&nbsp;</TD>
+											<TD ALIGN="LEFT"><INPUT NAME="Verify" ID="Verify" TYPE="CHECKBOX" VALUE="2" ONCLICK="doVeriClick()">启用验证</TD>
+										</TR>
+										<TR ID="UserRow">
+											<TD>&nbsp;&nbsp; 用户名：</TD>
+											<TD><INPUT NAME="User" TYPE="TEXT" CLASS="text" MAXLENGTH="31"></TD>
+										</TR>
+										<TR ID="PasswordRow">
+											<TD>&nbsp;&nbsp; 密码：</TD>
+											<TD><INPUT NAME="Password" TYPE="PASSWORD" CLASS="text" MAXLENGTH="31"></TD>
+										</TR>
+										<TR ID="VeriPassRow">
+											<TD WIDTH="160" ALIGN="LEFT">&nbsp;&nbsp; 密码确认：</TD>
+											<TD WIDTH="260"><INPUT NAME="VeriPass" TYPE="PASSWORD" CLASS="text" MAXLENGTH="31"></TD>
+										</TR>
+									</TABLE>
+								</TD></TR>
+							</TABLE>
+	
+							<TABLE BORDER="1" WIDTH="520" CELLSPACING="0" CELLPADDING="0" CLASS="SPACE">
+								<TR><TD WIDTH="520">
+									<TABLE BORDER="0" WIDTH="520" CELLSPACING="2" CELLPADDING="2">
+										<TR><TD COLSPAN="2" WIDTH="520"><INPUT NAME="AutoMail" ID="AutoMail" TYPE="CHECKBOX" VALUE="2" ONCLICK="doMainClick()">启用定时自动发送日志功能</TD></TR>
+										<TR>
+											<TD WIDTH="40" ALIGN="CENTER"><INPUT NAME="TimeType" TYPE="radio" VALUE="0" ONCLICK="doRadio1()" CHECKED></TD>
+											<TD>在每天的这个时候发送邮件：<INPUT NAME="Hour" TYPE="text" CLASS="text" SIZE="2" MAXLENGTH="2" VALUE="18">时<INPUT NAME="Minute" TYPE="text" CLASS="text" SIZE="2" MAXLENGTH="2" VALUE="00">分</TD>
+										</TR>
+										<TR>
+											<TD WIDTH="40" ALIGN="CENTER"><INPUT NAME="TimeType" TYPE="radio" VALUE="1" ONCLICK="doRadio2()"></TD>
+											<TD WIDTH="480">每间隔一段时间发送邮件：<INPUT NAME="TimeLen" ID="TimeLen" CLASS="text" TYPE="text" SIZE="2" MAXLENGTH="2" VALUE="48">小时</TD>
+										</TR>
+									</TABLE>
+								</TD></TR>
+							</TABLE>
+						</center>
+					</TD>
+						
+					<TD CLASS="VLINE" ROWSPAN="15"><BR></TD>
+				</TR>
+					
+				<TR><TD CLASS="HLINE"><IMG SRC="/IMAGES/EMPTY.GIF" WIDTH="1" HEIGHT="1"></TD></TR>
+				
+				<TR><TD CLASS="TAIL" HEIGHT="30">
+					&nbsp; <INPUT NAME="Save" TYPE="SUBMIT" CLASS="BUTTON" VALUE="保 存" ONCLICK="return doSubmit();">
+					&nbsp;<INPUT NAME="Return" TYPE="BUTTON" CLASS="BUTTON" VALUE="返 回" ONCLICK="location.href='SystemLogRpm.htm';">
+					&nbsp;<INPUT NAME="Help" TYPE="BUTTON" CLASS="BUTTON" ONCLICK="doHelp();" VALUE="帮 助">
+				</TD></TR>
+				
+				<TR><TD CLASS="HLINE"><IMG SRC="/IMAGES/EMPTY.GIF" WIDTH="1" HEIGHT="1"></TD></TR>
+				
+			</TABLE></TD></TR>
+		</TABLE></CENTER>
+	</FORM>
+</BODY>
+
+<HEAD><META http-equiv="pragma" content="no-cache"></HEAD></HTML>
+<SCRIPT  LANGUAGE="JAVASCRIPT">
+var cf = document.forms[0];
+if(autoEmailConf[0] == 0)
+{
+	cf.FromAddr.value = "";
+}
+else
+{
+	cf.FromAddr.value = autoEmailConf[0];
+}
+if(autoEmailConf[1] == 0)
+{
+	cf.ToAddr.value = "";
+}
+else
+{
+	cf.ToAddr.value = autoEmailConf[1];
+}
+if(autoEmailConf[2] == 0)
+{
+	cf.SMTPAddr.value = "";
+}
+else
+{
+	cf.SMTPAddr.value = autoEmailConf[2];
+}
+if (autoEmailConf[3] == 0)
+{
+	cf.Verify.checked = false;
+	doDisableVeri();
+}
+else
+{
+	cf.Verify.checked = true;
+	cf.User.value = autoEmailConf[4];
+	cf.Password.value = "\t\t\t\t\t\t";
+	cf.VeriPass.value = "\t\t\t\t\t\t";
+	doEnableVeri();
+}
+if (autoEmailConf[5] == 0)
+{
+	cf.AutoMail.checked = false;
+	doDisableTimeTb();
+}
+else
+{
+	cf.AutoMail.checked = true;
+	if (autoEmailConf[6] == 0)
+	{
+		cf.TimeType[0].checked = true;		
+		doRadio1();
+		cf.Hour.value =  twoDigit(autoEmailConf[7]);
+		cf.Minute.value = twoDigit(autoEmailConf[8]);
+	}
+	else
+	{
+		cf.TimeType[1].checked = true;
+		doRadio2();
+		cf.TimeLen.value = autoEmailConf[6];
+	}
+}
+</SCRIPT>

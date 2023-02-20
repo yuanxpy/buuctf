@@ -1,0 +1,104 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<SCRIPT LANGUAGE="JAVASCRIPT"><!--
+function doPrev(){
+	history.go(-1);
+}
+var freshTime=0;
+function doFresh()
+{
+	var	timeInterVal = 500;
+	if (freshTime>3)
+	{
+		location.href='/userRpm/MailResultRpm.htm';
+	}
+	else
+	{
+		document.getElementById("resStr").innerHTML += "·";
+		freshTime ++;
+		setTimeout("doFresh()",timeInterVal);
+	}
+}
+
+//-->
+</SCRIPT>
+</HEAD>
+	<BODY ><CENTER><FORM>
+		<TABLE WIDTH="502" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+			<TR>
+				<TD WIDTH="7" CLASS="title"><IMG SRC="/images/arc.gif" WIDTH="7" HEIGHT="24"></TD>
+				<TD WIDTH="495" ALIGN="left" VALIGN="middle" CLASS="title">邮件发送结果</TD>
+			</TR>
+			
+			<TR><TD COLSPAN="2"><TABLE WIDTH="502" BORDER="0" CELLSPACING="0" CELLPADDING="0">
+					<TR>
+						<TD CLASS="vline" ROWSPAN="15"><BR> </TD>
+						<TD WIDTH="500"><TABLE WIDTH="460" BORDER="0" ALIGN="center" CELLPADDING="0" CELLSPACING="0" CLASS="space">
+							<TR><TD ID="resStr" ALIGN="center"></TD></TR>
+							<TR><TD ALIGN="center">&nbsp</TD></TR>
+							<TR><TD ID="tipStr" ALIGN="left"></TD></TR>
+						</TABLE></TD>
+				
+						<TD CLASS="vline" ROWSPAN="15"><BR> </TD>
+					</TR>
+			
+					<TR><TD CLASS="hline"></TD></TR>
+				
+					<TR><TD HEIGHT="30" CLASS="tail" ALIGN="right" NOWRAP>
+						<INPUT NAME="Back" TYPE="button" CLASS="button" VALUE="返 回" ONCLICK="location.href='SystemLogRpm.htm';">&nbsp;&nbsp;
+					</TD></TR>		
+					<TR><TD CLASS="hline"><IMG SRC="/images/empty.gif" WIDTH="1" HEIGHT="1"></TD></TR>
+			</TABLE></TD></TR>
+		</TABLE>
+	</FORM></CENTER></BODY>  
+<HEAD><META HTTP-EQUIV="pragma" CONTENT="no-cache"></HEAD></HTML>
+<SCRIPT  LANGUAGE="JAVASCRIPT">
+var cf1 = document.getElementById("resStr");
+var cf2 = document.getElementById("tipStr");
+if(mailResult[0] == 0)
+{
+	cf1.innerHTML = "<b>路由器正在发送</b>";
+	cf2.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;您也可以稍后在日志中查看发送结果。";
+	doFresh();
+}
+else if(mailResult[0] == 1)
+{
+	cf1.innerHTML = "<b>其他用户正在使用此功能</b>";
+	cf2.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;请稍后再使用该项功能(约30秒)。";
+}
+else
+{
+	switch(mailResult[1])
+	{
+	case 0:	
+		cf1.innerHTML = "<b>邮件发送成功</b>";
+		break;
+	case 1:
+		cf1.innerHTML = "<b>连接服务器失败</b>";
+		cf2.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;请检查邮件发送设置中邮件服务器的地址和您的网络连接，并确保邮件服务器提供SMTP功能。";
+		break;
+	case 2:
+		cf1.innerHTML = "<b>用户名或密码错误</b>";
+		cf2.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;请检查邮件发送设置中的验证信息。如未启用验证，请启用验证。";
+		break;
+	case 3:
+		cf1.innerHTML = "<b>邮件地址错误</b>";
+		cf2.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;请检查邮件发送设置中的收信邮箱地址。";	
+		break;	
+	case 4:
+		cf1.innerHTML = "<b>服务器无需验证</b>";
+		cf2.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;请关闭邮件发送设置中的启用验证项。";	
+		break;
+	case 5:
+		cf1.innerHTML = "<b>邮件发送设置尚未设置</b>";
+		cf2.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;请进入邮件发送设置页面进行设置。";	
+		break;				
+	default:
+		cf1.innerHTML = "<b>其它错误</b>";
+		cf2.innerHTML = "&nbsp;&nbsp;&nbsp;&nbsp;请全面检查邮件发送设置中的所有设置项。如果始终出现错误，请尝试更换支持SMTP的收信邮箱。";
+		break;
+	}
+}
+</SCRIPT>
+
+

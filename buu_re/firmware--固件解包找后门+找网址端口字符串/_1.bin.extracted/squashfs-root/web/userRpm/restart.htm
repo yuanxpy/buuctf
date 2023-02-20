@@ -1,0 +1,196 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<SCRIPT language="JavaScript"><!-- 
+
+function Click(){ return false;}
+document.oncontextmenu=Click;
+
+var strRebootNote = new Array(
+	"操作成功",				            //reboot
+	"恢复出厂设置成功！",				//restore to factory
+	"软件升级成功！",				    //firmware update
+	"配置文件载入成功！",				//config update
+	"配置保存成功！",				    //wlanCfgSave
+	"操作成功.",
+    "LAN IP地址设置成功." ,				//Lan IP config 
+   "系统模式更改成功.",               			//system mode config
+    "设置成功",						//setup wizard successfully
+	"NAT设置成功."				//Nat Setting successfully
+);
+
+//added by ZQQ,09.03.12  增加进度条，（30 + 2）秒后发出请求首页命令
+function LoadMain()
+{
+	parent.location.href = "http://" + rebootInf[0] + ":" + rebootInf[1];
+}
+
+function JumpToMain()
+{
+	if (!parent.bottomLeftFrame)
+	{
+		 window.setTimeout("self.close();" , 4000);
+		// self.close();
+	}
+	else
+	{
+    	parent.bottomLeftFrame.collapseAll();
+    }
+    window.setTimeout("LoadMain()" , 2000);
+	
+    return true;
+}
+
+var str_action = "fresh";
+
+window.onbeforeunload = function()
+{
+	if (typeof event == "undefined")
+	{
+		return;	
+	}
+	with (event)
+	{
+		if (clientX > document.body.clientWidth && clientY < 0 || altKey)
+		{
+			// DO NOTHING
+		}
+		else			
+		{
+			if (str_action == "fresh")
+			{
+				if (window.parent == window)
+				{						
+					window.location.href = "http://" + rebootInf[0] + "/userRpm/StatusRpm.htm";
+					return false;
+				}	
+			}
+			else
+			{
+				// DO NOTHING
+			}
+		}
+	}
+}
+
+function doLoad()
+{
+	doReFresh();
+}
+    var timeout = rebootInf[2] * 10;
+    var rate = 0;
+function doReFresh()
+{
+	window.setTimeout("growUp()",timeout);
+}
+function growUp()
+{
+    var obj = document.getElementById('td1');
+	rate = rate + 1;
+	obj.style.width = rate + "%";
+    var per=document.getElementById("percent");
+    per.innerHTML=rate+"%";
+	if(rate >= 100)
+	{
+		str_action = "close";
+        var obj=document.getElementById("tag_notice");
+        obj.style.display="block";
+        var info = document.getElementById("t_info");
+        info.innerHTML = "重启完成";
+        info.style.color = "green";
+        per.style.color="green";
+        JumpToMain();
+		return;
+	}
+	doReFresh();
+}
+
+document.onkeydown = function()
+{
+	if (typeof event == "undefined")
+	{
+		alert("路由器正在重启中，请耐心等待。");
+		LoadMain();		
+	}
+	else
+	{
+		with(event)
+		{
+			if (event.keyCode == 116 ||
+				event.keyCode == 8 ||
+				(ctrlKey && event.keyCode == 82) )
+				
+			{
+				event.keyCode = 0;
+				event.returnValue =  false;
+			}
+		}
+	}
+}
+
+//--></SCRIPT>
+</HEAD>
+<BODY onLoad="return doLoad();">
+<CENTER>
+  <FORM>
+    <TABLE width="502" border="0" cellspacing="0" cellpadding="0">
+      <TR>
+        <TD width="7" class="title"><IMG src="/images/arc.gif" width="7" height="24"></TD>
+        <TD width="495" align="left" valign="middle" class="title" >重新启动</TD>
+      </TR>
+      <TR><td colspan="2">
+        <TABLE width="502" border="0" cellspacing="0" cellpadding="0">
+          <TR>
+            <TD class="vline" rowspan="15"><BR></TD>
+            <td width="500" height="220">
+            <TABLE width="400" border="0" align="center">
+              <TR>
+                <TD align="center" colspan="2"><SCRIPT language="Javascript"><!--
+document.write(strRebootNote[rebootInf[3]]);
+//--></SCRIPT>
+                  </head></TD>
+              </TR>
+              <TR>
+                <TD  colspan="2" id="t_info">正在重新启动</TD>
+              </TR>
+              <TR>
+                <td 
+                <DIV id="percent"></DIV>
+              </td>
+              
+              <TD style = "width:98%"><TABLE id="td1" NAME="td1" border="1px" cellpadding="0" cellspacing="0" height="12px" style="width:0px" bgcolor="#6699FF">
+                    <TR bgcolor="#6699FF">
+                      <TD></TD>
+                    </TR>
+                  </TABLE></TD>
+              </TR>
+              <TR>
+                <TD colspan=2><TABLE>
+                    <TD id ="tag_notice" style="display:none" colspan=2>请稍候。如果您的浏览器没有自动刷新，请点击浏览器的“刷新”按钮。</TD>
+                    </TR>
+                  </TABLE></TD>
+              </TR>
+            </TABLE>
+          </td>
+          
+          <TD class="vline" rowspan="15"><BR></TD>
+          </TR>
+          <TR>
+            <TD class="hline"><IMG src="/images/empty.gif" width="1" height="1"></TD>
+          </TR>
+          <TR>
+            <TD class="tail"></TD>
+          </TR>
+          <TR>
+            <TD class="hline"><IMG src="/images/empty.gif" width="1" height="1"></TD>
+          </TR>
+        </TABLE>
+        </td>
+      </TR>
+    </TABLE>
+  </FORM>
+</CENTER>
+</BODY>
+<HEAD>
+<META http-equiv="pragma" content="no-cache">
+</HEAD>
+</HTML>

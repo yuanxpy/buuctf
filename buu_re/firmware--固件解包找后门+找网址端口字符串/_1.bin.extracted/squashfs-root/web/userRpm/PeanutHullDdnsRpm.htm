@@ -1,0 +1,147 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+var bRefreshFlag=1;
+function doFocus()
+{
+	bRefreshFlag=0;
+}
+
+function doChange()
+{
+	var nIndex; 
+	nIndex=document.forms[0].provider.value; 
+	//location.href="/userRpm/PeanutHullDdnsRpm.htm?provider="+nIndex;
+    location.href="/userRpm/DdnsAddRpm.htm?provider="+nIndex;
+}
+function ResetStatus() 
+{
+	window.status=" ";
+	return true;
+}
+function goUrl(url) 
+{
+	window.open(url,'','');
+}
+function doRefresh()
+{
+	if(1==bRefreshFlag) 
+	{
+		location.href="/userRpm/PeanutHullDdnsRpm.htm";
+	}
+}
+function doLoad()
+{ 
+	if(serInf[5]==false)  
+	{
+		return;
+	}
+	else
+	   {
+		   window.setTimeout("doRefresh()", 6000);
+	   }
+}
+
+function doHelp() {location.href ="/help/PeanutHullDdnsHelpRpm.htm?provider="+serInf[0];}
+
+var connStat = new Array(
+"未连接",
+"正在连接中……",
+"连接成功",
+"验证失败"
+);
+function doSubmit()
+{
+   location.href="DdnsAddRpm.htm?provider="+0;
+}
+
+//--></script></head>
+<body onLoad="doLoad()"><center><form action="DdnsAddRpm.htm" enctype="multipart/form-data" method="get" onsubmit = "doSubmit()">
+<table width="502" border="0" cellspacing="0" cellpadding="0"><tr><td width="7" class="title"><IMG height=24 src="/images/arc.gif" width=7></td>
+<td width="495" align="left" valign="center" class="title">动态DNS设置</td></tr><tr> <td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br> </td><td width="500">
+<table width="450" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本页设置“Oray.com花生壳DDNS”的参数。<br><br>服务商链接：<a href="javascript:goUrl('http://www.oray.com/passport/register.php');"><font color="#0000ff">花生壳动态域名解析服务申请</font></a>
+&nbsp;&nbsp;<a href="javascript:goUrl('http://ask.oray.com/help');"><font color="#0000ff">花生壳动态域名解析服务帮助</font></a></td></tr></table>
+<TABLE width=450 border=0 align="center" cellpadding="2" cellspacing="2" class="space"><INPUT type=hidden name=address> 
+<tr><TD width=80 align="left">服务提供者：</td>
+<td><SELECT name="provider" class="list" onChange="doChange()" onClick="doFocus();"> 
+<script language=javascript><!--//
+if(ddnsType[0]) document.write("<option value=0  selected>花 生 壳 ( www.oray.com )</option>");
+if(ddnsType[1]) document.write("<option value=1 >科 迈 网 ( www.comexe.cn )</option>");
+if(ddnsType[2]) document.write("<option value=2 >Dyndns ( www.dyndns.org )</option>");
+if(ddnsType[3]) document.write("<option value=3>No-IP ( www.no-ip.com )</option>");
+//--></script>
+</SELECT>&nbsp;<a href="javascript:goUrl('http://www.oray.com');" OnMouseOver="return ResetStatus();">注册...</a></td></tr>
+
+
+<tr><td align="left">用户名：</td>
+<td><INPUT name="username" value="" maxLength="63" size="20"  class="text" onFocus="doFocus();">
+</td></tr>
+<tr><td align="left">密  码：</td>
+<td><INPUT name="pwd" type="password"  value="" maxLength="63"  size="20"  class="text" onFocus="doFocus();"></td></tr>
+<tr><TD align=right colSpan=2>
+</td></tr></TABLE>
+<TABLE width=450 border=0 align="center" cellpadding="0" cellspacing="0" class="space"><TBODY>
+
+<tr><TD align="left" valign="top">启用DDNS：</td><TD align="left" valign="top"><input type="checkbox" name="EnDdns" value="2"   onClick="doFocus();"></td></tr>
+<tr><TD width=80 align="left">连接状态：</td><td><DIV ID="connectStatus"></DIV></td></tr>
+<tr><td align="left" width="80">服务类型：</td><td><div id="SrvType">- - -</div></td></tr>
+<tr><TD width=80 align="left" valign="top">域名信息：</td><td>
+<script language="JavaScript">
+if(0==serInf[6])
+{
+	document.write('无');
+}
+else
+{
+	 for(i=0;i<serInf[6];i++)
+	 {
+		document.write('&nbsp;'+(i+1)+': '+serInf[7+i]+'<br>');
+	 }
+}
+</script>
+</td></tr>
+
+<tr><td><font color="#FF0000">注意：</font></td><td><font color="#FF0000">您成功登录之后，需要先退出才能使用其他帐号登录。</font></td></tr>
+
+<tr><TD colspan="2">&nbsp;</td></tr>
+
+<tr><TD colspan="2">
+<INPUT class="button" type="submit" name="Login"  value="登 录">&nbsp;
+<INPUT class="button" type="submit" name="Logout" value="退 出">&nbsp;
+</td></tr>
+
+</TBODY></TABLE>
+
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td  class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr><tr>
+<td height="30" class="tail"> 
+&nbsp;&nbsp;
+<INPUT class="button" name="Save"  type="submit" value="保 存">&nbsp;
+<INPUT class="button" type="button" name="Help"  value="帮 助"  onclick="return doHelp();">&nbsp;
+</td></tr>
+<tr><td class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr>
+</table></td></tr></table>
+</form></center>
+<script language="JavaScript">
+document.forms[0].provider.value = serInf[0];
+document.forms[0].username.value = serInf[1];
+document.forms[0].pwd.value = serInf[2];
+document.forms[0].EnDdns.checked = serInf[3];
+document.getElementById("connectStatus").innerHTML = connStat[serInf[4]];
+switch (serInf[17])
+{
+    case 0:
+        document.getElementById("SrvType").innerHTML = "专业服务";
+        break;
+    case 1:
+        document.getElementById("SrvType").innerHTML = "标准服务";
+        break;
+    default:
+         document.getElementById("SrvType").innerHTML = "－－－";
+         break;
+}
+</script>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+

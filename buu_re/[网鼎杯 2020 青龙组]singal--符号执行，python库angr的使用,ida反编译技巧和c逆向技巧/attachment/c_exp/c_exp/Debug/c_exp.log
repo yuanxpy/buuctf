@@ -1,0 +1,11 @@
+﻿  c_exp.cpp
+D:\desktop\ctf题目\buu_ctf\buu_re\[网鼎杯 2020 青龙组]singal\attachment\c_exp\c_exp\c_exp.cpp(81,23): warning C4018: “<”: 有符号/无符号不匹配
+D:\desktop\ctf题目\buu_ctf\buu_re\[网鼎杯 2020 青龙组]singal\attachment\c_exp\c_exp\c_exp.cpp(98,63): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+D:\desktop\ctf题目\buu_ctf\buu_re\[网鼎杯 2020 青龙组]singal\attachment\c_exp\c_exp\c_exp.cpp(98,81): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+D:\desktop\ctf题目\buu_ctf\buu_re\[网鼎杯 2020 青龙组]singal\attachment\c_exp\c_exp\c_exp.cpp(98,99): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+D:\desktop\ctf题目\buu_ctf\buu_re\[网鼎杯 2020 青龙组]singal\attachment\c_exp\c_exp\c_exp.cpp(98,111): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+D:\desktop\ctf题目\buu_ctf\buu_re\[网鼎杯 2020 青龙组]singal\attachment\c_exp\c_exp\c_exp.cpp(173,63): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+D:\desktop\ctf题目\buu_ctf\buu_re\[网鼎杯 2020 青龙组]singal\attachment\c_exp\c_exp\c_exp.cpp(173,81): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+D:\desktop\ctf题目\buu_ctf\buu_re\[网鼎杯 2020 青龙组]singal\attachment\c_exp\c_exp\c_exp.cpp(173,99): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+D:\desktop\ctf题目\buu_ctf\buu_re\[网鼎杯 2020 青龙组]singal\attachment\c_exp\c_exp\c_exp.cpp(173,111): warning C4838: 从“unsigned int”转换到“int”需要收缩转换
+  c_exp.vcxproj -> D:\desktop\ctf题目\buu_ctf\buu_re\[网鼎杯 2020 青龙组]singal\attachment\c_exp\Debug\c_exp.exe

@@ -1,0 +1,3 @@
+这题严格来说应该算是misc题目，因为考察的知识点是linux下命令加;就可以同时执行两个命令 如 ls;cat flag
+
+本题是连接ping和输入字符串，所以输入b';/bin/sh'或b';cat flag'即可

@@ -1,0 +1,207 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="Javascript"><!--
+function doBack(nPage)
+{
+	location.href="AccessCtrlAccessRulesRpm.htm?Page="+nPage;
+}
+
+function getValLen(val)
+{
+	var len = 0;
+	var i = 0;
+	for (i = 0; i < val.length; i ++)
+	{
+		var c = val.charAt(i);
+		len += ((c >= ' ') && (c <= '~')) ? 1 : 2;
+	}
+	return len;
+}
+
+function doSubmit()
+{
+	var desc_len = getValLen(document.forms[0].rule_name.value);
+
+	if (desc_len == 0)
+	{
+		alert("请输入正确的上网控制规则描述！");
+		var element = document.forms[0].rule_name;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	if (desc_len > 24)
+	{
+		alert("上网控制规则描述的长度不能超过24！");
+		var element = document.forms[0].rule_name;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+
+	if (document.forms[0].hosts_lists.value==255)
+	{
+		alert("主机列表不能为空，请选择主机列表！");
+		return false;
+	}
+	return true;
+}
+function style_display_on()
+{
+	if (window.ActiveXObject)
+	{ // IE
+		return "block";
+	}
+	else if (window.XMLHttpRequest)
+	{ // Mozilla, Safari,...
+		return "table-row";
+	}
+}
+/*
+function doSwitchTr()
+{
+	str=style_display_on();
+	document.getElementById("ip_area").style.display=(document.forms[0].target_type.value==1)?str:"none";
+	document.getElementById("url_area").style.display=(document.forms[0].target_type.value==1)?"none":str;
+}
+function doSwitchPortTr()
+{
+	str=style_display_on();
+	document.getElementById("port").style.display=(document.forms[0].proto.value==3)?"none":str;
+}
+*/
+function printfHostsLists()
+{
+	var i;
+	if (access_rules_adv_dyn_array[5] == 0)
+	{
+		document.write('<option value=\"255\">请设置主机列表<\/option>');
+		return;
+	}
+	else
+	{
+		for (i=0; i<access_rules_adv_dyn_array[5]; ++i)
+		{
+			document.write('<option value=\"' + i + '\">' + host_list_dyn_array[i] + '<\/option>');
+		}
+	}
+}
+function printfTargetsLists()
+{
+	var i;
+	if (access_rules_adv_dyn_array[6] == 0)
+	{
+		return;
+	}
+	else
+	{
+		for (i=0; i<access_rules_adv_dyn_array[6]; ++i)
+		{
+			document.write('<option value=\"' + i + '\">' + target_list_dyn_array[i] + '<\/option>');
+		}
+	}
+}
+function printfSchedsLists()
+{
+	var i;
+	if (access_rules_adv_dyn_array[7] == 0)
+	{
+		return;
+	}
+	else
+	{
+		for (i=0; i<access_rules_adv_dyn_array[7]; ++i)
+		{
+			document.write('<option value=\"' + i + '\">' + sched_list_dyn_array[i] + '<\/option>');
+		}
+	}
+}
+function doHelp(){location.href="/help/AccessCtrlAccessRulesHelpRpm.htm";}
+//--></script></head>
+<BODY>
+<center><form action="AccessCtrlAccessRulesRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="500" align="left" valign="middle" class="title">上网控制规则设置</td>
+</tr>
+<tr><td colspan="2"><table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="518">
+<table width="470" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<TR>
+<TD colspan=2>&nbsp;&nbsp;本页设置一条上网控制综合条目</TD>
+</TR>
+<tr><td>
+<table width="420" border="0" align="center" cellpadding="2" cellspacing="0" class="space">
+<TR>
+	<TD width="90">规则描述：</TD><TD width="320"><input name="rule_name" type="text" class="text" value="" size="25" maxlength="24"></TD>
+</TR>
+<tr>
+	<td>主机列表：</td>
+	<td><select size="1" name="hosts_lists" class="list" onchange="">
+		<script language="JavaScript">printfHostsLists();</script>
+		</select>&nbsp;&nbsp;
+		<SCRIPT language="javascript">
+		document.write('<A href=\"AccessCtrlHostsListsRpm.htm?Add=Add&Page=1&fromAdd=1&ManPage=' + access_rules_adv_dyn_array[10] +'"><SPAN style=\"color:#FF0000\" id=\"t_add_host\">点击此处添加主机列表</SPAN></A></TD>');
+		</SCRIPT>
+		</td>
+</tr>
+<tr>
+	<td>访问目标：</td>
+	<td><select size="1" name="targets_lists" class="list" onchange="">
+		<option value="255">任何目标</option>
+		<script language="JavaScript">printfTargetsLists();</script>
+		</SELECT>&nbsp;&nbsp;
+		<SCRIPT language="javascript">
+		document.write('<A href=\"AccessCtrlAccessTargetsRpm.htm?Add=Add&Page=1&fromAdd=1&ManPage=' + access_rules_adv_dyn_array[10] +'"><SPAN style=\"color:#FF0000\" id=\"t_add_target\">点击此处添加访问目标</SPAN></A></TD>' );
+		</SCRIPT>
+		</td>
+</tr>
+<tr>
+	<td>日程计划：</td>
+	<td><select size="1" name="scheds_lists" class="list" onchange="">
+		<option value="255"  >任何时间</option>
+		<script language="JavaScript">printfSchedsLists();</script>
+		</select>&nbsp;&nbsp;
+		<SCRIPT language="javascript">
+		document.write('<A href=\"AccessCtrlTimeSchedRpm.htm?Add=Add&Page=1&fromAdd=1&ManPage='  + access_rules_adv_dyn_array[10] + '"><SPAN style=\"color:#FF0000\" id=\"t_add_sche\">点击此处添加日程计划</SPAN></A></TD>');
+		</SCRIPT>
+		</td>
+</tr>
+<tr>
+	<td>生效：</td>
+	<td><select size="1" name="enable" class="list" onchange="">
+		<option value="0"  >失效</option>
+		<option value="1"  >生效</option>
+		</select></td>
+</tr>
+</table>
+</table>
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+<input name="Changed" type="hidden" value="">
+<input name="SelIndex" type="hidden" value="">
+<input name="Page" type="hidden" value="">
+&nbsp;<input name="Save" type="submit" class="button" value="保 存">
+&nbsp;<input type="button" value="返 回" name="Return" class="button" onClick="doBack(access_rules_adv_dyn_array[10]);">
+&nbsp;<input name="Help" type="button" class="button" value="帮 助" onClick="doHelp();"></TD></TR>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr>
+</TABLE>
+<script language="JavaScript">
+	document.forms[0].rule_name.value = access_rules_adv_dyn_array[0];
+	document.forms[0].hosts_lists.value = access_rules_adv_dyn_array[1];
+	document.forms[0].targets_lists.value = access_rules_adv_dyn_array[2];
+	document.forms[0].scheds_lists.value = access_rules_adv_dyn_array[3];
+	document.forms[0].enable.value = access_rules_adv_dyn_array[4];
+	document.forms[0].Changed.value = access_rules_adv_dyn_array[8];
+	document.forms[0].SelIndex.value = access_rules_adv_dyn_array[9];
+	document.forms[0].Page.value = access_rules_adv_dyn_array[10];
+</script>
+</form></center></BODY><head><meta http-equiv="pragma" content="no-cache"></head></HTML>

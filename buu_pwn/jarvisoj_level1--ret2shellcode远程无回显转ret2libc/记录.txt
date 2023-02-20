@@ -1,0 +1,1 @@
+这题按题目意思应该是考察的是ret2shellcode但是buu上的远程环境没有先printf回写栈地址，所以ret2shellcode只能本地，用的ret2libc打远程

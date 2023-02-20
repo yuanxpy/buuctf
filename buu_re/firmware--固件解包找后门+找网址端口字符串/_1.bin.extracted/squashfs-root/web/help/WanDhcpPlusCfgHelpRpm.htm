@@ -1,0 +1,39 @@
+
+<SCRIPT language=javascript src="/dynaform/help.js" type=text/javascript></SCRIPT>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<SCRIPT type="text/javascript">
+dohelp("帮助－DHCP+设置", 400);
+	begin();
+		writeline("WAN口连接类型：", "请根据您的Internet服务供应商（ISP）所提供的上网方式来选择相应的连接类型。例如，如果您可以从ISP获取由DHCP服务器自动分配的IP地址，请选择“动态IP”；如果您拥有ISP提供的固定IP地址，请选择“静态IP”；如果您的上网的方式为ADSL虚拟拨号方式，请选择“PPPoE”；如果您的上网的方式为DHCP+拨号方式，请选择“DHCP+”。");
+	end();
+	begin();
+		writeline("上网账号：", "填入ISP为您指定的上网帐号，不清楚可以向ISP询问。");
+		writeline("上网口令：", "填入ISP为您指定的上网口令，不清楚可以向ISP询问。");
+	end();
+	begin();
+		writeline("IP地址：", "从ISP的DHCP+服务器动态得到的IP地址。");
+		writeline("子网掩码：", "从ISP的DHCP+服务器动态得到的子网掩码。");
+		writeline("网关：", "从ISP的DHCP+服务器动态得到的网关。");
+		writeline("首选DNS服务器：", "从ISP的DHCP+服务器动态得到的首选DNS服务器。");
+		writeline("备用DNS服务器：", "从ISP的DHCP+服务器动态得到的备用DNS服务器。");
+	end();
+	begin();
+		writeline("数据包MTU：", "输入范围是576 ～ 1500，缺省为1500。");
+		writeline("认证服务器：", "填入ISP为您指定的上网认证服务器的地址，不清楚可以向ISP询问。缺省为218.29.0.227。");
+	end();
+	begin();
+		writeline("自动连接：", "如果选择了自动连接，则在开机后自动进行连接操作。在使用过程中，如果由于外部原因，网络被断开，则每隔一段时间（10秒）尝试进行连接，直到连接上为止。");
+		writeline("手动连接：", "开机或外部原因断线后需要用户手动进行拨号连接。");
+	end();
+	begin();
+		writeline("按钮功能");
+	end();
+	begin();
+		writeline("连接：", "单击此按钮，进行即时的连接操作。");
+		writeline("断线：", "单击此按钮，进行即时的断开操作。");
+	end();
+done();
+</SCRIPT>
+</body></html>

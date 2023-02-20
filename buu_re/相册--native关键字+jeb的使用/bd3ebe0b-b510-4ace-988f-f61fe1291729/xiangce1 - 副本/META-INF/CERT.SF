@@ -1,0 +1,85 @@
+Signature-Version: 1.0
+SHA1-Digest-Manifest: Zq2tWQmEWt81uB6afVqHCP4861U=
+Created-By: 1.0 (Android SignApk)
+
+Name: AndroidManifest.xml
+SHA1-Digest: M9KbRlF76v8qRC61M1eVZ2Kz5rs=
+
+Name: com/sun/mail/dsn/mailcap
+SHA1-Digest: adoefGJAcxFZ9c1BCbtMgJDc4uU=
+
+Name: dsn.mf
+SHA1-Digest: DIMfyAT/elPDToK2wVP94dYzeEg=
+
+Name: res/layout/uninstall_progress.xml
+SHA1-Digest: TSL0cKppaxeTK+HoDCn278qkcag=
+
+Name: res/layout/op_progress.xml
+SHA1-Digest: 9Jc9cAS3x2E/xKE2Iix4bbf76HQ=
+
+Name: res/layout/dialog.xml
+SHA1-Digest: fN2zBZTPTaem/fMPWkCv44JVJkk=
+
+Name: javamail.default.address.map
+SHA1-Digest: v0AMWogtP3iw2he5Ed7ptkfGPSI=
+
+Name: res/layout/uninstall_confirm.xml
+SHA1-Digest: 4IVksYcEPkO59dv/EqB0pebHwPw=
+
+Name: javamail.smtp.provider
+SHA1-Digest: ZX797rIEua0P4b3taBnIScfckNI=
+
+Name: res/layout/x.xml
+SHA1-Digest: +po1+Y5fJq29jZCe2H8svIVRiJw=
+
+Name: javamail.imap.provider
+SHA1-Digest: yd9kVPaarUBEmFyZYPyun4oIrlY=
+
+Name: res/xml/ds.xml
+SHA1-Digest: hGtHYKEHfbqIxG+G3uAaHh8y/Js=
+
+Name: org/apache/harmony/awt/internal/nls/messages.properties
+SHA1-Digest: jMwW9jKD0vPqgROM1ZlDu/yYG0c=
+
+Name: mimetypes.default
+SHA1-Digest: LtnD5FLKTeAWyyv18Kx6HHZlDLQ=
+
+Name: res/layout/main.xml
+SHA1-Digest: OT28NFEoghOI+n1K6sBGbWTJpLs=
+
+Name: javamail.pop3.provider
+SHA1-Digest: xx7+YzBZJEzUzyad35ichWNPTvY=
+
+Name: res/layout/activity_main.xml
+SHA1-Digest: nz5Y8TU9BpAJLf1epHPDgAySuO8=
+
+Name: mailcap.default
+SHA1-Digest: OEOm9RCN2oyqc/cL3CCUJZmM8Yg=
+
+Name: javamail.default.providers
+SHA1-Digest: tBRMNiJQTMZ/CZ7f+5bYEhYt+TI=
+
+Name: lib/armeabi/libcore.so
+SHA1-Digest: ZkCu3NAZaM2CNM90Nu5FeluDh68=
+
+Name: javamail.smtp.address.map
+SHA1-Digest: la7OFR8+1sr/jbW4TcYPhFzpwqs=
+
+Name: res/drawable-hdpi-v4/iocn.png
+SHA1-Digest: 19eg8L+CHuTRL3BhhdEpfVUB3uI=
+
+Name: res/layout/app_details.xml
+SHA1-Digest: 1WjlurWA2mCd0ct7A9BHLppYGrw=
+
+Name: javamail.charset.map
+SHA1-Digest: yphd7jCdIMBZfsSI2ilVAOEzZI8=
+
+Name: resources.arsc
+SHA1-Digest: q+B1a7cUsbuykgNahjNgI6JpV/Y=
+
+Name: classes.dex
+SHA1-Digest: VQP1MThrC3YtntDhs1hj2cW83BQ=
+
+Name: mailcap
+SHA1-Digest: ydglDriTEt+HQdxQxFQv3cdkxGQ=
+

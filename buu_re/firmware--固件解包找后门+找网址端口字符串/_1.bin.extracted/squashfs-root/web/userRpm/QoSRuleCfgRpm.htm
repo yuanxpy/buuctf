@@ -1,0 +1,195 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="Javascript">
+	<!--
+function doHelp()
+{
+    location.href="/help/QoSRuleCfgHelpRpm.htm";
+}
+function goBack(nPage)
+{
+	location.href="QoSRuleListRpm.htm?Page="+nPage;
+}
+function my_is_port(port_string)
+{
+	if(port_string.length == 0)
+    {
+		alert("请输入端口号！（1 - 65535）！");
+		return false;
+	}
+	if (!is_number(port_string, 1, 65535))
+    {
+		alert("端口号输入错误，请重新输入（1 - 65535）！");
+		return false;
+	}
+	return true;
+}
+function doSubmit(){
+	var start_ipaddr = document.forms[0].start_ip_addr.value;
+	var end_ipaddr = document.forms[0].end_ip_addr.value;
+	var startport = document.forms[0].start_port.value;
+	var endport = document.forms[0].end_port.value;
+	if (start_ipaddr == "" && end_ipaddr ==""&&
+		startport == "" && endport ==""
+		)
+	{
+		alert("地址段和端口段不能同时为空，请输入IP地址！");
+		document.forms[0].start_ip_addr.select();
+		return false;
+	}
+	if(start_ipaddr!="" && !is_ipaddr(start_ipaddr))
+    {
+		document.forms[0].start_ip_addr.select();
+		return false;
+	}
+	if(end_ipaddr!="" && !is_ipaddr(end_ipaddr))
+    {
+		document.forms[0].end_ip_addr.select();
+		return false;
+	}
+	if(startport!="" && !my_is_port(startport))
+    {
+		document.forms[0].start_port.select();
+		return false;
+	}
+	if(endport!="" && !my_is_port(endport))
+    {
+		document.forms[0].end_port.select();
+		return false;
+	}
+	if(parseInt(startport,10) > parseInt(endport,10))
+    {
+		alert("结束端口号不能小于起始端口号，请重新输入！");
+		document.forms[0].end_port.select();
+		return false;
+	}
+	var start_ip_array = start_ipaddr.split('.');
+	var end_ip_array = end_ipaddr.split('.');
+	for(i=0;i<4;i++)
+    {
+		var start = parseInt(start_ip_array[i],10);
+		var end = parseInt(end_ip_array[i],10);
+		if(start<end)
+        {
+			break;
+		}
+        else if(start == end)
+        {
+			continue;
+		}
+        else if(start>end)
+        {
+			alert("结束地址不能小于开始地址，请重新输入！");
+			document.forms[0].end_ip_addr.select();
+			return false;
+		}
+	}
+	if(document.forms[0].min_up_band_width.value == "")
+    {
+		document.forms[0].min_up_band_width.value = 0;
+	}
+	if(document.forms[0].max_up_band_width.value == "")
+    {
+		document.forms[0].max_up_band_width.value = 0;
+	}
+	if(document.forms[0].min_down_band_width.value == "")
+    {
+		document.forms[0].min_down_band_width.value = 0;
+	}
+	if(document.forms[0].max_down_band_width.value == "")
+    {
+		document.forms[0].max_down_band_width.value = 0;
+	}
+	var min_upbandwidth = document.forms[0].min_up_band_width.value;
+	var max_upbandwidth = document.forms[0].max_up_band_width.value;
+	var min_downbandwidth = document.forms[0].min_down_band_width.value;
+	var max_downbandwidth = document.forms[0].max_down_band_width.value;
+	if(!is_number(min_upbandwidth))
+    {
+		alert("最小上行带宽输入错误，请重新输入！");
+		document.forms[0].min_up_band_width.select();
+		return false;
+	}
+	if(!is_number(max_upbandwidth))
+    {
+		alert("最大上行带宽输入错误，请重新输入！");
+		document.forms[0].max_up_band_width.select();
+		return false;
+	}
+	if(parseInt(max_upbandwidth,10)!=0&&
+		parseInt(min_upbandwidth,10) > parseInt(max_upbandwidth,10)){
+		alert("最大上行带宽不能小于最小上行带宽，请重新输入！");
+		document.forms[0].max_up_band_width.select();
+		return false;
+	}
+	if(!is_number(min_downbandwidth))
+    {
+		alert("最小下行带宽输入错误，请重新输入！");
+		document.forms[0].min_down_band_width.select();
+		return false;
+	}
+	if(!is_number(max_downbandwidth))
+    {
+		alert("最大下行带宽输入错误，请重新输入！");
+		document.forms[0].max_down_band_width.select();
+		return false;
+	}
+	if(parseInt(max_downbandwidth,10)!=0&&
+		parseInt(min_downbandwidth,10) > parseInt(max_downbandwidth,10))
+    {
+        alert("最大下行带宽不能小于最小下行带宽，请重新输入！");
+        document.forms[0].max_down_band_width.select();
+        return false;
+	}
+	return true;
+}
+//--></script>
+</head>
+<body><form action="QoSRuleListRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();"><center>
+<table width="580" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="570" align="left" valign="middle" class="title">IP带宽控制规则配置</td></tr>
+<tr><td colspan="2"><table width="580" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="578">
+<table width="520" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本页通过IP带宽控制规则来进行带宽控制。</td></tr></table>
+<center>
+<table border="0" width="520" cellspacing="0" cellpadding="5" class="space">
+<tr><td colspan="2"><input type="checkbox" name="enable" value="true">&nbsp;&nbsp;启用</td></tr>
+<tr><td width="80">地址段：</td><td><input type="text" class="text" name="start_ip_addr" value="" size="15" maxlength="15">&nbsp;-&nbsp;<input type="text" class="text" name="end_ip_addr" value="" size="15" maxlength="15"></td></tr>
+<tr><td width="80">端口段：</td><td><input type="text" class="text" name="start_port" value="" size="5" maxlength="15">&nbsp;-&nbsp;<input type="text" class="text" name="end_port" value="" size="5" maxlength="15"></td></tr>
+<tr><td>协 议：</td><td><select name="protocol" class="list"><option value="0">ALL</option><option value="1">TCP</option><option value="2">UDP</option></select><!-- （只有选中端口段，该域才有效）--></td></tr>
+<!--<tr><td>模 式：</td><td><select name="mode" class="list"><option value="0">独立带宽</option><option value="1" selected>共享带宽</option></select></td></tr>-->
+</table>
+<table border=0 cellspacing="0" cellpadding="0" width="520"><tr><td align="left">
+<table border="1" width="380" cellspacing="0" cellpadding="3" class="space">
+<tr align="left"><td width="80">&nbsp;</td><td width="120">最小带宽（Kbps）</td><td>最大带宽（Kbps）</td></tr>
+<tr align="left"><td>上 行：</td><td><input type="text" class="text" name="min_up_band_width" size="15" maxlength="7"></td><td><input type="text" class="text" name="max_up_band_width" size="15" maxlength="7"></td></tr>
+<tr align="left"><td>下 行：</td><td><input type="text" class="text" name="min_down_band_width" size="15" maxlength="7"></td><td><input type="text" class="text" name="max_down_band_width" size="15" maxlength="7"></td></tr>
+</table></td></tr></table>
+</center>
+</td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td class="hline"></td></tr>
+<tr><td class="tail" height="30">&nbsp;
+<input name="Save" type="submit" class="button" value="保 存">&nbsp;
+<input name="Cancel" type="button" class="button" value="返 回" onClick="goBack(curPage);">
+&nbsp;<input name="Help" type="button" class="button" onClick="doHelp();" value="帮 助">
+<input type="hidden" name="curEditId" value=""><input type="hidden" name="Page" value="">
+</td></tr><tr><td class="hline"></td></tr>
+</table></td></tr></table></center></form></body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript"><!--
+document.forms[0].start_ip_addr.value = QoSRuleCfgParam[0];
+document.forms[0].end_ip_addr.value = QoSRuleCfgParam[1];
+//document.forms[0].mode.value = QoSRuleCfgParam[2];
+document.forms[0].min_up_band_width.value = QoSRuleCfgParam[3];
+document.forms[0].max_up_band_width.value = QoSRuleCfgParam[4];
+document.forms[0].min_down_band_width.value = QoSRuleCfgParam[5];
+document.forms[0].max_down_band_width.value = QoSRuleCfgParam[6];
+curPage = QoSRuleCfgParam[7];
+document.forms[0].Page.value = curPage;
+document.forms[0].curEditId.value = QoSRuleCfgParam[8];
+document.forms[0].enable.checked = QoSRuleCfgParam[9]?true:false;
+document.forms[0].start_port.value = QoSRuleCfgParam[10];
+document.forms[0].end_port.value = QoSRuleCfgParam[11];
+document.forms[0].protocol.value = QoSRuleCfgParam[12];
+--></script>

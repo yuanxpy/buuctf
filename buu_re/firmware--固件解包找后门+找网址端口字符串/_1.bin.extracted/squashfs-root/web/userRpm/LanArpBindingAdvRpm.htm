@@ -1,0 +1,135 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="Javascript"><!--
+function doBack(nPage)
+{
+	location.href="LanArpBindingRpm.htm?Page="+nPage;
+}
+function is_spmac(mac_string)
+{
+	if(mac_string == "00-00-00-00-00-00")
+	{
+		alert("无效MAC地址，请重新输入！");
+		return false;
+	}
+	var ch = "Ff-";
+	for (var i = 0; i < mac_string.length; i++)
+	{
+		c = mac_string.charAt(i);
+		if(ch.indexOf(c) == -1)
+		return true;
+	}
+	alert("无效MAC地址，请重新输入！");
+	return false;
+}
+function doSubmit()
+{
+	if(document.forms[0].Mac.value=="")
+	{
+		alert("请输入正确的MAC地址！");
+		var element = document.forms[0].Mac;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	if(document.forms[0].Mac.value != "")
+	{
+		if(!is_macaddr(document.forms[0].Mac.value))
+		{
+			var element = document.forms[0].Mac;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		if(!is_spmac(document.forms[0].Mac.value))
+		{
+			var element = document.forms[0].Mac;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+	}
+	if(document.forms[0].Ip.value=="")
+	{
+		alert("请输入正确的IP地址！");
+		var element = document.forms[0].Ip;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	if(document.forms[0].Ip.value != "")
+	{
+		if(!is_ipaddr(document.forms[0].Ip.value))
+		{
+			var element =document.forms[0].Ip;
+			if(element)
+			{
+				element.focus();element.select();
+			}
+			return false;
+		}
+	}
+	return true;
+}
+function doHelp(){location.href="/help/LanArpBindingHelpRpm.htm";}
+//--></script></head>
+<BODY >
+<center><form action="LanArpBindingRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="500" align="left" valign="middle" class="title">静态ARP绑定设置</td>
+</tr>
+<tr><td colspan="2"><table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="518">
+<table width="470" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<TR>
+<TD colspan=2>&nbsp;&nbsp;本页设置单机的MAC地址和IP地址的匹配</TD>
+</TR>
+<tr><td>
+<table width="400" border="0" align="center" cellpadding="3" cellspacing="0" class="space">
+<TR>
+						<TD colspan=2></TD>
+</TR>
+<TR>
+						<td colspan="2"><input type="checkbox" name="State" value="1">&nbsp;&nbsp;绑定</td>
+</TR>
+<TR>
+<TD >MAC 地址：</TD><TD><input name="Mac" type="text" class="text" value="" size="18" maxlength="17"></TD>
+</TR>
+<TR>
+					<TD>IP 地址：</TD><TD><input name="Ip" type="text" class="text" value="" size="16" maxlength="15"></TD>
+</TR>
+</table></table>
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+<input name="Changed" type="hidden" value="">
+<input name="SelIndex" type="hidden" value="">
+<input name="Page" type="hidden" value="">
+&nbsp;<input name="Save" type="submit" class="button" value="保 存">
+&nbsp;<input type="button" value="返 回" name="Return" class="button" onClick="doBack(arpBindingAdvDynArray[5]);">
+&nbsp;<input name="Help" type="button" class="button" value="帮 助" onClick="doHelp();"></TD></TR>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr>
+</TABLE>
+<script language="JavaScript">
+document.forms[0].Mac.value =arpBindingAdvDynArray[0];
+document.forms[0].Ip.value =arpBindingAdvDynArray[1];
+document.forms[0].State.checked = arpBindingAdvDynArray[2];
+document.forms[0].Changed.value = arpBindingAdvDynArray[3];
+document.forms[0].SelIndex.value = arpBindingAdvDynArray[4];
+document.forms[0].Page.value = arpBindingAdvDynArray[5];
+</script>
+</form></center></BODY><head><meta http-equiv="pragma" content="no-cache"></head></HTML>

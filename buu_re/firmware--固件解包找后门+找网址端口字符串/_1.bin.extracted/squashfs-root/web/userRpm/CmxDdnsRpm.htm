@@ -1,0 +1,138 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+var bRefreshFlag=1;
+function doFocus()
+{
+	bRefreshFlag=0;
+}
+function doChange()
+{
+	var nIndex; 
+	nIndex=document.forms[0].provider.value; 
+	location.href="DdnsAddRpm.htm?provider="+nIndex;
+}
+function ResetStatus() 
+{
+	window.status=" ";
+	return true;
+}
+function goUrl(url) 
+{
+	window.open(url,'','');
+}
+function doRefresh()
+{
+	var nIndex;
+	if(1==bRefreshFlag)
+	{
+		nIndex=document.forms[0].provider.value;
+		location.href="DdnsAddRpm.htm?provider="+nIndex;
+	}
+}
+function doLoad()
+{ 
+	if( serInf[5]== 0 )  
+	{
+		return;
+	}
+	else
+   {
+       window.setTimeout("doRefresh()", 6000);
+   }
+}
+
+function doHelp() 
+{
+    location.href ="/help/DdnsAddComexeHelpRpm.htm";
+}
+
+var connStat = new Array(
+"未连接",
+"正在连接中……",
+"连接成功"
+);
+
+function doSubmit()
+{
+   location.href="DdnsAddRpm.htm?provider="+1;
+}
+
+//--></script></head>
+<body onLoad="doLoad()"><center><form action="DdnsAddRpm.htm" enctype="multipart/form-data" method="get" onsubmit = "doSubmit()">
+<table width="502" border="0" cellspacing="0" cellpadding="0"><tr><td width="7" class="title"><IMG height=24 src="/images/arc.gif" width=7></td>
+<td width="495" align="left" valign="center" class="title">动态DNS设置</td></tr><tr> <td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br> </td><td width="500"><table width="450" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本页设置动态DNS参数</td></tr></table>
+<TABLE width=450 border=0 align="center" cellpadding="0" cellspacing="0" class="space"><INPUT type=hidden name=address> 
+<tr><TD width=80 align="left">服务提供者：</td>
+<td><SELECT name="provider" class="list" onChange="doChange()" onClick="doFocus();"> 	
+<script language=javascript><!--//
+if(ddnsType[0]) document.write("<option value=0>花 生 壳 ( www.oray.net )</option>");
+if(ddnsType[1]) document.write("<option value=1 selected>科 迈 网 ( www.comexe.cn )</option>");
+if(ddnsType[2]) document.write("<option value=2 >Dyndns ( www.dyndns.org )</option>");
+if(ddnsType[3]) document.write("<option value=3>No-IP ( www.no-ip.com )</option>");
+//--></script>
+</SELECT>&nbsp;<a href="javascript:goUrl('http://www.comexe.cn');" OnMouseOver="return ResetStatus();">注册...</a></td></tr>
+<TR><TD >域名：</TD><TD><INPUT name="cliUrl0" value="" maxLength="127" size="32"  class="text" onFocus="doFocus();"></TD></TR>
+<TR><TD >域名：</TD><TD><INPUT name="cliUrl1" value="" maxLength="127" size="32"  class="text" onFocus="doFocus();"></TD></TR>
+<TR><TD >域名：</TD><TD><INPUT name="cliUrl2" value="" maxLength="127" size="32"  class="text" onFocus="doFocus();"></TD></TR>
+<TR><TD >域名：</TD><TD><INPUT name="cliUrl3" value="" maxLength="127" size="32"  class="text" onFocus="doFocus();"></TD></TR>
+<TR><TD >域名：</TD><TD><INPUT name="cliUrl4" value="" maxLength="127" size="32"  class="text" onFocus="doFocus();"></TD></TR>
+<tr><td align="left">&nbsp;</td><td></td></tr>
+<tr><td align="left">用户名：</td>
+<td><INPUT name="username" value="" maxLength="63" size="20"  class="text" onFocus="doFocus();">
+</td></tr>
+<tr><td align="left">密  码：</td>
+<td><INPUT name="pwd" type="password"  value="" maxLength="63"  size="20"  class="text" onFocus="doFocus();"></td></tr>
+<tr><TD align=right colSpan=2>
+</td></tr></TABLE>
+<TABLE width=450 border=0 align="center" cellpadding="0" cellspacing="0" class="space"><TBODY>
+<tr><TD align="left" valign="top">启用DDNS：</td><TD align="left" valign="top"><input type="checkbox" name="EnDdns" value="2"   onClick="doFocus();"></td></tr>
+<tr><TD width=80 align="left">连接状态：</td><td><DIV ID="connectStatus"></DIV></td></tr>
+<tr><TD colspan="2">&nbsp;</td></tr>
+<tr><TD colspan="2">
+<INPUT class="button" type="submit" name="Login" value="登 录">&nbsp;
+<INPUT class="button" type="submit" name="Logout" value="退 出">&nbsp;
+</td></tr>
+</TBODY></TABLE>
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td  class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr><tr>
+<td height="30" class="tail"> 
+&nbsp;&nbsp;
+<INPUT class="button" name="Save"  type="submit" value="保 存">&nbsp;
+<INPUT class="button" type="button" name="Help"  value="帮 助"  onclick="return doHelp();">&nbsp;
+</td></tr>
+<tr><td class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr>
+</table></td></tr></table>
+</form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript">
+document.forms[0].provider.selectedIndex = serInf[0];
+document.forms[0].username.value = serInf[1];
+document.forms[0].pwd.value = serInf[2];
+document.forms[0].EnDdns.checked = serInf[3];
+document.getElementById("connectStatus").innerHTML = connStat[serInf[4]];
+switch (serInf[4])
+{
+case 0:
+document.forms[0].Login.disabled = false;
+document.forms[0].Logout.disabled = true;
+break;
+case 1:
+case 2:
+document.forms[0].Login.disabled = true;
+document.forms[0].Logout.disabled = false;
+break;
+default:
+document.getElementById("connectStatus").innerHTML = "--";
+document.forms[0].Login.disabled = false;
+document.forms[0].Logout.disabled = true;
+break;
+}
+document.forms[0].cliUrl0.value = serInf[7];
+document.forms[0].cliUrl1.value = serInf[8];
+document.forms[0].cliUrl2.value = serInf[9];
+document.forms[0].cliUrl3.value = serInf[10];
+document.forms[0].cliUrl4.value = serInf[11];
+</script>

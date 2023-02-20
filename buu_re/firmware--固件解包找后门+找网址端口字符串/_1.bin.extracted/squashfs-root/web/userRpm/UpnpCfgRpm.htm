@@ -1,0 +1,93 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doRefresh() {location.href="./UpnpCfgRpm.htm";}
+function doSubmit()
+{
+	document.forms[0].upnpenb.value = (uPnPPara[0] == 0)?"Enable":"Disable";
+	return true;
+}
+function doHelp()
+{
+	location.href="../help/UpnpCfgHelpRpm.htm";
+}
+
+//--></script>
+</head>
+<body>
+<center><form action="UpnpCfgRpm.htm" enctype="multipart/form-data" method="get">
+<table width="560" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><IMG height=24 src="/images/arc.gif" width=7></td>
+<td width="553" align="left" valign="center" class="title">UPnP设置</td>
+</tr><tr><td colspan="2"><table width="560" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td>
+<td width="558">
+<table width="514" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本页设置/显示UPnP的设置以及工作状态。</td></tr>
+</table>
+<table width="514" align="center" border="0" cellspacing="0" cellpadding="0" class="space">
+<tr><td width="120">当前UPnP状态：<script>(uPnPPara[0] == 0)?(document.write("<b>关闭</b>")):(document.write("<b>开启</b>"));</script>&nbsp;</TD><TD width="346">
+<input name="Upnpdisable" type="submit" class="button" value="关闭" onclick="return doSubmit();">
+<input name = "Upnpenable" type = "submit" class = "button" value = "开启" style ="display:none" onclick="return doSubmit();"></td></tr></table>
+<table><tr><td height="10"><INPUT type=hidden name=upnpenb></td></tr></table>
+<table width="514" border="0" align="center" cellspacing="0" cellpadding="0">
+<tr><td align="center" colspan="7">当前UPnP设置列表</td></tr>
+<tr><td><table width="514" border="1" align="center" cellspacing="0" cellpadding="0">
+<tr><td align="center">ID</td>
+<td align="center">应用描述</td>
+<td align="center">外部端口</td>
+<td align="center">协议类型</td>
+<td align="center">内部端口</td>
+<td align="center">IP地址</td>
+<td align="center">状态</td></tr>
+<script language="JavaScript">
+if (uPnPPara[1] > 0) {
+var ProtocolArray = new Array (
+"TCP",	"UDP");
+var	protocolType;
+var row = 0;
+var statusString;
+var j;
+for(var i = 0; i < uPnPPara[1]; i++)	{
+	j = i+1;
+	row = i * uPnPPara[2];
+	protocolType = uPnPList[row+2];
+	statusString = (uPnPList[row+5] == 1)?"已启用":"未启用";
+	document.write('<tr><td align="center">' + j + '</td>');
+	document.write('<td align="center">'
+				 + uPnPList[row] + '</td>');
+	document.write('<td align="center">'
+				 + uPnPList[row+1] + '</td>');
+	document.write('<td align="center">'
+				 + ProtocolArray[protocolType] + '</td>');
+	document.write('<td align="center">'
+				 + uPnPList[row+3] + '</td>');
+	document.write('<td align="center">'
+				 + uPnPList[row+4] + '</td>');
+	document.write('<td align="center">' 
+				 + statusString + '</TD></TR>');
+}}
+</script>
+</table></td></tr></table>
+</td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td height="20"></td></tr>
+<tr><td class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr>
+<tr><td height="30" class="tail">&nbsp;
+<input name="Refresh"  class="button" type="button" value="刷 新" onClick="return doRefresh();">&nbsp;
+<input name="help" type="button" class="button" onClick="doHelp();" value="帮 助"></td>
+</td>
+</tr><tr><td class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr>
+</table></td></tr></table></form></center></body></html>
+<script language="JavaScript">
+if(uPnPPara[0] == 0)
+{
+	document.forms[0].Upnpdisable.style.display = "none";
+	document.forms[0].Upnpenable.style.display = "block";
+}
+else
+{
+	document.forms[0].Upnpdisable.style.display = "block";
+	document.forms[0].Upnpenable.style.display = "none";
+}
+//document.getElementById("upnpStat").innerHTML = (uPnPPara[0] == 0)?"关闭":"开启";
+</script>

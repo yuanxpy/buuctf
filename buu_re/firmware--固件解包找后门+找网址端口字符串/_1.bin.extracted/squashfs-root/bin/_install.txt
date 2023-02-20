@@ -1,0 +1,26 @@
+【运行环境】
+
+PHP5.0, MYSQL5.0
+
+【安装说明】
+
+为了更好的熟悉与使用本系统，请自行安装MYSQL数据库并作出相关的配置。
+
+【配置说明】
+
+数据库的链接配置位于common/incfiles/const.inc.php。
+
+$db_host = '127.0.0.1'; //数据库主机地址 
+$db_username = 'root'; //用户名
+$db_password = ''; //密码
+$db_database = 'jtbc_database'; //数据库名称
+
+数据库的创建脚本在 _mysql 目录中。
+
+默认的管理员路径为http://您的网站地址/admin/，默认的用户名和密码都是admin。
+
+【关于作者】
+
+作者主页： http://www.jetiben.com/
+交流论坛： http://www.jtbc.net.cn/forum/
+联系方式： 详见主页

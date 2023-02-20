@@ -1,0 +1,86 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doHelp(){
+location.href="/help/ManageControlHelpRpm.htm";}
+
+function doSubmit(){
+if(document.forms[0].port.value != ""){
+if(!is_port(document.forms[0].port.value)){	
+var element =document.forms[0].port;
+if(element){element.focus();element.select();}
+return false;}}
+if(document.forms[0].ip.value != ""){
+if(!is_ipaddr(document.forms[0].ip.value)){	
+var element =document.forms[0].ip;
+if(element){element.focus();element.select();}
+return false;}}
+if (managementPara[3] == 1){
+if(document.forms[0].telnet_port.value != ""){
+if(!is_port(document.forms[0].telnet_port.value)){	
+var element =document.forms[0].telnet_port;
+if(element){element.focus();element.select();}
+return false;}}}
+if (managementPara[3] == 1){
+if((document.forms[0].port.value != "" && webcontrolport != document.forms[0].port.value) || 
+	(document.forms[0].telnet_port.value != "" && telnetcontrolport != document.forms[0].telnet_port.value))
+alert("注意：只有在您重启路由器后，管理端口的更改才能生效！");	
+}
+else{
+if(document.forms[0].port.value != "" && webcontrolport != document.forms[0].port.value)
+alert("注意：只有在您重启路由器后，管理端口的更改才能生效！");	
+}
+return true;}
+//--></script></head>
+
+<body ><center><form action="ManageControlRpm.htm" enctype="multipart/form-data" method="get" >
+<table width="502" border="0" cellspacing="0" cellpadding="0"><tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">远端WEB管理</td></tr><tr><td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br> </td><td width="500"><table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本页设置路由器的WEB管理端口和广域网中可以执行远端WEB管理的计算机的IP地址。</td></tr></table><table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td width="49" class="top">注意：</td>
+<td width="351">1、路由器默认的WEB管理端口为80，如果您改变了默认的WEB管理端口（例如改为88），则您必须用“IP地址:端口”的方式（例如http://192.168.1.1:88）才能登录路由器执行WEB界面管理。此功能需要重启路由器才能生效。</td></tr>
+<tr>
+	<td>&nbsp;</td>
+	<td>2、路由器默认的远端WEB管理IP地址为0.0.0.0，在此默认状态下，广域网中所有计算机都不能登录路由器执行远端WEB管理，如果您改变了默认的远端WEB管理IP地址（例如改为202.96.12.8），则广域网中只有具有指定IP地址（例如202.96.12.8）的计算机才能登录路由器执行远端WEB管理。如果将远端WEB管理IP地址设为255.255.255.255，那么，广域网中所有的计算机都可以登录路由器执行远端WEB管理。</td>
+</tr>
+<tr>
+	<td>&nbsp;</td>
+	<td>3、如果WEB管理端口与“转发规则”中虚拟服务器条目的端口产生冲突，当您保存配置时，存在端口冲突的虚拟服务器条目将被自动禁用。</td>
+</tr>
+</table><table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td height="25">WEB管理端口：</td>
+<td><input name="port" type="text" class="text" id="port" value="" size="6" maxlength="5"></td></tr>
+<script language="JavaScript">
+if (managementPara[3] == 1) {
+document.write('<tr><td height="25">Telnet管理端口：</td><td><input name="telnet_port" type="text" class="text" value="" size="6" maxlength="5"></td></tr>');
+}
+</script>
+<tr><td width="136" height="25">远端WEB管理IP地址：</td>
+<td width="264"><input name="ip" type="text" class="text" id="ip" value="" size="16" maxlength="15"></td></tr>
+<script language="JavaScript">
+if (managementPara[2] == 1) {
+document.write('<TR><TD colspan=2></TD></TR>');
+document.write('<TR><TD colspan=2>&nbsp</TD></TR>');
+document.write('<TR><TD COLSPAN=2><FONT color=#FF0000>您已经更改了管理端口，</FONT></span><A href="../userRpm/SysRebootRpm.htm" id="t_click">重启</A><span id="t_to_reboot" style="color:#FF0000"><FONT color=#FF0000>后生效。</FONT> </TD></TR>'); 
+}
+</script>
+</table></td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td class="tail" height="30"> &nbsp;
+<input name="Save" type="submit" class="button" id="Submit" value="确 定" onClick="return doSubmit();">&nbsp; 
+<input name="Submit" type="button" class="button" id="Submit" onClick="doHelp();" value="帮 助">
+</td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>			
+</table></td></tr></table>
+</form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript">
+document.forms[0].port.value =managementPara[0];
+document.forms[0].ip.value =managementPara[1];
+var webcontrolport = document.forms[0].port.value;
+if (managementPara[3] == 1) {
+	document.forms[0].telnet_port.value =managementPara[4];
+	var telnetcontrolport = document.forms[0].telnet_port.value;
+}
+</script>

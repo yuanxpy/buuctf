@@ -1,0 +1,275 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+var g_txPower	 = wlanAdv[0];
+var g_bcPrd		 = wlanAdv[1];
+var g_rtsThd	 = wlanAdv[2];
+var g_fragThd	 = wlanAdv[3];
+var g_dtimThd	 = wlanAdv[4];
+var g_wmm		 = wlanAdv[5];
+var g_shotGI	 = wlanAdv[6];
+var g_apisolation= wlanAdv[7];
+
+function doSubmit()
+{
+	var df = document.forms[0];
+	
+	var ct_txPower = df.txPower;
+	if (!ct_txPower || ct_txPower.value < 0 || (ct_txPower.value > 2 && ct_txPower.value != 5))
+	{
+		alert("请选择正确的传输功率!");
+		ct_txPower.focus();
+		ct_txPower.select();
+		return false;
+	}
+	
+	var ct_beaconPeriod = df.beaconPeriod;
+    if(is_digit(ct_beaconPeriod.value) == false)
+    {
+        alert("Beacon时槽的值存在非法字符，请检查输入是否正确！");
+		ct_beaconPeriod.focus();
+		ct_beaconPeriod.select();
+		return false;
+    }
+	if (!ct_beaconPeriod || ct_beaconPeriod.value < 40 || ct_beaconPeriod.value > 1000)
+	{
+		alert("Beacon时槽的值应该在40～1000之间，请检查输入是否正确！");
+		ct_beaconPeriod.focus();
+		ct_beaconPeriod.select();
+		return false;
+	}
+
+	var ct_rtsThreshold = df.rtsThreshold;
+    if(is_digit(ct_rtsThreshold.value) == false)
+    {
+        alert("RTS时槽的值存在非法字符，请检查输入是否正确！");
+		ct_rtsThreshold.focus();
+		ct_rtsThreshold.select();
+		return false;
+    }
+	if (!ct_rtsThreshold || ct_rtsThreshold.value < 1 || ct_rtsThreshold.value > 2346)
+	{
+		alert("RTS时槽的值应该在1～2346之间，请检查输入是否正确！");
+		ct_rtsThreshold.focus();
+		ct_rtsThreshold.select();
+		return false;
+	}
+
+	var ct_fragThreshold = df.fragThreshold;
+    if(is_digit(ct_fragThreshold.value) == false)
+    {
+        alert("分片阈值的值存在非法字符，请检查输入是否正确！");
+		ct_fragThreshold.focus();
+		ct_fragThreshold.select();
+		return false;
+    }
+	if (!ct_fragThreshold || ct_fragThreshold.value < 256 || ct_fragThreshold.value > 2346)
+	{
+		alert("分片阈值的值应该在256～2346之间，请检查输入是否正确！");
+		ct_fragThreshold.focus();
+		ct_fragThreshold.select();
+		return false;
+	}
+
+	var ct_dtimInterval = df.dtimInterval;
+    if(is_digit(ct_dtimInterval.value) == false)
+    {
+        alert("DTIM阈值的值存在非法字符，请检查输入是否正确！");
+		ct_dtimInterval.focus();
+		ct_dtimInterval.select();
+		return false;
+    }
+	if (!ct_dtimInterval || ct_dtimInterval.value < 1 || ct_dtimInterval.value > 15)
+	{
+		alert("DTIM阈值的值应该在1～15之间，请检查输入是否正确！");
+		ct_dtimInterval.focus();
+		ct_dtimInterval.select();
+		return false;
+	}
+    alert("注意：只有在您重启路由器后，无线高级设置更改才能生效！");	
+    return true;
+}
+function doHelp()
+{
+    location.href = "/help/WlanAdvHelpRpm.htm";
+}
+//--></SCRIPT></HEAD>
+<body ><center><form action="WlanAdvRpm.htm" enctype="multipart/form-data" method="get" onsubmit = "return doSubmit()">
+<table width="502" border="0" cellspacing="0" cellpadding="0"><tr><td width="7" class="title"><IMG height=24 src="/images/arc.gif" width=7></td>
+<td width="495" align="left" valign="center" class="title" id = "tag_title">无线高级设置</td></tr><tr> <td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br> </td><td width="500">
+<table width="450" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+</table>
+<TABLE width=450 border = 0 align="center" cellpadding="0" cellspacing="2" class="space"><INPUT type=hidden name=address> 
+<TR style="display">
+	<TD class="Item" id="t_transmit_power">传输功率:</TD>
+	<TD>
+		<select name="txPower" class="listS" id="txPower">
+			<option value="5" id="t_high">高</option>
+			<option value="0" id="t_middle">中</option>
+			<option value="1" id="t_low">低</option>
+		</select>
+	</TD>
+</TR>
+
+<TR>
+	<TD align="left" width = "100px" id = "tag_bcn_prd">Beacon时槽：</TD>
+	<TD>
+		<INPUT name="beaconPeriod" type="text" class="text" maxlength="4" size="8">&nbsp; (40-1000)
+	</TD>
+</TR>
+
+<TR style="display:none;">
+	<TD align="left" width = "100px" id = "tag_rts_th">RTS时槽：</TD>
+	<TD>
+		<INPUT name="rtsThreshold" type="text" class="text" maxlength="4" size="8">&nbsp; (1-2346)
+	</TD>
+</TR>
+
+<TR style="display:none;">
+	<TD  align="left" width = "100px" id = "tag_frg_th">分片阈值：</TD>
+	<TD >
+		<INPUT name="fragThreshold" type="text" class="text" maxlength="4" size="8">&nbsp; (256-2346)
+	</TD>
+</TR>
+
+<TR style="display:none;">
+	<TD  align="left" width = "100px" id = "tag_dtm_inter">DTIM阈值：</TD>
+	<TD>
+		<INPUT name="dtimInterval" type="text" class="text" maxlength="4" size="8">&nbsp; (1-15)
+	</TD>
+</TR>
+
+<TR>
+	<TD>&nbsp;</TD>
+	<TD>
+		<INPUT name="wmm" type="checkbox" value = "2">&nbsp;<span id = "tag_enable_wmm">开启 WMM</span>
+	</TD>
+</TR>
+
+<TR style="display:none;">
+	<TD>&nbsp;</TD>
+	<TD>
+		<INPUT name="shortGI" type="checkbox" value = "2">&nbsp;<span id = "tag_enable_shrt_gi">开启 Short GI</span>
+	</TD>
+</TR>
+
+<SCRIPT language="JavaScript">
+//if (wlanAdv[9] == 0)
+//{
+	document.write('<TR><TD class=Item>&nbsp;</TD><TD><INPUT type=checkbox value=2 name=apisolation>&nbsp;<span id="t_enable_ap">开启 AP隔离</span></TD></TR>');
+//}
+</SCRIPT>
+<script>
+if(wlanAdv[8] == 1)
+{
+    document.write('<TR><TD colspan=2></TD></TR>');
+    document.write('<TR><TD colspan=2></BR></TD></TR>');
+    document.write('<TR><TD COLSPAN=2><FONT color=#FF0000>您已经更改了无线设置，</FONT></span><A href="../userRpm/SysRebootRpm.htm" id="t_click">重启</A><span id="t_to_reboot" style="color:#FF0000"><FONT color=#FF0000>后生效。</FONT> </TD></TR>'); 
+}
+</script>
+
+</TBODY></TABLE>
+
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td  class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr><tr>
+<td height="30" class="tail"> 
+&nbsp;&nbsp;
+<INPUT class="button" name="Save"  type="submit" value="保 存">&nbsp;
+<INPUT class="button" type="button" name="Help"  value="帮 助"  onclick="return doHelp();">&nbsp;
+</td></tr>
+<tr><td class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr>
+</table></td></tr></table>
+</form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+
+<SCRIPT language="JavaScript">
+var df = document.forms[0];
+if ((g_txPower >= 0 && g_txPower <= 2) || g_txPower == 5)
+{
+	df.txPower.value = g_txPower;
+}
+else
+{
+	df.txPower.value = 0;
+}
+
+if (g_bcPrd >= 40 && g_bcPrd <= 1000)
+{
+	df.beaconPeriod.value = g_bcPrd;
+}
+else
+{
+	df.beaconPeriod.value = 100;
+}
+
+if (g_rtsThd >= 1 && g_rtsThd <= 2346)
+{
+	df.rtsThreshold.value = g_rtsThd;
+}
+else
+{
+	df.rtsThreshold.value = 2346;
+}
+
+if (g_fragThd >= 256 && g_fragThd <= 2346)
+{
+	df.fragThreshold.value = g_fragThd;
+}
+else
+{
+	df.fragThreshold.value = 2346;
+}
+
+if (g_dtimThd >= 1 && g_dtimThd <= 15)
+{
+	df.dtimInterval.value = g_dtimThd;
+}
+else
+{
+	df.dtimInterval.value = 1;
+}
+
+if (g_wmm == 1)
+{
+	df.wmm.checked = true;
+}
+else
+{
+	df.wmm.checked = false;
+}
+
+if (g_shotGI == 1)
+{
+	df.shortGI.checked = true;
+}
+else
+{
+	df.shortGI.checked = false;
+}
+
+if (g_apisolation == 1)
+{
+	df.apisolation.checked = true;
+}
+else
+{
+	df.apisolation.checked = false;
+}
+
+if(wlanAdv[9] == 1)
+{
+	df.apisolation.disabled = true;
+}
+
+if (wlanAdv[10] == 1)
+{
+	df.shortGI.checked = false;
+	df.shortGI.disabled = true;
+}
+
+if (wlanAdv[11] == 1)
+{
+	df.fragThreshold.disabled = true;
+}
+</SCRIPT>

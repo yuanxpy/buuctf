@@ -1,0 +1,50 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doLoad()
+{
+	doReFresh();
+	location.href = tempPageInf[2];
+}
+function doReFresh(){
+		window.setTimeout("showTime()",1000);
+}
+function showTime(){
+	var interval = (400/tempPageInf[0]);
+	var tdsize = td1.width;
+	if(tdsize=="")
+		tdsize += interval;
+	else
+		tdsize = parseInt(tdsize) + interval;
+	if (parseInt(tdsize) < 400){
+		td1.width = tdsize;
+		doReFresh();
+	}
+    if( parseInt(tdsize) >= 400)
+    {
+        //location.href = +"restart.htm"
+        //alert("软件升级成功!");
+        //parent.location.href="http://"+tempPageInf[3];
+        return;
+    }
+}
+//--></script></head>
+<body onLoad="return doLoad();">
+<center>
+<table width="502" border="0" cellpadding="0" cellspacing="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title"><div id="uploadtype"></div></td></tr>
+<tr><td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="1" rowspan="15" class="vline"><br></td><td width="500">
+<table align="center" height="120" width="400">
+<TR><TD align="center" colspan="2">正在处理...</TD></TR>
+<TR><TD align="center" colspan="2">请稍候...</TD></TR>
+</table>
+<table border="1" cellpadding="0" cellspacing="0" height="10" width="400" align="center" bordercolor="#6699FF" class="space">
+<tr><td><table id="td1" border="0" cellpadding="0" cellspacing="0" height="10" width="0" bgcolor="#6699FF"><td bgcolor="#6699FF"></td></table></td></tr>
+</table>
+</td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail"></td></tr><tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr></table>
+</center> </body><head><meta http-equiv="pragma" content="no-cache"></head></html>

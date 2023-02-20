@@ -1,0 +1,1089 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0052)http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>利用Crypto&nbsp;API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客</title>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8,chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="keywords" content="利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客,YHZX_2013,sha256,cryptoapi,哈希算法,md5">
+<meta name="description" content="利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客,YHZX_2013,">
+<meta http-equiv="mobile-agent" content="format=html5; url=http://blog.sina.cn/dpool/blog/s/blog_9cd8465f0102uy5d.html?vt=4">
+<meta http-equiv="mobile-agent" content="format=wml; url=http://blog.sina.cn/dpool/blog/ArtRead.php?nid=9cd8465f0102uy5d&amp;vt=1">
+<!--–[if lte IE 6]-->
+<script id="sinaads-ck-script" charset="utf-8" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sinaads_ck.js"></script><script type="text/javascript">
+try{
+document.execCommand("BackgroundImageCache", false, true);
+}catch(e){}
+</script>
+<!--[endif]–-->
+<script type="text/javascript">
+    
+window.staticTime=new Date().getTime();
+;(function () {
+    if(/\/{2,}/.test(location.pathname)){
+        location.href = 'http://blog.sina.com.cn' + location.pathname.replace(/\/+/g,'/') + location.search;
+    }
+})();
+</script>
+<link rel="pingback" href="http://upload.move.blog.sina.com.cn/blog_rebuild/blog/xmlrpc.php">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://upload.move.blog.sina.com.cn/blog_rebuild/blog/xmlrpc.php?rsd">
+<link href="http://blog.sina.com.cn/blog_rebuild/blog/wlwmanifest.xml" type="application/wlwmanifest+xml" rel="wlwmanifest">
+<link rel="alternate" type="application/rss+xml" href="http://blog.sina.com.cn/rss/2631419487.xml" title="RSS">
+<link href="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/article.css" type="text/css" rel="stylesheet"><link href="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/common.css" type="text/css" rel="stylesheet"><link href="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/blog.css" type="text/css" rel="stylesheet"><link href="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/blog(1).css" type="text/css" rel="stylesheet"><style id="tplstyle" type="text/css">@charset "utf-8";@import url("http://simg.sinajs.cn/blog7newtpl/css/30/30_1/t.css");
+</style>
+<style id="positionstyle" type="text/css">
+</style>
+<style id="bgtyle" type="text/css">
+</style>
+<style id="headtyle" type="text/css">
+</style>
+<style id="navtyle" type="text/css">
+</style>
+<script type="text/javascript" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sspnew.js"></script><script src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/ssologin.js" charset="utf-8" async=""></script><script src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/article.js" charset="utf-8"></script><script src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sinaads.js" charset="utf-8"></script><script src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/suda_s_v851c.js" charset="utf-8"></script><iframe src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/ckctl.html" id="ckctlFrame" scrolling="no" style="height: 0px; width: 1px; overflow: hidden;"></iframe><script src="http://sjs.sinajs.cn/blog7common/conf/tmp_clone.js" charset="utf-8"></script><style type="text/css" id="stylefix">#bsPanelHolder,#sinaads_pdps54771{display:none;}</style><script src="http://d4.sina.com.cn/litong/zhitou/sinaads/release/spec/getSinaadsExParamsForBlog.js" charset="utf-8"></script><script src="http://news.sina.com.cn/js/694/2013/0220/guess.boot.blog.js?varname=requestId_91099141" charset="gb2312"></script><script src="http://ent.sina.com.cn/js/470/2013/0506/collect.js?varname=requestId_87872826" charset="gb2312"></script></head><style type="text/css" id="10025011558"></style>
+<body>
+<!--$sinatopbar-->
+<ins class="sinaads" data-ad-pdps="PDPS000000049439" style="width:1000px; display:block; margin:0 auto"></ins><div style="z-index:512;" class="nsinatopbar">
+  <div style="position:absolute;left:0;top:0;" id="trayFlashConnetion"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" src="http://sjs.sinajs.cn/blog7swf/scache.swf" width="1" height="1" style="undefined" id="scache" name="scache" bgcolor="#00ff00" quality="high" wmode="transparent" allowscriptaccess="always"></div>
+  <div class="ntopbar_main"><div id="_6391625640287325_panel" class="horn" style="display: none;"><div id="_6391625640287325_tj" class="horn_con" style="display:none;">推荐：<a id="_6391625640287325_noticeAd1" target="_blank" href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#"></a><a id="_6391625640287325_noticeAd2" target="_blank" href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#"></a></div><div id="_6391625640287325_announce" class="horn_con" style="display:none;"><p id="_6391625640287325_announceCon">公告：<em>请您及时更换请请请您正在使用的模版将于2周后被下线，请您及时更换</em></p></div><a class="close" title="关闭" id="_6391625640287325_close" style="float:none;">×</a></div> 
+    <a id="login_bar_logo_link_350" href="http://blog.sina.com.cn/" target="_blank"><img class="ntopbar_logo" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/topbar_logo.gif" width="100" alt="新浪博客"></a>
+    <div class="ntopbar_floatL">
+      <div class="ntopbar_search" id="traySearchBar"><div class="ntopbar_input" id="_7581625640287317_panel" style=""><form id="_7581625640287317_searchForm" method="get" target="_blank" action="http://search.sina.com.cn/"><input id="_7581625640287317_queryTxt" class="ntopbar_txt" type="text" name="q" autocomplete="off"><input id="_7581625640287317_submit" type="submit" onclick="v7sendLog(&#39;40_01_44&#39;)" class="ntopbar_searchBtn" value=""><input type="hidden" name="ie" value="utf-8"><input type="hidden" name="e" value="utf-8"><input id="_7581625640287317_range" type="hidden" name="range" value="article"><input id="_7581625640287317_t" type="hidden" name="t" value=""><input id="_7581625640287317_s" type="hidden" name="s" value="sup"><input id="_7581625640287317_by" type="hidden" name="by" value="all"><input id="_7581625640287317_type" type="hidden" name="type" value=""><input id="_7581625640287317_stype" type="hidden" name="stype" value="1"><input id="_7581625640287317_c" type="hidden" name="c" value="blog"></form></div></div>
+	  <div class="ntopbar_ad" id="loginBarActivity" style="display:none;"></div>
+    </div>
+    <div class="ntopbar_loading" style="display: none;"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/loading.gif">加载中…</div>
+  <div id="_8731625640287215_panel" class="ntopbar_login" login="1" style=""><span class="link bk_home"><a href="http://www.sina.com.cn/" target="_blank" suda-uatrack="key=sinahome_from_blog&amp;value=sinahome_from_blogpage"><i class="SG_bkhome"></i>新浪首页</a></span><a class="login" onclick="v7sendLog(&#39;40_01_38&#39;);return false;" href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html###" action-type="tray-login-btn"><span>登录</span></a><a class="register" onclick="v7sendLog(&#39;40_01_39&#39;)" target="_blank" href="https://login.sina.com.cn/signup/signupmail.php?entry=blog&amp;srcuid=2631419487&amp;src=blogicp">注册</a></div></div>
+</div>
+<!--$end sinatopbar-->
+
+<div class="sinabloga" id="sinabloga">
+	<div id="sinablogb" class="sinablogb">
+
+	   
+ <div id="sinablogHead" class="sinabloghead">
+     <div style="display: none;" id="headflash" class="headflash"></div>
+	   <div id="headarea" class="headarea">
+      <div id="blogTitle" class="blogtoparea">
+      <h1 id="blogname" class="blogtitle"><a href="http://blog.sina.com.cn/u/2631419487"><span id="blognamespan">YHZX_2013的博客</span></a></h1>
+	  		
+					<div id="bloglink" class="bloglink"><a href="http://blog.sina.com.cn/u/2631419487">http://blog.sina.com.cn/u/2631419487</a>  <a onclick="return false;" class="CP_a_fuc" href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" id="SubscribeNewRss">[<cite>订阅</cite>]</a><a class="CP_a_fuc" href="javascript:void(scope.pa_add.add(&#39;2631419487&#39;));">[<cite>手机订阅</cite>]</a></div>
+      </div>
+      <div class="blognav" id="blognav">
+      			  <div id="blognavBg" class="blognavBg"></div> <div class="blognavInfo"> 
+		<span><a href="http://blog.sina.com.cn/u/2631419487">首页</a></span>
+      <span><a class="on" href="http://blog.sina.com.cn/s/articlelist_2631419487_0_1.html">博文目录</a></span>
+      <!--<span><a href="">图片</a></span>-->
+      <span class="last"><a href="http://blog.sina.com.cn/s/profile_2631419487.html">关于我</a></span></div>
+      </div>      		      
+             <div class="autoskin" id="auto_skin">
+       </div>
+
+<div class="adsarea">
+     <a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#"><div id="template_clone_pic" class="pic"></div></a>
+     <div id="template_clone_link" class="link wdc_HInf"></div>
+     <div id="template_clone_other" class="other"></div>        
+</div>
+    </div>
+    </div>
+    
+    <!--主题内容开始 -->
+    <div class="sinablogbody" id="sinablogbody">
+		
+	<!--第一列start-->
+    <div id="column_1" class="SG_colW21 SG_colFirst"><div class="SG_conn" id="module_901">
+    <div class="SG_connHead">
+            <span class="title" comp_title="个人资料">个人资料</span>
+            <span class="edit">
+                        </span>
+    </div>
+    <div class="SG_connBody">
+        <div class="info">
+                         
+            <div class="info_img" id="comp_901_head"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/180" real_src="http://portrait8.sinaimg.cn/2631419487/blog/180" id="comp_901_head_image" width="180" height="180" alt="YHZX_2013" title="YHZX_2013"></div>
+            
+            <div class="info_txt">
+              <div class="info_nm">
+                <img id="comp_901_online_icon" style="display:none;" class="SG_icon SG_icon1" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" align="absmiddle">
+                <span class="SG_txtb"><strong id="ownernick">YHZX_2013</strong></span>
+                
+                <div class="clearit"></div>
+              </div>
+              <div class="info_btn1">
+                <a target="_blank" href="http://weibo.com/u/2631419487?source=blog" class="SG_aBtn SG_aBtn_ico"><cite><img class="SG_icon SG_icon51" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" align="absmiddle">微博</cite></a>
+                <div class="clearit"></div>
+              </div>
+    <div class="SG_j_linedot"></div>        <div class="info_locate" id="info_locate_id">
+<div class="SG_j_linedot"></div>
+<div class="info_btn2">
+    <p>
+    <a href="javascript:void(0)" class="SG_aBtn " id="comp901_btn_invite"><cite>加好友</cite></a>
+    <a href="javascript:void(0)" class="SG_aBtn" id="comp901_btn_sendpaper"><cite>发纸条</cite></a>
+    </p>
+    <p>
+    <a href="http://blog.sina.com.cn/s/profile_2631419487.html#write" class="SG_aBtn" id="comp901_btn_msninfo"><cite>写留言</cite></a>
+    <a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" onclick="return false;" class="SG_aBtn" id="comp901_btn_follow"><cite>加关注</cite></a>
+    </p>
+    <div class="clearit"></div>
+</div>
+<div class="SG_j_linedot"></div>
+</div>
+                  <div class="info_list"><a href="http://blog.sina.com.cn/lm/map/" target="_blank" title=""><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/ten_map.png" alt="博客十周年地图"></a></div><div class="info_list">     
+                                   <ul class="info_list1">
+                    <li><span class="SG_txtc">博客等级：</span><span id="comp_901_grade"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/1.gif"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/4.gif"></span></li>
+                    <li><span class="SG_txtc">博客积分：</span><span id="comp_901_score"><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="积分"><strong>308</strong><img width="15" height="15" align="top" title="积分" alt="积分" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" class="SG_icon SG_icon11"></a></span></li>
+                    </ul>
+                    <ul class="info_list2">
+                    <li><span class="SG_txtc">博客访问：</span><span id="comp_901_pv"><strong>48,867</strong></span></li>
+                    <li><span class="SG_txtc">关注人气：</span><span id="comp_901_attention"><strong>10</strong></span></li>
+                    <li><span class="SG_txtc">获赠金笔：</span><strong id="comp_901_d_goldpen">3</strong></li>
+                    <li><span class="SG_txtc">赠出金笔：</span><strong id="comp_901_r_goldpen">2</strong></li>
+					<li class="lisp" id="comp_901_badge"><span class="SG_txtc">荣誉徽章：</span><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="点亮荣誉勋章"><img title="点亮荣誉勋章" alt="点亮荣誉勋章" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" class="badge" style="background-image:url(http://simg.sinajs.cn/blog7style/images/common/badge/badge08.png);_background-image: url(http://simg.sinajs.cn/blog7style/images/common/badge/badge08.gif);"></a><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="兑换图片博主服务"><img title="兑换图片博主服务" alt="兑换图片博主服务" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" class="badge" style="background-image:url(http://simg.sinajs.cn/blog7style/images/common/badge/badge11.png);_background-image: url(http://simg.sinajs.cn/blog7style/images/common/badge/badge11.gif);"></a><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="兑换私密博文"><img title="兑换私密博文" alt="兑换私密博文" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" class="badge" style="background-image:url(http://simg.sinajs.cn/blog7style/images/common/badge/badge13.png);_background-image: url(http://simg.sinajs.cn/blog7style/images/common/badge/badge13.gif);"></a><a href="http://control.blog.sina.com.cn/blog_rebuild/profile/controllers/points_action.php" title="兑换金笔"><img title="兑换金笔" alt="兑换金笔" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" class="badge" style="background-image:url(http://simg.sinajs.cn/blog7style/images/common/badge/badge15.png);_background-image: url(http://simg.sinajs.cn/blog7style/images/common/badge/badge15.gif);"></a></li>
+                    </ul>
+                  </div>
+<div class="clearit"></div>
+    </div>
+    <div class="clearit"></div>
+</div>
+            </div>       
+            <div class="SG_connFoot"></div>
+</div>
+<div class="SG_conn" suda-uatrack="key=blog_article&amp;value=h_article53" id="hotShangPin"><ins class="sinaads" data-ad-pdps="PDPS000000057414" style="display:block;"></ins></div><div id="module_903" class="SG_conn ">
+    <div class="SG_connHead">
+    <span comp_title="相关博文" class="title">相关博文</span>
+    <span class="edit"> </span>
+    </div>
+    <div class="SG_connBody">
+    <div class="atcTitList relaList">        <ul class="">
+
+                <li class="SG_j_linedot1" style="display:none;">
+            <p id="atcTitLi_SLOT_41" class="atcTitCell_tit SG_dot" style="display:none">
+        </p>
+        </li>
+        <li class="SG_j_linedot1" style="display:none;">
+            <p id="atcTitLi_SLOT_42" class="atcTitCell_tit SG_dot" style="display:none">
+        </p>
+        </li>
+        
+                	<li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_54abf4670102zif3.html#cre=blogpagepc&amp;mod=f&amp;loc=1&amp;r=0&amp;rfunc=48&amp;tj=cxvertical_pc_blogpagepc_f" target="_blank" title="王一博代言的品牌出事了！黑历史被翻出，曾代言过多个辱华品牌">王一博代言的品牌出事了！黑历史被翻出，曾代言过多个辱华品牌</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1420555367" class="SG_linkb" target="_blank">代军哥哥</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_54abf4670102ziey.html#cre=blogpagepc&amp;mod=f&amp;loc=3&amp;r=0&amp;rfunc=48&amp;tj=cxvertical_pc_blogpagepc_f" target="_blank" title="盘点经常炒作“不老女神”人设的八大女星，你知道几位？">盘点经常炒作“不老女神”人设的八大女星，你知道几位？</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1420555367" class="SG_linkb" target="_blank">代军哥哥</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_683c082b0102z3r2.html#cre=blogpagepc&amp;mod=f&amp;loc=4&amp;r=0&amp;rfunc=48&amp;tj=cxvertical_pc_blogpagepc_f" target="_blank" title="4-1打哭日本伊藤美诚，孙颖莎冲奥运2金，刘国梁最看重她的大心脏">4-1打哭日本伊藤美诚，孙颖莎冲奥运2金，刘国梁最看重她的大心脏</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1748764715" class="SG_linkb" target="_blank">柳号</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_4694741f0102zsxe.html#cre=blogpagepc&amp;mod=f&amp;loc=5&amp;r=0&amp;rfunc=48&amp;tj=cxvertical_pc_blogpagepc_f" target="_blank" title="黄轩倪妮合演情侣太养眼了！俊男美女超级惊艳">黄轩倪妮合演情侣太养眼了！俊男美女超级惊艳</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1184134175" class="SG_linkb" target="_blank">释凡影视</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_683c082b0102z3r3.html#cre=blogpagepc&amp;mod=f&amp;loc=6&amp;r=0&amp;rfunc=48&amp;tj=cxvertical_pc_blogpagepc_f" target="_blank" title="意大利6连胜剑指冠军！点球5-3胜西班牙晋级决赛，1将功过抵消">意大利6连胜剑指冠军！点球5-3胜西班牙晋级决赛，1将功过抵消</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1748764715" class="SG_linkb" target="_blank">柳号</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_4d5cbf220102z4nk.html#cre=blogpagepc&amp;mod=f&amp;loc=7&amp;r=0&amp;rfunc=48&amp;tj=cxvertical_pc_blogpagepc_f" target="_blank" title="温碧霞穿抹胸长裙气质优雅妩媚迷人（组图）">温碧霞穿抹胸长裙气质优雅妩媚迷人（组图）</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1297923874" class="SG_linkb" target="_blank">苗禺哥</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_6479dc5b0102ymep.html#cre=blogpagepc&amp;mod=f&amp;loc=8&amp;r=0&amp;rfunc=48&amp;tj=cxvertical_pc_blogpagepc_f" target="_blank" title="今日！cctv5不转，这2大平台直播nba总决赛，太阳PK雄鹿力争首胜">今日！cctv5不转，这2大平台直播nba总决赛，太阳PK雄鹿力争首胜</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1685707867" class="SG_linkb" target="_blank">晚池</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_4694741f0102zsxb.html#cre=blogpagepc&amp;mod=f&amp;loc=9&amp;r=0&amp;rfunc=48&amp;tj=cxvertical_pc_blogpagepc_f" target="_blank" title="王志文朱一龙惊艳朱珠销魂惨死《叛逆者》凭啥火到台湾">王志文朱一龙惊艳朱珠销魂惨死《叛逆者》凭啥火到台湾</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1184134175" class="SG_linkb" target="_blank">释凡影视</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_6479dc5b0102ymeo.html#cre=blogpagepc&amp;mod=f&amp;loc=10&amp;r=0&amp;rfunc=48&amp;tj=cxvertical_pc_blogpagepc_f" target="_blank" title="欧洲杯半决赛，意大利男足vs西班牙首发出炉！cctv5等5大平台直播">欧洲杯半决赛，意大利男足vs西班牙首发出炉！cctv5等5大平台直播</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1685707867" class="SG_linkb" target="_blank">晚池</a></p></li><li class="SG_j_linedot1"><p class="atcTitCell_tit SG_dot"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/s/blog_54abf4670102zifi.html#cre=blogpagepc&amp;mod=f&amp;loc=11&amp;r=0&amp;rfunc=48&amp;tj=cxvertical_pc_blogpagepc_f" target="_blank" title="谢娜侄子692分考上清华，身高1米95超帅气，网友抢着介绍女朋友">谢娜侄子692分考上清华，身高1米95超帅气，网友抢着介绍女朋友</a></p><p class="atcTitCell_nm"><a suda-uatrack="key=blog_xg&amp;value=h_blogxg" href="http://blog.sina.com.cn/u/1420555367" class="SG_linkb" target="_blank">代军哥哥</a></p></li></ul>
+    <div class="atcTit_more"><span class="SG_more"><a href="http://blog.sina.com.cn/" target="_blank">更多&gt;&gt;</a></span></div></div>    </div>
+    <div class="SG_connFoot"></div>
+  </div><ins class="sinaads" data-ad-pdps="PDPS000000055124" style="display:block;"></ins><div class="SG_conn"><!--博客左侧推荐商讯210*220按钮(扶翼) Start--><ins class="sinaads" data-ad-pdps="PDPS000000057669"></ins><script>(sinaads = window.sinaads || []).push({})</script><!--博客左侧推荐商讯210*220按钮(扶翼) End—></div>--></div>
+<div id="module_904_top_ad"></div>
+<ins class="sinaads" data-ad-pdps="PDPS000000033239" style="display:block;"></ins><div id="notAe" class="SG_conn"><ins class="sinaads" data-ad-pdps="593E0A43A6FE" style="display:block;"></ins></div><div class="SG_conn " id="module_904">
+<div class="SG_connHead">
+<span class="title">推荐博文</span>
+</div>
+<div class="SG_connBody ">
+	<div class="atcTitList relaList">		<ul class="">
+					</ul>
+		<div id="atcPicList"><!--[346,152,102] published at 2019-05-06 09:21:09 from #106 by system-->
+ <script language="javascript">document.domain="sina.com.cn";</script>
+
+<div class="relaPic SG_j_linedot1"> 
+	<ul>
+			<li>
+		<p><a href="http://blog.sina.com.cn/s/blog_4fd7d49f01031736.html?tj=1" target="_blank"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/hr0d-hmivixn3910563.jpg" width="80" height="58" alt="难得一见的蜀山之王" border="0"></a></p>
+		<p><a href="http://blog.sina.com.cn/s/blog_4fd7d49f01031736.html?tj=1" target="_blank">难得一见的蜀山之王</a></p>
+	</li>
+	<li>
+		<p><a href="http://blog.sina.com.cn/s/blog_67afa3290102ymvw.html?tj=1" target="_blank"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/wK0d-hnyuqhi2917867.jpg" width="80" height="58" alt="走过秋天的湖光山色" border="0"></a></p>
+		<p><a href="http://blog.sina.com.cn/s/blog_67afa3290102ymvw.html?tj=1" target="_blank">走过秋天的湖光山色</a></p>
+	</li>
+	<li>
+		<p><a href="http://blog.sina.com.cn/s/blog_4fe4dc6f0102zd2m.html?tj=1" target="_blank"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/dKip-hmhhnqt0930465.jpg" width="80" height="58" alt="女人要学会挖掘自己的美丽" border="0"></a></p>
+		<p><a href="http://blog.sina.com.cn/s/blog_4fe4dc6f0102zd2m.html?tj=1" target="_blank">女人要学会挖掘自己的美丽</a></p>
+	</li>
+	<li>
+		<p><a href="http://blog.sina.com.cn/s/blog_67083fc70102ywo3.html?tj=1" target="_blank"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/W8O6-hmhhnqt0924181.jpg" width="80" height="58" alt="爱情的样子" border="0"></a></p>
+		<p><a href="http://blog.sina.com.cn/s/blog_67083fc70102ywo3.html?tj=1" target="_blank">爱情的样子</a></p>
+	</li>
+	<li>
+		<p><a href="http://blog.sina.com.cn/s/blog_774dd74f0102z390.html?tj=1" target="_blank"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/GFI7-hmhswin4655514.jpg" width="80" height="58" alt="令少女魂牵梦绕的婚纱秀" border="0"></a></p>
+		<p><a href="http://blog.sina.com.cn/s/blog_774dd74f0102z390.html?tj=1" target="_blank">令少女魂牵梦绕的婚纱秀</a></p>
+	</li>
+	<li>
+		<p><a href="http://blog.sina.com.cn/s/blog_4c6b4ffa0102ydqv.html?tj=1" target="_blank"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/-sEx-hnyuqhi2814642.jpg" width="80" height="58" alt="作业太少的澳洲儿童" border="0"></a></p>
+		<p><a href="http://blog.sina.com.cn/s/blog_4c6b4ffa0102ydqv.html?tj=1" target="_blank">作业太少的澳洲儿童</a></p>
+	</li>
+
+	</ul>
+	<div class="clearfix"></div>
+</div>
+</div>
+	<div class="atcTit_more"><span class="SG_more"><a target="_blank" href="http://blog.sina.com.cn/">查看更多</a>&gt;&gt;</span></div></div></div>
+<div class="SG_connFoot"></div>
+</div>
+        <div class="SG_conn" id="module_47"><div class="SG_connHead">
+                <span class="title" comp_title="谁看过这篇博文">谁看过这篇博文</span>
+                                <span class="edit"></span>
+            </div>
+            <div class="SG_connBody"><ul class="ad_ptlist"><li onmouseover="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;&#39;;}" onmouseout="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;none&#39;;}"><span class="pt_imgs"><img class="SG_icon SG_icon35" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="ddltxj" align="absmiddle"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1457663423" target="_blank" title="ddltxj">ddltxj</a></span><span class="pt_tms">3月10日</span></li><li onmouseover="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;&#39;;}" onmouseout="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;none&#39;;}"><span class="pt_imgs"><img class="SG_icon SG_icon35" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="如雨似泣" align="absmiddle"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1704905451" target="_blank" title="如雨似泣">如雨似泣</a></span><span class="pt_tms">11月23日</span></li><li onmouseover="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;&#39;;}" onmouseout="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;none&#39;;}"><span class="pt_imgs"><img class="SG_icon SG_icon35" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="栖川山葵家" align="absmiddle"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/5519393179" target="_blank" title="栖川山葵家">栖川山葵家</a></span><span class="pt_tms">11月7日</span></li><li onmouseover="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;&#39;;}" onmouseout="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;none&#39;;}"><span class="pt_imgs"><img class="SG_icon SG_icon35" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="chenyu_wushu" align="absmiddle"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1268545822" target="_blank" title="chenyu_wushu">chenyu_wu…</a></span><span class="pt_tms">7月10日</span></li><li onmouseover="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;&#39;;}" onmouseout="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;none&#39;;}"><span class="pt_imgs"><img class="SG_icon SG_icon35" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="zyftig" align="absmiddle"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1570617592" target="_blank" title="zyftig">zyftig</a></span><span class="pt_tms">7月1日</span></li><li onmouseover="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;&#39;;}" onmouseout="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;none&#39;;}"><span class="pt_imgs"><img class="SG_icon SG_icon35" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="13164602219" align="absmiddle"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1033563127" target="_blank" title="13164602219">13164602219</a></span><span class="pt_tms">5月28日</span></li><li onmouseover="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;&#39;;}" onmouseout="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;none&#39;;}"><span class="pt_imgs"><img class="SG_icon SG_icon35" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="bbbsl" align="absmiddle"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1402293510" target="_blank" title="bbbsl">bbbsl</a></span><span class="pt_tms">5月12日</span></li><li onmouseover="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;&#39;;}" onmouseout="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;none&#39;;}"><span class="pt_imgs"><img class="SG_icon SG_icon35" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="鱼鱼酱的一生" align="absmiddle"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/3889185193" target="_blank" title="鱼鱼酱的一生">鱼鱼酱的…</a></span><span class="pt_tms">5月8日</span></li><li onmouseover="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;&#39;;}" onmouseout="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;none&#39;;}"><span class="pt_imgs"><img class="SG_icon SG_icon35" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="finalday81" align="absmiddle"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1736214047" target="_blank" title="finalday81">finalday81</a></span><span class="pt_tms">4月14日</span></li><li onmouseover="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;&#39;;}" onmouseout="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;none&#39;;}"><span class="pt_imgs"><img class="SG_icon SG_icon35" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="wxb369" align="absmiddle"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1425187480" target="_blank" title="wxb369">wxb369</a></span><span class="pt_tms">2月27日</span></li><li onmouseover="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;&#39;;}" onmouseout="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;none&#39;;}"><span class="pt_imgs"><img class="SG_icon SG_icon35" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="afatpig" align="absmiddle"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/3234940575" target="_blank" title="afatpig">afatpig</a></span><span class="pt_tms">1月28日</span></li><li onmouseover="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;&#39;;}" onmouseout="if(this.childNodes[2].className==&#39;del&#39;){this.childNodes[2].style.display=&#39;none&#39;;}"><span class="pt_imgs"><img class="SG_icon SG_icon35" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="pak14" align="absmiddle"></span><span class="pt_nms"><a suda-uatrack="key=blog_article&amp;value=h_article51" href="http://blog.sina.com.cn/u/1532905711" target="_blank" title="pak14">pak14</a></span><span class="pt_tms">1月15日</span></li></ul><div class="moreLink" style="padding-top:0;"></div></div>
+            <div class="SG_connFoot"></div>
+                  </div></div>
+	<!--第一列end-->
+	
+	<!--第二列start-->
+	<div id="column_2" class="SG_colW73">	
+<div id="module_920" class="SG_conn">
+	<div class="SG_connHead">
+	    <span comp_title="正文" class="title">正文</span>
+	    <span class="edit"><span id="articleFontManage" class="fontSize">字体大小：<a href="javascript:;" onclick="changeFontSize(2);return false;">大</a> <strong>中</strong> <a href="javascript:;" onclick="changeFontSize(0);return false;">小</a></span></span>
+	</div>
+    <div class="SG_connBody" id="module_920_SG_connBody">
+<!--博文正文 begin -->
+	<div id="articlebody" class="artical" favmd5="{&quot;9cd8465f0102uy5d&quot;:&quot;57353ff2acfcf2f8f5d529314accd3ce&quot;}">
+		<div class="articalTitle"> 
+			
+								<h2 id="t_9cd8465f0102uy5d" class="titName SG_txta">利用Crypto&nbsp;API实现Hash算法（补充SHA256、SHA512）</h2>
+			
+					<span class="img2">
+				<img width="15" height="15" align="absmiddle" title="此博文包含图片" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" class="SG_icon SG_icon18">	
+			</span>
+					<span class="time SG_txtc">(2014-08-01 20:47:44)</span><div class="turnBoxzz"><a href="javascript:;" class="SG_aBtn SG_aBtn_ico SG_turn" action-type="reblog" action-data="{srcBlog:1, blogId:&#39;9cd8465f0102uy5d&#39;}"><cite><img class="SG_icon SG_icon111" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" align="absmiddle">转载<em class="arrow">▼</em></cite></a></div>		</div>
+		<div class="articalTag" id="sina_keyword_ad_area">
+			<table>
+				<tbody><tr>
+					<td class="blog_tag">
+					<script>
+					var $tag='sha256,cryptoapi,哈希算法,md5';
+					var $tag_code='68f81bbf69e06e61076c5484d7fd33c4';
+					var $r_quote_bligid='9cd8465f0102uy5d';
+					var $worldcup='0';
+					var $worldcupball='0';
+					</script>
+											<span class="SG_txtb">标签：</span>
+																				<!--<h3><a href="" target="_blank"></a></h3>-->
+                            <h3>sha256</h3>
+																				<!--<h3><a href="" target="_blank"></a></h3>-->
+                            <h3>cryptoapi</h3>
+																				<!--<h3><a href="" target="_blank"></a></h3>-->
+                            <h3>哈希算法</h3>
+																				<!--<h3><a href="" target="_blank"></a></h3>-->
+                            <h3>md5</h3>
+																</td>
+					<td class="blog_class">
+											<span class="SG_txtb">分类：</span>
+						<a target="_blank" href="http://blog.sina.com.cn/s/articlelist_2631419487_3_1.html">Ｃ＆＆ＣＰＰ</a>
+										</td>
+				</tr>
+			</tbody></table>
+		</div>
+						<!-- 正文开始 -->
+		<div id="sina_keyword_ad_area2" class="articalContent   newfont_family">
+			<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+最近有需要计算SHA256的需求，于是在原有的基础上做了修改，唯一需要注意的地方就是在调用CryptAcquireContext需要修改参数如下：</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+CryptAcquireContext(&amp;hCryptProv, NULL, <strong>NULL</strong>,
+<strong>PROV_RSA_AES</strong>, CRYPT_VERIFYCONTEXT)</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+更新之后的效果图：</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> <a href="http://album.sina.com.cn/pic/002S5apNzy713zi7oEN09" target="_blank"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/002S5apNzy713zi7oEN09&amp;690" real_src="http://s10.sinaimg.cn/mw690/002S5apNzy713zi7oEN09&amp;690" width="637" height="433" name="image_operate_4471461129299316" alt="利用Crypto &lt;wbr&gt;API实现Hash算法（补充SHA256、SHA512）" title="利用Crypto &lt;wbr&gt;API实现Hash算法（补充SHA256、SHA512）"></a></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+--------------------------------------------------------------------------------------</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+之前偶尔看到了一篇论文里面提到微软的</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">Crypto
+API</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">库，可以实现加解密、</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">Hash</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">运算、密钥交换、证书认证等功能，于是就萌生了用该库实现</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">DES</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">、</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">AES</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">、</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">RSA</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">、</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">MD5</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">等算法的想法（以前都是人工实现，太麻烦了</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">……</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">）。</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+这里先介绍各种</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">Hash</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">算法的实现方法：</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">Step0</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">：</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+环境配置，我这里用的是</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">vs2010</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">，貌似只需要添加</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">#include</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+头文件和</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">#pragma
+comment(lib, "Crypt32.lib")</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">代码就可以使用这些</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">API</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">了，不需要进行额外的工程设置。</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">&nbsp;<wbr></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">Step1</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">：</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+首先我们先看看这个函数，</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-font-kerning: 0pt">CryptHashData</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">（看起来很靠谱的样子，其实只算一个中间函数吧。）</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+<span style="CoLor: black; mso-font-kerning: 0pt">BOOL WINAPI
+CryptHashData(<a name="OLE_LINK3">HCRYPTHASH</a>
+hHash,</span></span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 147pt; TexT-AUTospACe: ; TexT-inDenT: 25.55pt; mso-layout-grid-align: none; mso-char-indent-count: 2.12" align="left"><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+BYTE *pbData,<span style="mso-tab-count: 1">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+<span style="mso-spacerun: yes">&nbsp;<wbr>&nbsp;<wbr></span>
+//</span></b><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">带哈希数据首地址</span></b></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 136.5pt; TexT-AUTospACe: ; TexT-inDenT: 36.15pt; mso-layout-grid-align: none; mso-char-indent-count: 3.0" align="left"><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+DWORD dwDataLen,//</span></b><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">待哈希数据长度</span></b></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 136.5pt; TexT-AUTospACe: ; TexT-inDenT: 36pt; mso-layout-grid-align: none; mso-char-indent-count: 3.0" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+DWORD dwFlags</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 136.5pt; TexT-AUTospACe: ; TexT-inDenT: 36pt; mso-layout-grid-align: none; mso-char-indent-count: 3.0" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+);</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+参数：</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+hHash</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">哈希对象句柄</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+pbData</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">指向要加入到哈希对象的数据指针</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+dwDataLen</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">数据长度</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+dwFlags</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">标志</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+CRYPT_USERDATA</span> <span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+所有微软</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+都忽略此参数。所有其他</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+都不能忽略此参数，如果置此参数，</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+提示用户直接传入数据。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+函数功能：</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+此函数把一段数据加入到指定的哈希对象中去。</span></b></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+e.g.</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+CryptHashData(hCryptHash, (BYTE*)hash_data, data_len,
+0);</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+&nbsp;<wbr></span></b></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+好吧，为了调用这个函数，我们需要一个</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">HCRYPTHASH</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">类型的哈希句柄，那么这个句柄怎么来呢</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">……</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+&nbsp;<wbr></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+Step2:</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+<span style="mso-tab-count: 1">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+不难发现，生成哈希句柄的函数为</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CryptCreateHash,</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">同样看看他的参数说明：</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+BOOL WINAPI CryptCreateHash(HCRYPTPROV hProv,</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 168pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+ALG_ID Algid, //</span></b><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">想使用的哈希算法</span></b></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 168pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+HCRYPTKEY hKey,</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 168pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+DWORD dwFlags,</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 189pt; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+HCRYPTHASH *phHash</span></b></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 189pt; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+//</span></b><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">获得的哈希句柄</span></b></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 168pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+);</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+参数：</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+hProv</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]CSP</span> <span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+句柄</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+Algid</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">哈希算法的标示符。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+hKey</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]</span></b><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">如果哈希算法是密钥哈希，如</span></b><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">HMAC</span></b><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">、</span></b><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">MAC</span></b>
+<b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+算法，就用此密钥句柄传递密钥。对于非密钥算法，此参数为</span></b><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">NULL</span></b><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">。</span></b></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+dwFlags</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">保留。必须为</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">0</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+phHash</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[out]</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">哈希对象的句柄。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+功能：</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+此函数初始化哈希数据流。它创建并返回了一个</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+哈希对象的句柄。此句柄由</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CryptHashData</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+和</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CryptHashSessionKey</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+来调用。</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+e.g.</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+CryptCreateHash(hCryptProv,CALG_MD5,0,0,&amp;hCryptHash)</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+&nbsp;<wbr></span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+<span style="mso-tab-count: 1">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 新宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+这里可以通过</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">Algid</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 新宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">参数设置你需要的哈希算法对应的预编译常量，就可以获取哈希句柄。但是</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">……</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 新宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">获取哈希句柄需要传入一个</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">CSP</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 新宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">句柄（密钥容器），所以需要一个获取该句柄的函数。</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+&nbsp;<wbr></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">Step3:</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+直接利用函数</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CryptAcquireContext</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">就可以获取</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">HCRYPTPROV</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">类型的密钥容器句柄了，该函数参数声明如下：</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+<span style="mso-tab-count: 1">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+BOOL WINAPI CryptAcquireContext(<b style="mso-bidi-font-weight: normal">HCRYPTPROV
+*phProv,//</b></span><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">返回的</span></b><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span></b><b style="mso-bidi-font-weight: normal"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">句柄</span></b></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 168pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+LPCTSTR pszContainer,</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 168pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+LPCTSTR pszProvider,</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 168pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+DWORD dwProvType,</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 168pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+DWORD dwFlags</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 168pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+);</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+参数：</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+phProv</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[out] CSP</span> <span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+句柄指针</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+pszContainer</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]</span> <span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+密钥容器名称，</span> <span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+指向密钥容器的字符串指针。如果</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">dwFlags</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+为</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+CRYPT_VERIFYCONTEXT</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">，</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">pszContainer</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+必须为</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">NULL</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+pszProvider</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">指向</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+名称的字符串指针。如果为</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">NULL</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">，就使用却省的</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+dwProvType</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]CSP</span> <span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+类型。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+dwFlags</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">标志。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+CRYPT_VERIFYCONTEXT</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+此选项指出应用程序不需要使用公钥</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">/</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">私钥对，如程序只执行哈希和对称加密。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+只有程序需要创建签名和解密消息时才需要访问私钥。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+CRYPT_NEWKEYSET</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+使用指定的密钥容器名称创建一个新的密钥容器。如果</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">pszContainer</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+为</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">NULL</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">，</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+密钥容器就使用却省的名称创建。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+CRYPT_MACHINE_KEYSET</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+由此标志创建的密钥容器只能由创建者本人或有系统管理员身份的人使用。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+CRYPT_DELETEKEYSET</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+删除由</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">pszContainer</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+指定的密钥容器。如果</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">pszContainer</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+为</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">NULL</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">，却省名称</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+的容器就会被删除。此容器里的所有密钥对也会被删除。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+CRYPT_SLIENT</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+应用程序要求</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+不显示任何用户界面。</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+功能：</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+这个函数是用来取得指定</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+密钥容器句柄，以后的任何加密操作就是针对此</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+句</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+柄而言。函数首先查找由</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">dwProvType</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+和</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">pszProvider</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+指定的</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">，如果找到了</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">，函数就查找由此</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+指定的密钥容器。由适当的</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">dwFlags</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+标志，这个函数就可以创建和销毁密钥容器，如果不要求访问私钥的话，也可以提供对</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">CSP</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+临时密钥容器的访问。</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+e.g.</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+CryptAcquireContext(&amp;hCryptProv, NULL, MS_DEF_PROV,
+PROV_RSA_FULL, CRYPT_VERIFYCONTEXT)</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">&nbsp;<wbr></span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+这样</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">……</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">如果从第三步出发到第一步，我们已经成功地把哈希结果添加到了哈希句柄中，考虑到</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-font-kerning: 0pt">CryptHashData</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">并没有直接返回哈希结果，我们需要使用</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">CryptGetHashParam</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 新宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">取出哈希句柄中的哈希结果。</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+&nbsp;<wbr></span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+Step4</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 新宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">：</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+<span style="mso-tab-count: 1">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+CryptGetHashParam</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 新宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">函数可以通过哈希句柄，获得刚刚哈希出来的结果，其声明如下：</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+<span style="mso-tab-count: 1">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+BOOL WINAPI CryptGetHashParam(HCRYPTHASH
+hHash,//</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">刚刚的哈希句柄</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 189pt; TexT-AUTospACe: ; TexT-inDenT: 24pt; mso-layout-grid-align: none; mso-char-indent-count: 2.0; mso-para-margin-left: 18.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+DWORD dwParam,//</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">你需要的结果类型</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 189pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none; mso-para-margin-left: 18.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+BYTE *pbData,//</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">存储结果的缓冲区指针</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 189pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none; mso-para-margin-left: 18.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+DWORD *pdwDataLen,</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 189pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none; mso-para-margin-left: 18.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+//</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">最大缓冲区长度</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 189pt; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none; mso-para-margin-left: 18.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+DWORD dwFlags</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 210pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 20.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+);</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+参数：</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+hHash</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">哈希对象的句柄</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+dwParam</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+[in]</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">查询类型。可以是下列：</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+HP_ALGID</span> <span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+哈希算法</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+HP_HASHSIZE</span> <span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+哈希值长度</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+HP_HASHVAL</span> <span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+哈希值，由</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">hHash</span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+指定的哈希值或者消息哈希</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+功能：</span></p>
+<p style="TexT-ALiGn: left; MArGin-LeFT: 21pt; TexT-AUTospACe: ; mso-layout-grid-align: none; mso-para-margin-left: 2.0gd" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+此函数得到指定哈希对象的数据。</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+<span style="mso-tab-count: 1">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+e.g.</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+<span style="mso-tab-count: 1">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+CryptGetHashParam(hCryptHash, HP_HASHVAL, (BYTE*)hash_data,
+&amp;hash_len, 0)</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+&nbsp;<wbr></span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">
+<span style="mso-tab-count: 1">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 新宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">
+这里要强调几个事情：</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 新宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt; mso-no-proof: yes">
+①</span> <span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">
+pdwDataLen</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">参数是输入输出的，特别要注意它的初始值，一旦小于哈希值长度，将返回莫名其妙的结果。用</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">GetLastError</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">可以获取错误代码</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; CoLor: black; mso-font-kerning: 0pt">234</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; CoLor: black; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">，即</span><span style="FonT-siZe: 12pt; mso-bidi-font-size: 11.0pt">ERROR_MORE_DATA</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">。</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">
+与最终结果对比上图：</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; TexT-inDenT: 21pt; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; mso-bidi-font-size: 11.0pt"><a href="http://album.sina.com.cn/pic/002S5apNzy6KUpe6pwud2" target="_blank"><img name="image_operate_66921406898102504" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" real_src="http://s3.sinaimg.cn/mw690/002S5apNzy6KUpe6pwud2&amp;690" width="276" height="112" alt="利用Crypto &lt;wbr&gt;API实现Hash算法（补充SHA256、SHA512）" title="利用Crypto &lt;wbr&gt;API实现Hash算法（补充SHA256、SHA512）"></a></span></p>
+<p style="TexT-ALiGn: center; TexT-AUTospACe: ; mso-layout-grid-align: none" align="center">&nbsp;<wbr></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-no-proof: yes; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">
+②</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">对以上四个函数最好都进行返回值判断，如果返回值为假，表示执行出了问题，这时可以用</span><span style="FonT-siZe: 12pt; mso-bidi-font-size: 11.0pt">GetLastError</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">获取错误信息，查找</span><span style="FonT-siZe: 12pt; mso-bidi-font-size: 11.0pt">Error
+Code</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">搞清楚错误原因，不然会有莫名其妙的结果……</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-no-proof: yes; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">
+③</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">由于获取的哈希结果是</span><span style="FonT-siZe: 12pt; mso-bidi-font-size: 11.0pt">BYTE</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">数组，以</span><span style="FonT-siZe: 12pt; mso-bidi-font-size: 11.0pt">MD5
+32</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">位哈希为例，如果直接以字符串形式或者</span><span style="FonT-siZe: 12pt; mso-bidi-font-size: 11.0pt">%x</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">输出都会有问题。因为是</span><span style="FonT-siZe: 12pt; mso-bidi-font-size: 11.0pt">4bit</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">对应一个</span><span style="FonT-siZe: 12pt; mso-bidi-font-size: 11.0pt">Hex</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: Calibri; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-bidi-font-size: 11.0pt; mso-ascii-theme-font: minor-latin; mso-hansi-theme-font: minor-latin">码，所以要进行一下转换，否则：</span></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left">&nbsp;<wbr></p>
+<p style="TexT-inDenT: 21pt"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+……直接输出字符串</span></p>
+<p style="TexT-inDenT: 21pt"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><a href="http://album.sina.com.cn/pic/002S5apNzy6KUq3TPkmf2" target="_blank"><font face="宋体"><img name="image_operate_521406898187601" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" real_src="http://s3.sinaimg.cn/mw690/002S5apNzy6KUq3TPkmf2&amp;690" width="640" height="115" alt="利用Crypto &lt;wbr&gt;API实现Hash算法（补充SHA256、SHA512）" title="利用Crypto &lt;wbr&gt;API实现Hash算法（补充SHA256、SHA512）"></font></a></span></p>
+<p>&nbsp;<wbr></p>
+<p style="TexT-inDenT: 21pt"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+……直接十六进制输出</span></p>
+<p style="TexT-inDenT: 21pt"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><a href="http://album.sina.com.cn/pic/002S5apNzy6KUq5Ezgr57" target="_blank"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" real_src="http://s8.sinaimg.cn/mw690/002S5apNzy6KUq5Ezgr57&amp;690" width="510" height="66" name="image_operate_28201461129294954" alt="利用Crypto &lt;wbr&gt;API实现Hash算法（补充SHA256、SHA512）" title="利用Crypto &lt;wbr&gt;API实现Hash算法（补充SHA256、SHA512）"></a></span></p>
+<p style="TexT-inDenT: 21pt"><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+好吧，那就处理一下吧……</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">&nbsp;<wbr></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">Step5:</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+分别取一个</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">BYTE</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">的前四位和后四位，然后放到</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">int</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">里面，再用</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">16</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">进制输出即可，这里使用了一个</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">itoa</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">做</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">int</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">到</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">hex</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">字串的转换。</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+代码如下：</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+<span style="CoLor: blue">i</span>nt hash_bit =
+hash_data[i];</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+int first = (hash_bit &amp; 0xf0) &gt;&gt; 4; //</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">取前四位</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+int second = hash_bit &amp; 0x0f; <span style="mso-spacerun: yes">&nbsp;<wbr>&nbsp;<wbr></span>
+//</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">取后四位</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+char tmp[10];</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+itoa(first, tmp, 16);<span style="mso-tab-count: 1">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+cout &lt;&lt; tmp;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+itoa(second, tmp, 16);<span style="mso-tab-count: 1">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+cout &lt;&lt; tmp;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+这样就可以获得正确的</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">32</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">位结果了，对应</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">16</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">位结果取中间</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">16</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">位即可，如</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">”admin”:21232f297a57a5a743894a0e<wbr>4a801fc3</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">，</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">16</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">位结果为</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">7a57a5a743894a0e</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">。</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+最后试试实现一些其他的哈希算法吧：</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+<a href="http://album.sina.com.cn/pic/002S5apNzy6KUq9UuAYfc" target="_blank"><img name="image_operate_26371406898201029" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" real_src="http://s13.sinaimg.cn/mw690/002S5apNzy6KUq9UuAYfc&amp;690" width="597" height="368" alt="利用Crypto &lt;wbr&gt;API实现Hash算法（补充SHA256、SHA512）" title="利用Crypto &lt;wbr&gt;API实现Hash算法（补充SHA256、SHA512）"></a></span></p>
+<p style="TexT-ALiGn: center" align="center">&nbsp;<wbr></p>
+<p style="TexT-ALiGn: left; TexT-AUTospACe: ; mso-layout-grid-align: none" align="left"><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+P.S.</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">最后不要忘记使用</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">CryptDestroyHash</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 新宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">和</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">CryptReleaseContext</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 新宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">释放哈希句柄和</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;; mso-fareast-font-family: 新宋体; mso-font-kerning: 0pt">CSP</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 新宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;; mso-font-kerning: 0pt">句柄。</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">&nbsp;<wbr></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">
+核心代码：</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">bool
+CCryptoApiHashDlg::GetHash(int hash_type, CString&amp; hash_result,
+static CString hash_message)</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">{</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+HCRYPTPROV hCryptProv;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+HCRYPTHASH hCryptHash;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">&nbsp;<wbr></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+if (!CryptAcquireContext(&amp;hCryptProv, NULL, MS_DEF_PROV,
+PROV_RSA_FULL, CRYPT_VERIFYCONTEXT))</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+{</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+int e = GetLastError();</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+CString str;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+str.Format("</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">创建</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">CSP</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">容器出错！错误代码为</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">:%d</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">！</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">",
+e);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+MessageBox(str, "</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">出错啦</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">!",
+MB_OK | MB_ICONERROR);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+return false;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+}<span style="mso-tab-count: 1">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+if (!CryptCreateHash(hCryptProv, hash_type, 0, 0,
+&amp;hCryptHash))</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+{</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+int e = GetLastError();</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+CString str;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+str.Format("</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">创建哈希句柄出错！错误代码为</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">:%d</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">！</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">",
+e);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+MessageBox(str, "</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">出错啦</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">!",
+MB_OK | MB_ICONERROR);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+return false;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+}</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">&nbsp;<wbr></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+if (!CryptHashData(hCryptHash, (BYTE*)hash_message.GetBuffer(),
+hash_message.GetLength(), 0))</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+{</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+int e = GetLastError();</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+CString str;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+str.Format("</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">计算哈希值出错！错误代码为</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">:%d</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">！</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">",
+e);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+MessageBox(str, "</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">出错啦</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">!",
+MB_OK | MB_ICONERROR);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+return false;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+}</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">&nbsp;<wbr></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+char hash_data[512];</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+DWORD hash_len = 512;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+if (!CryptGetHashParam(hCryptHash, HP_HASHVAL, (BYTE*)hash_data,
+&amp;hash_len, 0))</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+{</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+int e = GetLastError();</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+CString str;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+str.Format("</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">获取哈希值出错！错误代码为</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">:%d</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">！</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">",
+e);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+MessageBox(str, "</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: 宋体; mso-ascii-font-family: &#39;Times new roman&#39;; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: &#39;Times new roman&#39;; mso-bidi-font-family: &#39;Times new roman&#39;">出错啦</span><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">!",
+MB_OK | MB_ICONERROR);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+return false;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+}</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+char hash_hex[512];</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+for (int i=0; i&lt;=hash_len-1; i++)</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+{</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+int hash_bit = hash_data[i];</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+int first = (hash_bit &amp; 0xf0) &gt;&gt; 4;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+int second = hash_bit &amp; 0x0f;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+char tmp[2];</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+itoa(first, tmp, 16);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+hash_hex[i*2] = tmp[0];</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+itoa(second, tmp, 16);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 2">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+hash_hex[i*2+1] = tmp[0];</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+}</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+hash_hex[hash_len*2] = '\0';</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">&nbsp;<wbr></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+hash_result.Format("%s", hash_hex);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+CryptDestroyHash(hCryptHash);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+CryptReleaseContext(hCryptProv, NULL);</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">&nbsp;<wbr></span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;"><span style="mso-tab-count: 1">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+return true;</span></p>
+<p><span style="FonT-siZe: 12pt; FonT-FAMiLY: &#39;Times new roman&#39;,&#39;serif&#39;">}</span></p>							
+		</div>
+						<!-- 正文结束 -->
+		<div id="share" class="shareUp nor">
+        	<div class="share SG_txtb clearfix">
+			<span class="share-title">分享：</span> 
+			<div class="bshare-custom" style="display:inline;margin-left:5px;">
+			<div class="share-pannel clearfix"><a class="bshare-sinaminiblog" target="__blank" title="分享到新浪微博" href="https://service.weibo.com/share/share.php?appkey=&amp;title=%E5%88%A9%E7%94%A8Crypto%20API%E5%AE%9E%E7%8E%B0Hash%E7%AE%97%E6%B3%95%EF%BC%88%E8%A1%A5%E5%85%85SHA256%E3%80%81SHA512%EF%BC%89@%E6%96%B0%E6%B5%AA%E5%8D%9A%E5%AE%A2&amp;url=http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html&amp;pic=http://s3.sinaimg.cn/middle/002S5apNzy6KUpe6pwud2&amp;amp;690"></a><a class="bshare-qzone" target="__blank" title="分享到QQ空间" href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http%3A%2F%2Fblog.sina.com.cn%2Fs%2Fblog_9cd8465f0102uy5d.html&amp;title=%E5%88%A9%E7%94%A8Crypto%20API%E5%AE%9E%E7%8E%B0Hash%E7%AE%97%E6%B3%95%EF%BC%88%E8%A1%A5%E5%85%85SHA256%E3%80%81SHA512%EF%BC%89@%E6%96%B0%E6%B5%AA%E5%8D%9A%E5%AE%A2&amp;pics=http://s3.sinaimg.cn/middle/002S5apNzy6KUpe6pwud2&amp;amp;690&amp;summary=&amp;desc=%20%20%20%20%20%E6%9C%80%E8%BF%91%E6%9C%89%E9%9C%80%E8%A6%81%E8%AE%A1%E7%AE%97SHA256%E7%9A%84%E9%9C%80%E6%B1%82%EF%BC%8C%E4%BA%8E%E6%98%AF%E5%9C%A8%E5%8E%9F%E6%9C%89%E7%9A%84%E5%9F%BA%E7%A1%80%E4%B8%8A%E5%81%9A%E4%BA%86%E4%BF%AE%E6%94%B9%EF%BC%8C%E5%94%AF%E4%B8%80%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9%E5%B0%B1%E6%98%AF%E5%9C%A8%E8%B0%83%E7%94%A8CryptAcqu...%20%20(%E6%9D%A5%E8%87%AA%20@%E5%A4%B4%E6%9D%A1%E5%8D%9A%E5%AE%A2)"></a><a class="bshare-douban" target="__blank" title="分享到豆瓣" href="https://www.douban.com/share/service?image=http://s3.sinaimg.cn/middle/002S5apNzy6KUpe6pwud2&amp;amp;690&amp;href=http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html&amp;name=%E5%88%A9%E7%94%A8Crypto%20API%E5%AE%9E%E7%8E%B0Hash%E7%AE%97%E6%B3%95%EF%BC%88%E8%A1%A5%E5%85%85SHA256%E3%80%81SHA512%EF%BC%89@%E6%96%B0%E6%B5%AA%E5%8D%9A%E5%AE%A2&amp;text=%20%20%20%20%20%E6%9C%80%E8%BF%91%E6%9C%89%E9%9C%80%E8%A6%81%E8%AE%A1%E7%AE%97SHA256%E7%9A%84%E9%9C%80%E6%B1%82%EF%BC%8C%E4%BA%8E%E6%98%AF%E5%9C%A8%E5%8E%9F%E6%9C%89%E7%9A%84%E5%9F%BA%E7%A1%80%E4%B8%8A%E5%81%9A%E4%BA%86%E4%BF%AE%E6%94%B9%EF%BC%8C%E5%94%AF%E4%B8%80%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E5%9C%B0%E6%96%B9%E5%B0%B1%E6%98%AF%E5%9C%A8%E8%B0%83%E7%94%A8CryptAcqu...%20%20(%E6%9D%A5%E8%87%AA%20@%E5%A4%B4%E6%9D%A1%E5%8D%9A%E5%AE%A2)"></a><a class="bshare-weixin" title="分享到微信" href="javascript:void(0);"><div class="weixin-pannel"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/qr"><div class="txt"><p>打开微信“扫一扫”</p><p>打开网页后点击屏幕</p><p>右上角“分享”按钮</p></div></div></a></div></div>
+			</div>
+            <div class="up">
+	        	<div title="喜欢后让更多人看到" id="dbox_9cd8465f0102uy5d" class="upBox upBox_click" style="cursor: pointer;">
+	            	<p ti_title="利用Crypto API实现Hash算法（补充SHA256、SHA512）" id="dbox2_9cd8465f0102uy5d" class="count" mnum="5">5</p>
+	                <p class="link"><img width="15" height="15" align="absmiddle" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" class="SG_icon SG_icon34">喜欢</p>
+	            </div>
+<!--
+                <div class="upBox upBox_add">
+                    <p class="count">0</p>
+                    <p class="link"><img width="20" height="16" align="absmiddle" title="推荐" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" class="SG_icon SG_icon214">赠金笔</p>
+                </div>
+-->
+                                <div class="upBox upBox_add">
+                    <p class="count" id="goldPan-num">0</p>
+                    <p class="link" id="goldPan-give"><img class="SG_icon SG_icon214" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="20" height="16" title="赠金笔" align="absmiddle">赠金笔</p>
+                </div>
+                
+	        </div>
+            <div class="clearit"></div>
+		</div>
+		<div class="articalInfo">
+			<!-- 分享到微博 {$t_blog} -->
+			<div>
+				阅读<span id="r_9cd8465f0102uy5d" class="SG_txtb">(4910)</span><em class="SG_txtb">┊</em> 
+				<a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#commonComment">评论</a> <span id="c_9cd8465f0102uy5d" class="SG_txtb">(0)</span><em class="SG_txtb">┊</em>				<a href="javascript:;" onclick="$articleManage(&#39;9cd8465f0102uy5d&#39;,5);return false;">收藏</a><span id="f_9cd8465f0102uy5d" class="SG_txtb">(0)</span>
+				<em class="SG_txtb">┊</em><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" id="quote_set_sign" onclick="return false ;">转载</a><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" id="z_9cd8465f0102uy5d" onclick="return false ;" class="zznum">(0)</a>				<span id="fn_利用Crypto API实现Hash算法（补充SHA256、SHA512）" class="SG_txtb"></span><em class="SG_txtb">┊</em>
+				<a onclick="return false;" href="javascript:;"><cite id="d1_digg_9cd8465f0102uy5d">喜欢</cite></a><a id="d1_digg_down_9cd8465f0102uy5d" href="javascript:;"><b>▼</b></a>
+									<em class="SG_txtb">┊</em><a href="http://blog.sina.com.cn/main_v5/ria/print.html?blog_id=blog_9cd8465f0102uy5d" target="_blank">打印</a><em class="SG_txtb">┊</em><a id="q_9cd8465f0102uy5d" onclick="report(&#39;9cd8465f0102uy5d&#39;);return false;" href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#">举报/Report</a>
+											</div>
+			<div class="IR">
+				<table>
+					<tbody><tr><!--
+											<th class="SG_txtb" scope="row">已投稿到：</th>
+						<td>
+							<div class="IR_list">
+								<span><img class="SG_icon SG_icon36" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" width="15" height="15" title="排行榜" align="absmiddle" /> <a href="http://blog.sina.com.cn/lm/114/117/day.html" class="SG_linkb" target="_blank">排行榜</a></span>							</div>
+						</td>
+					-->
+					</tr>
+									</tbody></table>
+			</div>
+		</div>
+		<div class="clearit"></div>
+		<div class="blogzz_zzlist borderc" id="blog_quote" style="display:none"><h3><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" onclick="return false" title="关闭" id="ql_close9cd8465f0102uy5d" class="blogzz_closepic SG_floatR"></a>转载列表：</h3>                <ul class="ul_zzlist" id="ql_content9cd8465f0102uy5d">                </ul>				<ul style="display:none"><li id="ql_tip9cd8465f0102uy5d"></li></ul>                <div class="SG_clearB"></div>                <div class="blogzz_btn">					<a id="btnArticleQuote9cd8465f0102uy5d" href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" onclick="scope.article_quote &amp;&amp; scope.article_quote.check(&#39;9cd8465f0102uy5d&#39;);return false;" class="SG_aBtn SG_aBtn_ico SG_turn"><cite><img class="SG_icon SG_icon111" id="quoteList_quote9cd8465f0102uy5d" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" align="absmiddle">转载</cite></a>					<p id="quoteDescription9cd8465f0102uy5d" class="SG_turntxt" style="display: none;">转载是分享博文的一种常用方式...</p>				</div>				<div id="ql_page9cd8465f0102uy5d" class="blogzz_paged"></div>				<div class="clearit"></div></div>
+		<div class="articalfrontback SG_j_linedot1 clearfix" id="new_nextprev_9cd8465f0102uy5d">
+							<div><span class="SG_txtb">前一篇：</span><a href="http://blog.sina.com.cn/s/blog_9cd8465f0101g86a.html">360第二届高校信安竞赛&nbsp;逆向80分题目的解法与反思</a></div>
+										<div><span class="SG_txtb">后一篇：</span><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102v6ok.html">ISG&nbsp;CTF图片信息隐藏题目总结与反思</a></div>
+					</div>
+		<div class="clearit"></div>
+							
+		<div id="loginFollow"></div>
+				<div class="allComm">
+			<div class="allCommTit">
+				<div class="SG_floatL">
+				    <strong>评论</strong>
+				    <span id="commAd_1" style="display: inline-block;">
+				        <span style="margin-left:15px; width:220px; display:inline-block;"><a target="_blank" href="http://blog.sina.com.cn/lm/8/2009/0325/105340.html">重要提示：警惕虚假中奖信息</a></span>
+				    </span>
+				</div>
+				<div class="SG_floatR"><a class="CP_a_fuc" href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#post">[<cite>发评论</cite>]</a></div>
+			</div>
+			<ul id="article_comment_list" class="SG_cmp_revert"><!-- 循环始 --><li>评论加载中，请稍候...</li><!-- 循环终  --></ul>
+			<div class="clearit"></div>
+			<div class="myCommPages SG_j_linedot1">
+				<div class="SG_page" id="commentPaging" style="display:none;">
+					<ul class="SG_pages">
+					</ul>
+				</div>
+				<div class="clearit"></div>
+			</div>
+			<a name="post"></a>
+			<div class="writeComm">
+				<div class="allCommTit">
+					<div class="SG_floatL">
+					    <strong>发评论</strong>
+					    <span></span>
+					</div>
+					<div class="SG_floatR"></div>
+				</div>
+				<div class="wrCommTit">
+					<div class="SG_floatL" id="commentNick" style="display:none;"></div>
+				</div>
+				<div class="formTextarea">
+					<div style="float:left;" id="commonComment">
+					<iframe id="postCommentIframe" frameborder="0" style="border:1px solid #C7C7C7;
+		height:158px;width:448px;maring-top:1px;background-color:white;" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/blank2.html"></iframe>
+					<textarea id="commentArea" tabindex="1" style="display:none;"></textarea>
+					</div>
+					<div id="mobileComment" style="float:left;display:none;">
+						<textarea id="mbCommentTa" style="width:438px;height:150px;border:1px solid #C7C7C7;line-height:18px;padding:5px;"></textarea>
+					</div>
+					<div class="faceblk" id="faceWrap">
+						<div id="smilesSortShow" class="faceline1">
+						<div class="facestyle" id="recomm_1625640287883"><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" key="302"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/302-25.gif" alt="小新小浪" title="小新小浪"></a><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" key="308"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/308-25.gif" alt="炮炮兵" title="炮炮兵"></a><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" key="315"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/315-25.gif" alt="张富贵" title="张富贵"></a><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" key="316"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/316-25.gif" alt="旺狗" title="旺狗"></a><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" key="331"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/331-25.gif" alt="悠嘻猴" title="悠嘻猴"></a><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" key="351"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/351-25.gif" alt="酷巴熊" title="酷巴熊"></a></div><span class="SG_more"><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#">更多&gt;&gt;</a></span><div class="clearit"></div></div>
+						<ul id="smilesRecommended" class="faceline01"><li><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/E___0321EN00SIGT.gif" alt="就不买你" title="就不买你" height="50" width="50"></a></li><li><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/E___0320EN00SIGT.gif" alt="股市" title="股市" height="50" width="50"></a></li><li><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/E___0319EN00SIGT.gif" alt="发霉" title="发霉" height="50" width="50"></a></li><li><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/E___0318EN00SIGT.gif" alt="陈水边" title="陈水边" height="50" width="50"></a></li><li><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/E___0317EN00SIGT.gif" alt="裁员" title="裁员" height="50" width="50"></a></li><li><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/E___0316EN00SIGT.gif" alt="音乐" title="音乐" height="50" width="50"></a></li><li><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/E___0315EN00SIGT.gif" alt="贴你" title="贴你" height="50" width="50"></a></li><li><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/E___0314EN00SIGT.gif" alt="抢车位" title="抢车位" height="50" width="50"></a></li></ul>
+					</div>
+					<div class="clearit"></div>
+				</div>
+				<div class="formLogin">
+					<div class="SG_floatL"> 
+					<p id="commentlogin" style="display: block;"><span>登录名：</span><input type="text" style="width: 115px;" id="login_name" tabindex="2">   <span>密码：</span><input type="password" style="width: 115px;" id="login_pass" tabindex="3">   <a href="https://login.sina.com.cn/getpass.html" target="_blank">找回密码</a>   <a href="https://login.sina.com.cn/signup/signup.php?entry=blog&amp;src=blogicp&amp;srcuid=2631419487" target="_blank">注册</a>	<input type="checkbox" id="login_remember"><label for="login_remember" style="display:inline-block;" title="建议在网吧/公用电脑上取消该选项">记住登录状态</label></p><p id="commentloginM" style="display:none;"><span>昵&nbsp;&nbsp;&nbsp;称：</span><input type="text" style="width: 115px;" id="comment_anonyous" value="新浪网友" tabindex="2" disabled=""></p><p id="quote_comment_p"><!--<input type="checkbox" id="bb"> <label for="bb"><img height="18" align="absmiddle" width="18" title="" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" class="SG_icon SG_icon110">分享到微博 <img height="15" align="absmiddle" width="15" title="新" src="http://simg.sinajs.cn/blog7style/images/common/sg_trans.gif" class="SG_icon SG_icon11"></label>&nbsp;&nbsp;&nbsp;--><input type="checkbox" id="cbCommentQuote"><label for="cbCommentQuote">评论并转载此博文</label><img class="SG_icon SG_icon11" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" width="15" height="15" title="新" align="absmiddle"></p>
+					<p id="geetest-box"></p>
+					</div>
+
+					<span style="display: none; color: rgb(153, 153, 153); margin-left: 10px;" id="login_remember_caution"></span>
+
+											<!--<div class="SG_floatR" id="anonymity_cont"><input type="checkbox" id="anonymity"/><label for="anonymity">匿名评论</label></div>-->
+									</div>
+				<div class="formBtn">
+					<a href="javascript:;" onclick="return false;" class="SG_aBtn" tabindex="5"><cite id="postcommentid">发评论</cite></a>
+					<p class="SG_txtc">以上网友发言只代表其个人观点，不代表新浪网的观点或立场。</p>
+				</div>
+			</div>
+		</div>
+				<div class="clearit"></div>
+		
+				<div class="articalfrontback articalfrontback2 clearfix">
+						  <div class="SG_floatL"><span class="SG_txtb">&lt;&nbsp;前一篇</span><a href="http://blog.sina.com.cn/s/blog_9cd8465f0101g86a.html">360第二届高校信安竞赛&nbsp;逆向80分题目的解法与反思</a></div>
+									  <div class="SG_floatR"><span class="SG_txtb">后一篇&nbsp;&gt;</span><a href="http://blog.sina.com.cn/s/blog_9cd8465f0102v6ok.html">ISG&nbsp;CTF图片信息隐藏题目总结与反思</a></div>
+					</div>
+		<div class="clearit"></div>
+				
+	</div>
+	<!--博文正文 end -->
+		<script type="text/javascript">
+			var voteid="";
+		</script>
+
+            </div>       
+            <div class="SG_connFoot"></div>
+          </div>
+</div>
+	<!--第二列start-->
+	
+	<!--第三列start-->
+	<div id="column_3" class="SG_colWnone"><div style="width:0px;height:0.1px;margin:0px;">&nbsp;&nbsp;</div></div>
+	<!--第三列end-->
+
+	
+    </div>
+   <!--主题内容结束 -->
+  
+
+	<div id="diggerFla" style="position:absolute;left:0px;top:0px;width:0px"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" src="http://sjs.sinajs.cn/blog7swf/digger.swf" width="1" height="1" style="undefined" id="digger" name="digger" bgcolor="#00ff00" quality="high" wmode="transparent" allowscriptaccess="always"></div>
+    <div class="sinablogfooter" id="sinablogfooter" style="position:relative;">
+      
+      <p class="SG_linka"><a href="http://help.sina.com.cn/" target="_blank">新浪BLOG意见反馈留言板</a>　电话：4000520066 提示音后按1键（按当地市话标准计费）　欢迎批评指正</p>
+   
+      <p class="SG_linka"><a href="http://corp.sina.com.cn/chn/" target="_blank">新浪简介</a> | <a href="http://corp.sina.com.cn/eng/" target="_blank">About Sina</a> | <a href="http://emarketing.sina.com.cn/" target="_blank">广告服务</a> | <a href="http://www.sina.com.cn/contactus.html" target="_blank">联系我们</a> | <a href="http://corp.sina.com.cn/chn/sina_job.html" target="_blank">招聘信息</a> | <a href="http://www.sina.com.cn/intro/lawfirm.shtml" target="_blank">网站律师</a> | <a href="http://english.sina.com/" target="_blank">SINA English</a> | <a href="http://members.sina.com.cn/apply/" target="_blank">会员注册</a> | <a href="http://help.sina.com.cn/" target="_blank">产品答疑</a> </p>
+      <p class="copyright SG_linka"> Copyright © 1996 - 2018 SINA Corporation,  All Rights Reserved</p>
+      <p class="SG_linka"> 新浪公司 <a href="http://www.sina.com.cn/intro/copyright.shtml" target="_blank">版权所有</a></p>
+	  <a href="http://www.bj.cyberpolice.cn/index.jsp" target="_blank" class="gab_link"></a>
+    </div>
+  </div>
+</div>
+<div id="swfbox"><embed pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" src="http://sjs.sinajs.cn/blog7swf/voteCookie.swf" width="1" height="1" style="undefined" id="swfId" name="swfId" bgcolor="#00ff00" quality="high" allowscriptaccess="always" flashvars="readyFun=readyFun&amp;realfull=1&amp;moz=1&quot;/"></div>
+<script id="PVCOUNTER_FORIE" type="text/javascript"></script>
+
+<script type="text/javascript">
+var scope = {
+    $newTray : 1,
+    $setDomain : true,
+    $uid : "2631419487",
+    $PRODUCT_NAME : "blog7",      //blog7photo,blog7icp
+    $pageid : "article",
+    $key :  "459fb66fbd629cea2e231a721cc4084c",
+    $uhost : "",
+    $ownerWTtype :"",
+    $private: {"pageset":0,"tj":0,"adver":0,"sms":0,"ad":0,"blogsize":0,"cms":0,"hidecms":0,"top":"9cd8465f0100yjt7","invitationset":0,"p4p":0,"spamcms":0,"init7":0,"quote":0,"foot":0,"isprivate":0,"headpic":1,"t_sina":"2631419487","medal7":2,"oauth_token":1,"oauth_token_secret":1,"uname":"","p_push_t":"1","p_get_t":"1","articleclass":"117"},
+    $summary: "...  (来自 @头条博客)",
+    $is_photo_vip:0,
+		 $nClass:0,
+		 $articleid:"9cd8465f0102uy5d",
+		 $sort_id:117,
+		 $cate_id:173,
+		 $isCommentAllow:0,
+		 $album_pic:"002S5apNzy6KUpe6pwud2",
+		 $pn_x_rank:4,
+		 $x_quote_c:"",
+		 $flag2008:"",
+		     component_lists:{"2":{"size":730,"list":[920]},"1":{"size":210,"list":[901,903,904,47]}},
+    formatInfo:1,
+    UserPic:[{"pid":null,"repeat":null,"align-h":null,"align-v":null,"apply":null},{"pid":null,"repeat":null,"align-h":null,"align-v":null,"apply":null},{"pid":null,"repeat":null,"align-h":null,"align-v":null,"apply":null}],
+    UserBabyPic:{"photoX":0,"photoY":0,"photoURL":null,"angle":0,"zoom":0,"maskX":0,"maskY":0,"maskURL":null,"frameURL":null},
+    UserColor:"",
+    backgroundcolor:"",
+    $shareData:{"title":"\u5229\u7528Crypto API\u5b9e\u73b0Hash\u7b97\u6cd5\uff08\u8865\u5145SHA256\u3001SHA512\uff09@\u65b0\u6d6a\u535a\u5ba2","content":"     \u6700\u8fd1\u6709\u9700\u8981\u8ba1\u7b97SHA256\u7684\u9700\u6c42\uff0c\u4e8e\u662f\u5728\u539f\u6709\u7684\u57fa\u7840\u4e0a\u505a\u4e86\u4fee\u6539\uff0c\u552f\u4e00\u9700\u8981\u6ce8\u610f\u7684\u5730\u65b9\u5c31\u662f\u5728\u8c03\u7528CryptAcqu...  (\u6765\u81ea @\u5934\u6761\u535a\u5ba2)","url":"http:\/\/blog.sina.com.cn\/s\/blog_9cd8465f0102uy5d.html","pic":"http:\/\/s3.sinaimg.cn\/middle\/002S5apNzy6KUpe6pwud2&amp;690"},
+    tpl:"30_1",
+    reclist:0    };
+var $encrypt_code = "3ff251b834723e94daa326af50a8ad2e";
+</script>
+
+<script type="text/javascript" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/boot.js"></script>
+<script type="text/javascript">__load_js();</script>
+<script type="text/javascript">__render_page();</script>
+
+
+<!--
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=b436f96b-ce3c-469f-93ca-9c0c406fcf10&amp;pophcol=2&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+<script type="text/javascript" charset="utf-8">
+        bShare.addEntry({pic: "http://s3.sinaimg.cn/middle/002S5apNzy6KUpe6pwud2&amp;690", title:"分享自YHZX_2013  《利用Crypto API实现Hash算法（补充SHA256、SHA512）》", summary:"...  (来自 @头条博客)"});
+     </script>-->
+
+<script type="text/javascript" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/blog680-min.js"></script>
+<script type="text/javascript">
+        var slotArr = ['atcTitLi_SLOT_41', 'atcTitLi_SLOT_42','loginBarActivity']; //广告位id
+        var sourceArr = ['SLOT_41','SLOT_42','SLOT_43,SLOT_47,SLOT_48'];  //广告资源id
+        SinaBlog680.staticBox(slotArr, sourceArr);
+</script>
+
+<div id="sinaads_pdps54771"> <ins class="sinaads" data-ad-pdps="PDPS000000054771"></ins>  </div><div id="reblog_1625640287284" class="turnList" style="display:none;position:absolute;z-index:20;"><ul class=""><li><a suda-uatrack="key=blog_article&amp;value=h_article17" action-type="click_reblog" action-data="{action:&#39;toBlog&#39;}" href="javascript:void(0);" title="转载到博客"><img width="18" height="18" align="absmiddle" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" class="SG_icon SG_icon141">博客</a></li><li style="display:none;"><a suda-uatrack="key=blog_article&amp;value=h_article17" action-type="click_reblog" action-data="{action:&#39;toBlog&#39;}" href="javascript:void(0);" title="转载原文"><img width="18" height="18" align="absmiddle" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" class="SG_icon SG_icon141">转载原文</a></li><li><a suda-uatrack="key=blog_article&amp;value=h_article17" action-type="click_reblog" action-data="{action:&#39;cwb&#39;}" href="javascript:;" title="发布长微博"><img width="18" height="18" align="absmiddle" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/sg_trans.gif" class="SG_icon SG_icon143">长微博</a></li></ul></div><div id="_4681625640287318_panel" class="mCatSearch" style="position: absolute; display: none; z-index: 512;"><ul><li action-type="tray-search" onclick="v7sendLog(&#39;40_01_43&#39;)" action-data="article" class="current">含“<span id="_4681625640287318_article"></span>”的博文</li><li action-type="tray-search" onclick="v7sendLog(&#39;40_01_43&#39;)" action-data="bloger">含“<span id="_4681625640287318_bloger"></span>”的博主</li><li action-type="tray-search" onclick="v7sendLog(&#39;40_01_43&#39;)" action-data="music">含“<span id="_4681625640287318_music"></span>”的音乐</li><li action-type="tray-search" onclick="v7sendLog(&#39;40_01_43&#39;)" action-data="video">含“<span id="_4681625640287318_video"></span>”的视频</li></ul></div><iframe style="border: none; z-index: -1; opacity: 0; position: absolute; width: 0px; height: 0px;" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/saved_resource.html"></iframe><div class="tb_layer_Y tb_layer_w3" style="z-index: 511; position: absolute; display: none; width: 160px;"><div class="tb_layer_arrow"></div><div class="tb_layer_Y_main tip_ps" style="width: auto;"><a style="margin-top: 5px;" title="关闭" class="tb_friend_inputDel" href="javascript:void(0)"></a>							<div style="text-align:left;color:#999999">最近喜欢了的博主：</div>							<div style="white-space: nowrap;"><div style="text-align:center;"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/loading.gif">加载中…</div></div></div></div><div style="position: fixed; width: 1519px; height: 694px; left: 0px; top: 0px; z-index: 1024; background-color: black; opacity: 0.4; display: none;"></div><table class="CP_w" id="_3431625640287349_panel" style="z-index: 5000; position: fixed; display: none; left: 433.5px; top: 121px;"><thead><tr><th class="tLeft"><span></span></th><th class="tMid"><div class="bLyTop"><strong>赠金笔</strong><cite><a node-data="btn-close" href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" class="CP_w_shut" title="关闭">关闭</a></cite></div></th><th class="tRight"><span></span></th></tr></thead><tfoot><tr><td class="tLeft"><span></span></td><td class="tMid"><span></span></td><td class="tRight"><span></span></td></tr></tfoot><tbody><tr><td class="tLeft"><span></span></td><td class="tMid"><div class="CP_layercon3 jiben"><div class="SG_tag tag_h"><ul><li class="current"><span><strong><a node-data="gold-exchange" href="javascript:void(0)">金笔兑换</a></strong></span><span class="tagR"></span></li><li><span><strong><a node-data="tyrant-standings" href="javascript:void(0)">今日土豪榜</a></strong></span><span class="tagR"></span></li><li><span><strong><a node-data="nomination-list" href="javascript:void(0)">今日提名榜</a></strong></span><span class="tagR"></span></li></ul></div><div name="jiben_tab" class="jiben_tab"><ul class="denPicRow denPicRow01 clearfix" name="radioAll"><li><span class="a">兑换服务：</span><span class="b">金笔道具</span></li><li><span class="a"><span class="CP_w_star"></span>赠送数量：</span><span class="b rlist"><input name="num" value="1" type="radio" id="jb1"><label for="jb1">1支</label><input name="num" value="10" type="radio" id="jb2"><label for="jb2">10支</label><input name="num" value="20" type="radio" id="jb3"><label for="jb3">20支</label><input name="num" value="50" type="radio" id="jb4"><label for="jb4">50支</label><input name="num" value="100" type="radio" id="jb5"><label for="jb5">100支</label><br><input name="num" value="0" type="radio" id="jb5"><label for="jb6">其他</label><input type="text" maxlength="4" class="SG_input" id="jb6" node-data="other-num" value="请输入整数"></span></li><li><span class="a cold">现有金笔：</span><span class="b cold" node-data="own-num">0支</span></li><li><span class="a cold">还需兑换：</span><span class="b cold" node-data="need-num">1支 x 1=1(积分)</span></li></ul><div id="hidden"></div><div class="butt01" id="button01"><a node-data="btn-ok" href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" class="SG_aBtn SG_aBtnB "><cite>确认</cite></a><a target="_blank" href="http://blog.sina.com.cn/s/blog_4b0f52990102v0dd.html" class="jf_rule">点击了解更多规则</a></div></div><div class="clearit"></div></div></td><td class="tRight"><span></span></td></tr></tbody></table><iframe style="border: none; z-index: 4999; opacity: 0; position: fixed; width: 0px; height: 0px; left: 433.5px; top: 121px;" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/saved_resource(1).html"></iframe><table id="_4551625640287436_panel" class="CP_w" style="left: 558px; top: 186.781px; z-index: 5000; position: absolute; display: none;"><thead id="_4551625640287436_titleBar" style="cursor: move;"><tr><th class="tLeft"><span></span></th><th class="tMid"><div class="bLyTop"><strong id="_4551625640287436_titleName">提示</strong><cite><a id="_4551625640287436_btnClose" href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" onclick="return false;" class="CP_w_shut" title="关闭">关闭</a></cite></div></th><th class="tRight"><span></span></th></tr></thead><tfoot><tr><td class="tLeft"><span></span></td><td class="tMid"><span></span></td><td class="tRight"><span></span></td></tr></tfoot><tbody><tr><td class="tLeft"><span></span></td><td class="tMid" id="_4551625640287436_content"><div class="CP_layercon2 unilayer"><div class="CP_prompt" style="padding:0;"><table style="width:100%;margin-bottom:40px;" class="CP_w_ttl"><tbody><tr><td style="text-align:center;"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/msg-515-18.png"></td></tr><tr><td style="text-align:center;height:auto;padding:10px 0;"><span style="font-size:18px;color:#333;letter-spacing: 3px;font-weight:400;font-family: Microsoft Yahei;">下载新浪博客APP</span></td></tr><tr><td style="height:auto;text-align:center;"><span style="font-size: 14px;color:#999;letter-spacing: 2px;font-weight:400;font-family: Microsoft Yahei;">纸条升级为私信，我在APP上等你~</span></td></tr></tbody></table></div></div></td><td class="tRight"><span></span></td></tr></tbody></table><div style="border: 2px dashed rgb(188, 196, 208); position: absolute; display: none; background-color: transparent; left: 0px; top: 0px;"></div><div id="sharePhoto" style="display:none;width:120px;position:absolute;"><div class="picShareFlt"><div class="share SG_txtb" style="margin-top:5px;"><span>分享到新浪微博</span></div></div></div><ins class="sinaads" data-ad-pdps="PDPS000000054727" style="display:block;"></ins><div id="_5401625640287817_panel" style="z-index: 512; width: 200px; position: absolute; display: none;" class="tb_layer_Y tb_layer_w5"><div class="tb_layer_Y_main tip_layer_main"><div class="tip_ps" style="width:auto;float:right"><a id="closeBindEmail" title="关闭提示" class="tb_friend_inputDel" href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" onclick="return false"></a></div><div style="padding:6px">为了您的账号安全，请<a id="linkBindEmail" href="http://blog.sina.com.cn/s/blog_9cd8465f0102uy5d.html#" target="_blank">绑定邮箱</a></div></div><div class="tb_layer_arrow tip_arrow"></div></div><iframe style="border: none; z-index: 511; opacity: 0; position: absolute; width: 0px; height: 0px;" src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/saved_resource(2).html"></iframe><div id="selectionShare" style="display: none; position: absolute; cursor: pointer;"><img src="./利用Crypto API实现Hash算法（补充SHA256、SHA512）_YHZX_2013_新浪博客_files/share.gif" title="将选中内容分享到新浪微博"></div><ins class="sinaads" data-ad-pdps="PDPS000000051781" style="display: none;"></ins><div style="left: -1000px; top: -1000px;position:absolute;" class="picSlideBtn" action-type="show-slide" action-data="http%3A%2F%2Fww4.sinaimg.cn%2Flarge%2F697db644jw1dw1s1zljvaj.jpg"><a href="javascript:void(0);">幻灯播放</a></div></body></html>

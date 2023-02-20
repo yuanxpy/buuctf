@@ -1,0 +1,42 @@
+
+<SCRIPT language=javascript src="/dynaform/help.js" type=text/javascript></SCRIPT>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<SCRIPT type="text/javascript">
+dohelp("帮助－PPTP设置");
+	begin();
+		writeline("WAN口连接类型：", "请根据您的Internet服务供应商（ISP）所提供的上网方式来选择相应的连接类型。例如，如果您可以从ISP获取由DHCP服务器自动分配的IP地址，请选择“动态IP”；如果您拥有ISP提供的固定IP地址，请选择“静态IP”；如果您的上网的方式为ADSL虚拟拨号方式，请选择“PPPoE”；如果您的上网方式为PPTP的拨号方式，请选择“PPTP”。");
+	end();
+	begin();
+		writeline("上网账号：", "填入ISP为您指定的上网帐号，不清楚可以向ISP询问。");
+		writeline("上网口令：", "填入ISP为您指定的上网口令，不清楚可以向ISP询问。");
+	end();
+	begin();			
+		writeline("动态或静态IP：", "如果您的ISP为您分配了IP地址、子网掩码、网关和DNS服务器地址，请选择使用静态IP。否则使用动态IP。");
+		writeline("服务器IP/域名：", "输入由ISP提供的服务器IP或者域名。");
+		
+		writeline("IP地址：", "当选择使用静态IP时，请输入拨号时使用的IP地址。");
+		writeline("子网掩码:  ", "当选择使用静态IP时，请输入ISP提供的子网掩码。");
+		writeline("网关:", "当选择使用静态IP时，请输入ISP提供的网关IP地址。");
+		writeline("DNS: ", "当选择使用静态IP时，请输入ISP提供的DNS服务器地址。");
+	end();
+	begin();
+		writeline("Internet IP Address:", "从ISP的PPTP服务器得到的因特网IP地址。");
+		writeline("Internet DNS:", "从ISP的PPTP服务器得到的DNS服务器地址。");
+	end();
+	begin();
+		writeline("按需连接：", "如果选择了按需连接，则在有来自局域网的网络访问请求时，自动进行连接操作。");
+		writeline("自动连接：", "如果选择了自动连接，则在开机后自动进行连接操作。在使用过程中，如果由于外部原因，网络被断开，则每隔一段时间（30秒）尝试进行连接，直到连接上为止。");
+		writeline("手动连接：", "开机后由用户手动进行拨号连接。");
+	end();	
+	begin();	
+		writeline("按钮功能");
+	end();
+	begin();
+		writeline("连接：", "单击此按钮，进行即时的连接操作。");
+		writeline("断线：", "单击此按钮，进行即时的断开操作。");
+	end();				
+done();
+</SCRIPT>
+</body></html>

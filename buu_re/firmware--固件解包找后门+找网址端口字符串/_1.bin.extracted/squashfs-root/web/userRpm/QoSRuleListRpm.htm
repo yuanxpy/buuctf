@@ -1,0 +1,116 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="Javascript">
+function doAdd(nPage)
+{
+    location.href="QoSRuleCfgRpm.htm?Add=Add&Page="+nPage;
+}
+function doPage(nPage)
+{   
+    location.href="QoSRuleListRpm.htm?Page="+nPage;
+}
+function doAll(val)
+{
+    if(val=="DelAll")
+    {
+        if(!confirm("您确认要删除当前所有的条目吗？"))
+        return;
+    }
+    location.href="QoSRuleListRpm.htm?DelAll=1";
+}
+function doHelp()
+{   
+    location.href="/help/QoSRuleListHelpRpm.htm";
+}
+function ResetStatus(strInfo)
+{   
+    window.status=strInfo;
+    return true;
+}
+function enableId(id){
+	var enable;
+	if(document.forms[0].elements['enable'+id].checked == true)
+		enable = 1;
+	else
+		enable = 0;
+	location.href = "QoSRuleListRpm.htm?enable=" + enable + "&enableId=" + id +"&Page=" + QoSRuleListParam[0];
+}
+//-->
+</script></head>
+<body><center><form action="QoSRuleListRpm.htm" enctype="multipart/form-data" method="get">
+<table width="660" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="653" align="left" valign="middle" class="title">IP带宽控制规则列表</td></tr>
+<tr><td colspan="2">
+    <table width="660" border="0" cellspacing="0" cellpadding="0">
+    <tr><td class="vline" rowspan="15"><br></td><td width="658">
+<table width="600" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本页为IP带宽控制规则列表。</td></tr></table>
+<table width="600" border="1" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr align="center"><td rowspan="2" width="20">ID</td>
+<td width="180" rowspan="2">描述</td>
+<!--<td nowrap rowspan="2" nowrap>模 式</td>-->
+<td nowrap colspan="2" nowrap>上行带宽(Kbps)</td>
+<td nowrap colspan="2" nowrap>下行带宽(Kbps)</td>
+<td rowspan="2" nowrap>启 用</td><td width=60 rowspan="2" nowrap>配 置</td></tr>
+<tr align="center"><td>最小</td><td>最大</td><td>最小</td><td>最大</td></tr>
+<script language="JavaScript">
+if (QoSRuleListParam[2] > 0)	{
+	var row = 0;
+	var index = (QoSRuleListParam[0]-1)*QoSRuleListParam[4]+1;
+	var modifyId;
+	for(var i = 0; i < QoSRuleListParam[2]; i++, index++)
+	{
+		row = i * QoSRuleListParam[3];
+		modifyId = QoSRuleListArray[row];
+		//var mode = QoSRuleListArray[row+2]?"共享":"独立";
+		var enableStatus = QoSRuleListArray[row+7]?"checked":"";
+		document.write('<tr><td align="center">' + index+ '</td>');//id
+		document.write('<td align="center">' + QoSRuleListArray[row+1] + '</td>');//ip addr
+		//document.write('<td align="center">' + mode + '</td>');//mode
+		document.write('<td align="center">' + QoSRuleListArray[row+4] + '</td>');//tx min
+		document.write('<td align="center">' + QoSRuleListArray[row+3] + '</td>');//tx max
+		document.write('<td align="center">' + QoSRuleListArray[row+6] + '</td>');//rx min
+		document.write('<td align="center">' + QoSRuleListArray[row+5] + '</td>');//rx max
+		document.write('<td align="center"><input type="checkbox" ' + enableStatus +' name="enable' + modifyId + '" value="1" onClick="enableId(' + modifyId + ');"></td>');
+		document.write('<td align="center"><a href=\"QoSRuleCfgRpm.htm?Modify=' + modifyId
+						+'&Page='+QoSRuleListParam[0] +
+						'\" OnMouseOver=\"return ResetStatus(\'modify\');\">编辑</a>&nbsp;' +
+						'<a href=\"QoSRuleListRpm.htm?Del=' + modifyId+'&Page=' + QoSRuleListParam[0] +
+						'\" OnMouseOver=\"return ResetStatus(\'delete\');\">删除</a></td></tr>');
+	}
+}else{
+	document.write('<tr align="center"><td colspan="9">当前列表为空</td></tr>');
+}
+</script>
+</table>
+<table width="510" align="center" border="0" cellpadding="0" cellspacing="0" class="space">
+<tr><td colspan="3" width="468"><input type="button" value="添加新条目" name="Add" class="button" onClick="doAdd(curPage);">&nbsp;<input type="button" value="删除所有条目" name="DelAll" class="button" onClick="doAll('DelAll');"></td></tr>
+</table>
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">&nbsp;
+<input name="previous" type="button" class="button" onClick="doPage(prePage);" value="上一页">
+&nbsp;<input name="next" type="button" class="button" onClick="doPage(NextPage);" value="下一页">
+&nbsp;当前第<select class=list name="Page" onChange=doPage(this.value)>
+<script language="JavaScript"><!--
+for(var i=1;i<=QoSRuleListParam[1];i++){
+	document.write('<option value=\"'+i+'\">'+i+'</option>');
+}
+--></script>
+</select>页
+&nbsp;<input name="help" type="button" class="button" onClick="doHelp();" value="帮 助">
+</td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr></table></form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript">
+var curPage = QoSRuleListParam[0];
+var prePage = (QoSRuleListParam[0] == 1)?1:QoSRuleListParam[0]-1;
+var NextPage = (QoSRuleListParam[0]<QoSRuleListParam[1])?QoSRuleListParam[0]+1:QoSRuleListParam[1];
+document.forms[0].previous.disabled = (QoSRuleListParam[0] < 2)?true:false;
+document.forms[0].next.disabled = (QoSRuleListParam[0]<QoSRuleListParam[1])?false:true;
+document.forms[0].Page.value = curPage;
+if(QoSRuleListParam[5]==0) document.forms[0].Add.disabled = true;
+if(QoSRuleListParam[2]==0) document.forms[0].DelAll.disabled = true;
+</script>

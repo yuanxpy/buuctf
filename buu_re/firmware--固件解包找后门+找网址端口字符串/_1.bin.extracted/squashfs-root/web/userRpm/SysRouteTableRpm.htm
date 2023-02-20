@@ -1,0 +1,89 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<SCRIPT language="JavaScript">
+<!-- 
+function doHelp(){location.href="/help/SysRouteTableHelpRpm.htm";}
+function doSubmit()
+{return true;}
+//-->
+</SCRIPT>
+</HEAD>
+
+<body>
+<center>
+<form action="SysRouteTableRpm.htm" enctype="multipart/form-data" method="get">
+<!--外框表格-->
+<table width="540" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+		<td width="530" align="left" valign="middle" class="title">系统路由表</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<table width="540" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td class="vline" rowspan="15"><br></td>
+					<td width="538">
+<!--内容开始-->
+						<table width="500" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+							<tr>
+								<td align="center" width="500">
+<!-- added, -->
+							  <SCRIPT type="text/javascript">
+								if (SysRouteTablePara[0] > 0)
+								{
+									var row = 0;
+									var i = 0;
+									var j;
+									document.write('<TR><TD><table border=1 width="450" align="center" cellpadding="0" cellspacing="0" class="space">');
+									document.write('<TR><TD align="center">ID</TD><TD align="center">目的网络地址</TD><td align="center">子网掩码</td><TD align="center">网关</TD><TD align="center">接口</TD></TR>');
+									for(i = 0; i < SysRouteTablePara[0]; i++)
+									{	
+										j = i+1;
+										row = i * SysRouteTablePara[1];
+										document.write('<tr><td align="center">' + j + '</td>');
+										document.write('<td align="center">' + SysRouteTable[row] + '</td>');
+										document.write('<td align="center">' + SysRouteTable[row+1] + '</td>');
+										document.write('<td align="center">' + SysRouteTable[row+2] + '</td>');
+										document.write('<td align="center">' + SysRouteTable[row+3] + '</TD></TR>');		
+									}
+									document.write('</table></TD></TR>');
+								}
+									else	
+									{
+									document.write('<TR><TD class=info1">现在没有系统路由表项.</TD></TR>');
+									}
+
+								</SCRIPT>
+
+								</td>
+							<tr>
+						</table>
+<!--内容结束-->
+					</td>
+					<td class="vline" rowspan="15"><br></td>
+				</tr>
+				<tr>
+					<td  class="hline"><img src="/images/empty.gif" width="1" height="1"></td>
+				</tr>
+				<tr>
+					<td height="30" class="tail">
+&nbsp;<input name="Refresh" type="submit" class="button" value="刷 新">&nbsp;<INPUT name="Help" type="button" class="button" id="Help" onClick="doHelp();" value="帮 助"></td>
+				</tr>
+				<tr>
+					<td class="hline"><img src="/images/empty.gif" width="1" height="1"></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+</form>
+</center>
+</body>
+
+
+
+<HEAD>
+<META http-equiv="pragma" content="no-cache">
+</HEAD>
+</HTML>

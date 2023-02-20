@@ -1,0 +1,130 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<SCRIPT language="JavaScript" src="../dynaform/custom.js" type="text/JavaScript"></SCRIPT>
+<SCRIPT language="JavaScript"><!-- 
+function doPage()
+{
+	location.href="/userRpm/WpsCfgRpm.htm?NewDevCfg=Connect";
+}
+function doSubmit()
+{
+	var df = document.forms[0];
+	if (df.WpsAddDevMode[0].checked)
+	{
+		if (df.DevPin.value.length != 8)
+		{
+			alert("PIN码的长度应该为8位，请检查输入是否正确！");
+			df.DevPin.focus();
+			df.DevPin.select();
+			return false;
+		}
+    if(is_number(df.DevPin.value) == false)
+        {
+            
+            alert("PIN码中存在非数字字符，请检查输入是否正确！");
+            df.DevPin.focus();
+			df.DevPin.select();
+			return false;
+        }
+	}
+	if (isConfigured == 0)
+			alert(str_wps_name_short + "处于未配置状态，如果配置成功路由器将重启");
+	return true;
+}
+function onBackPage()
+{
+	location.href = "/userRpm/WpsCfgRpm.htm";
+}
+function doHelp()
+{
+    location.href = "/help/WlanWpsChkModeHelpRpm.htm";
+}
+//--></SCRIPT></HEAD>
+
+
+<body ><center><form action="WpsCfgRpm.htm" enctype="multipart/form-data" method="get" onsubmit = "return doSubmit()">
+<table width="502" border="0" cellspacing="0" cellpadding="0"><tr><td width="7" class="title"><IMG height=24 src="/images/arc.gif" width=7></td>
+<td width="495" align="left" valign="center" class="title" id = "tag_title">添加新的设备</td></tr><tr> <td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br> </td><td width="500">
+<table width="450" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+</table>
+<TABLE width=450 border=0 align="center" cellpadding="0" cellspacing="0" class="space"><INPUT type=hidden name=address> 
+<TR>
+	<TD colspan="2">
+		<INPUT name="WpsAddDevMode" type="radio" value="1" checked id = "tag_input_dvc_pin">输入准备添加的新设备的PIN码。
+	</TD>
+</TR>
+
+<TR>
+	<TD colspan="2" style="padding-left:30px;">PIN码:
+		<INPUT name="DevPin" value="" maxlength="8">
+	</TD>
+</TR>
+
+<TR>
+	<TD colspan="2">
+		<INPUT name="WpsAddDevMode" type="radio" value="2" id = "tag_prs_btn">按下新设备上的按钮。
+	</TD>
+</TR>
+
+<TR><TD colspan="2">&nbsp;</TD></TR>
+<TR id="WpsStatusVis" style="display:none"><TD colspan="2" id="WpsStatus" class="emp">-</TD></TR>
+<TR id="showErrMsg" style="display:none"><TD colspan="2" id="errMsg">-</TD></TR>
+
+<TR>
+	<TD class="mbtn" colspan="2">
+		<INPUT name="Back" type="button" class="button" value="返回" onclick = "onBackPage();">
+		<INPUT name="NewDevCfg" type="submit" class="button" value="连接">
+	</TD>
+</TR>
+
+</TBODY></TABLE>
+
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td  class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr><tr>
+<td height="30" class="tail"> 
+&nbsp;&nbsp;
+<INPUT class="button" type="button" name="Help"  value="帮 助"  onclick="return doHelp();">&nbsp;
+</td></tr>
+<tr><td class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr>
+</table></td></tr></table>
+</form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+
+<SCRIPT language="JavaScript">
+if (addDevCfg[0] == 1)
+{
+	document.getElementById("showErrMsg").style.display = "block";
+	document.getElementById("errMsg").innerHTML = "<font color=\"#FF0000\" id=\"tag_wrongpin\">无效的PIN码，请检查输入是否正确！</font>";
+	document.forms[0].DevPin.value = addDevCfg[1];
+	document.forms[0].DevPin.focus();
+	document.forms[0].DevPin.select();
+}
+else if (addDevCfg[1] != "00000000")
+{
+	document.forms[0].DevPin.value = addDevCfg[1];
+}
+if (addDevCfg[2] == 1)
+{
+	window.setTimeout("doPage()", 5000);
+	document.getElementById("WpsStatusVis").style.display = "block";
+	document.getElementById("WpsStatus").innerHTML = "连接中...";
+	
+	document.forms[0].WpsAddDevMode[0].disabled = true;
+	document.forms[0].WpsAddDevMode[1].disabled = true;
+	document.forms[0].DevPin.disabled = true;
+	document.forms[0].Back.disabled = true;
+	document.forms[0].NewDevCfg.disabled = true;
+
+} else if (addDevCfg[2] == 2)
+{
+	document.getElementById("WpsStatusVis").style.display = "block";
+	document.getElementById("WpsStatus").innerHTML = "添加设备成功 !";
+} else if (addDevCfg[2] == 3)
+{
+	document.getElementById("WpsStatusVis").style.display = "block";
+	document.getElementById("WpsStatus").innerHTML = "添加设备失败 !";
+}
+document.forms[0].WpsAddDevMode[addDevCfg[3]-1].checked = true;
+
+</SCRIPT>

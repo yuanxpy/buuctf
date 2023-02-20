@@ -1,0 +1,27 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<SCRIPT language=javascript src="/dynaform/help.js" type=text/javascript></SCRIPT>
+<script language="JavaScript" src="../dynaform/custom.js" type="text/JavaScript"></script>
+<body>
+<SCRIPT type="text/javascript">
+dohelp("帮助－系统路由表", 150, 452);
+	begin();
+		writeline("系统路由表显示了所有正在使用的路由表条目，每条路由表条目由目的IP地址，子网掩码，网关和网络接口组成。点击刷新按钮可以刷新路由表。");
+	end();
+	begin();
+		writeline("目的网络地址：", "静态路由条目所指定的目的主机或网络的网络地址。");		
+		blank();
+		writeline("子网掩码：", "子网掩码决定了目的IP地址的网络号和主机号。");
+		blank();
+		writeline("网关：", "连接路由器和目的主机或网络的网关设备的网络地址。");
+		blank();
+		writeline("网络接口：", "网络接口显示目的IP地址位于LAN与WLAN(内部有线和无线网络)，或者WAN(外部网络)。");
+		blank();		
+	end();			
+done();
+</SCRIPT>
+</body>
+<head>
+<meta http-equiv="pragma" content="no-cache">
+</head>
+</html>

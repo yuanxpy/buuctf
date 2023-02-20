@@ -1,0 +1,51 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<center><form action="virtualserverhelp.htm" enctype="multipart/form-data" method="get">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr> <td width="7" class="title"><img src="../images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">
+帮助－虚拟服务器</td>
+</tr><tr> <td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr> <td class="vline" rowspan="15"><br> </td><td width="500">
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本路由器自身集成了防火墙，这样广域网中的计算机要想通过本路由器访问局域网中的某些服务器，则在默认设置下无法通过防火墙的防护，这就出现了一对矛盾，路由器既要保护网络不被侵袭，又要方便广域网合法的用户访问。这里，本路由器提供了虚拟服务器功能，即可以解决这一对矛盾。虚拟服务器定义一个外部端口，所有对此端口的服务请求将被重新定位给局域网中的服务器开放的端口；其中服务器通过IP地址指定，开放端口通过内部端口指定。</td>
+</tr></table> <table width="400" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td width="110"  valign="top">外部端口：</td>
+<td width="326">WAN端外部端口，即路由器提供给广域网的外部端口。您可以输入一个端口号，也可以输入一个端口段，如：6001-6008。</td></tr>
+<tr><td valign="top">内部端口：</td><td>LAN端内部端口，局域网中服务器实际开放的端口。只允许单个端口号，或留空，留空时默认与外部端口保持一致。</td></tr>
+<tr><td>IP地址：</td><td>局域网中作为服务器的计算机的IP地址。</td></tr>
+<tr><td>协议：</td><td>服务器所使用的协议。</td></tr>
+<tr><td>状态：</td><td>当前条目是否生效。</td></tr>
+<tr> <td class="top">常用外部端口号：</td>
+<td width="321">常用外部端口下拉列表中列举了一些常用的外部端口，您可以从中选择您所需要的服务，然后单击此按钮把该外部端口填入上面的虚拟服务器列表中。</td>
+</tr></table>
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>举例说明：如果您的FTP服务器（端口号为21）IP地址为192.168.1.2，Web服务器（端口号为80）地址为 
+192.168.1.3，POP3服务器（端口号为110）IP地址为 192.168.1.6，游戏服务器（端口号为6001-6008）IP地址为 192.168.1.8，这时您需要指定如下的虚拟服务器映射表：</td>
+</tr></table> <table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr> <td width="105"><div align="center">外部端口</div></td>
+<td width="105"><div align="center">内部端口</div></td>
+<td width="189"><div align="center">IP地址</div></td>
+<td width="189"><div align="center">协议</div></td>
+<td width="106"><div align="center">状态</div></td>
+</tr><tr> <td><div align="center">21</div></td><td><div align="center">21</div></td>
+<td><div align="center">192.168.1.2</div></td><td align="center">ALL</td><td><div align="center">
+生效</div></td></tr><tr><td><div align="center">80</div></td><td><div align="center">80</div></td>
+<td><div align="center">192.168.1.3</div><td align="center">TCP</td></td><td><div align="center">
+生效</div></td></tr><tr> <td><div align="center">110</div></td><td><div align="center">110</div></td>
+<td><div align="center">192.168.1.6</div></td><td align="center">TCP</td><td><div align="center">
+生效</div></td></tr><tr> <td><div align="center">6001-6008</div></td><td><div align="center">6001-6008</div></td>
+<td><div align="center">192.168.1.8</div></td><td align="center">TCP</td><td><div align="center">
+生效</div></td></tr></table>
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>注意：如果设置了外部端口为80的虚拟服务器，则需要将“安全功能”菜单中“远端WEB管理”项的WEB管理端口设置为80以外的值，
+如8080，否则会发生冲突，而导致虚拟服务器不起作用。</td>
+</tr></table></td><td class="vline" rowspan="15"><br> </td></tr>		
+<tr> <td class="hline"><img src="../images/empty.gif" width="1" height="1"></td>
+</tr><tr><td height="30" class="tail">&nbsp; 
+<input name="back" type="button" class="button" id="back" onClick="doPrev();" value="返 回">
+</td></tr><tr> <td class="hline"><img src="../images/empty.gif" width="1" height="1"></td>
+</tr></table></td></tr></table></form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>

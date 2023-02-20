@@ -1,0 +1,131 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+var i=0; 
+function doRestore(nIndex)
+{
+   if(nIndex > macCloneInf[0])
+   { 
+		return false;  
+   }
+   else
+   {
+		document.forms[0].elements['mac'+nIndex].value = document.forms[0].elements['defaultMac'+nIndex].value;
+		return true;
+   }
+}
+function doClone()
+{
+	var n;
+	if (macCloneInf[0] == 1)
+	{
+		n =1;
+	}
+	else{	
+		n = document.forms[0].wan.value;
+	}
+	document.forms[0].elements['mac'+n].value = document.forms[0].pcmac.value;
+}
+function doSubmit()
+{
+	for(i = 1; i <= macCloneInf[0]; i++)
+	{
+		if(!is_macaddr(document.forms[0].elements['mac'+i].value))
+		{	
+			var element = document.forms[0].elements['mac'+i];
+			if(element)
+			{element.focus();element.select();}
+			return false;
+		}
+		if(!is_spmac(document.forms[0].elements['mac'+i].value))
+		{
+			var element = document.forms[0].elements['mac'+i];
+			if(element)
+			{element.focus();element.select();}
+			return false;
+		}
+	}
+	return true;
+}
+function is_spmac(mac_string)
+{
+	if(mac_string == "00-00-00-00-00-00")
+	{
+		alert("无效MAC地址，请重新输入！");
+		return false;
+	}
+	var ch = "Ff-";
+	for (var i = 0; i < mac_string.length; i++)
+	{
+		c = mac_string.charAt(i);
+		if(ch.indexOf(c) == -1)
+		return true;
+	}
+	alert("无效MAC地址，请重新输入！");
+	return false;
+}
+function doHelp(){location.href="/help/MacCloneCfgHelpRpm.htm";}
+//--></script></head>
+
+
+<BODY>
+<center><form action="MacCloneCfgRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">MAC地址克隆</td></tr>
+<tr><td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="500">
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本页设置路由器对广域网的MAC地址。</td></tr></table>
+<table width="400" border="0" align="center" class="space">
+
+<script language="JavaScript">
+var Row;
+for(i=1;i<=macCloneInf[0];i++)
+{
+    Row = (i-1)*2;
+	var wName = (i == 1)?"":("WAN"+i+" ");
+	document.write('<TR><TD  width="136">'+wName+'MAC 地址：</TD><TD><input name="mac'+i+'" type="text" class="text" value="'+macCloneList[Row]+'" size="18" maxlength="17">&nbsp;');
+	document.write('<input name="restore'+i+'" type="button" class="button" value="恢复出厂MAC" onClick="doRestore('+i+');"></td></tr>');
+}
+document.write('<TR><TD >当前管理PC的MAC地址：</TD><TD><input name="pcmac" type="text" class="text" value="' + macCloneInf[1] +'" size="18" maxlength="17" disabled>&nbsp;');
+var tempStr = (macCloneInf[2])?"Disabled":" ";
+if (macCloneInf[0] == 1)
+{
+document.write('<input name="clone" type="button" class="button" id="clone" onClick="doClone();" value="克隆MAC地址"  >');
+}
+else if(macCloneInf[0]>1)
+{
+document.write('<input name="clone" type="button" class="button" onClick="doClone();" value="克 隆"  '+ tempStr + '>&nbsp;到&nbsp;');
+document.write('<select name="wan" class="listS">');
+for(i = 1; i <= macCloneInf[0]; i++)
+{
+	document.write('<option value="'+i+'">WAN '+i+'</option>');
+}
+document.write('</select>');
+}
+for(i = 1; i <= macCloneInf[0]; i++)
+{
+    Row = (i-1)*2;
+	document.write('<input name="defaultMac'+i+'" type="hidden" value="'+macCloneList[Row+1]+'">');
+}
+document.write('</TD></TR>');
+</script>
+
+</table><table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr>
+                    <td>注意：只有局域网中的计算机才能使用本功能。</td>
+                  </tr></table>
+
+
+
+</td><td class="vline" rowspan="15"><br></td></tr>		
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td class="tail">&nbsp;&nbsp;<input name="Save" type="submit" class="button" id="Save" value="保 存">&nbsp; 
+<input name="help" type="button" class="button" id="help" onClick="doHelp();" value="帮 助">
+
+</td></tr><tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td>
+</tr></table></td></tr></table>
+</form></center></BODY><head><meta http-equiv="pragma" content="no-cache"></head></HTML>
+
+

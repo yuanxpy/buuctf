@@ -1,0 +1,126 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doHelp(){location.href="/help/FixMapCfgHelpRpm.htm";}
+function doBack(nPage)
+{
+	location.href="/userRpm/FixMapCfgRpm.htm?Page="+nPage;
+}
+function is_spmac(mac_string)
+{
+	if(mac_string == "00-00-00-00-00-00")
+	{
+		alert("无效的MAC地址，请重新输入！");
+		return false;
+	}
+	var ch = "Ff-";
+	for (var i = 0; i < mac_string.length; i++)
+	{
+		c = mac_string.charAt(i);
+		if(ch.indexOf(c) == -1)
+		return true;
+	}
+	alert("MAC地址输入含有非法字符，请重新输入！");
+	return false;
+}
+function doSubmit()
+{
+	if(document.forms[0].Mac.value=="") 
+	{
+		alert("请输入MAC地址！");
+		var element = document.forms[0].Mac;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+
+	if(document.forms[0].Mac.value != "")
+	{
+		if(!is_macaddr(document.forms[0].Mac.value))
+		{
+           
+			var element = document.forms[0].Mac;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+                               
+			return false;
+		}
+
+		if(!is_spmac(document.forms[0].Mac.value))
+		{
+			var element = document.forms[0].Mac;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+	}
+	if(document.forms[0].Ip.value=="") 
+	{
+		alert("请输入IP地址！");
+		 return false;
+	}
+	if(!is_ipaddr(document.forms[0].Ip.value))
+	{
+		var element =document.forms[0].Ip;
+		if(element)
+		{
+			element.focus();element.select();
+		}
+		return false;
+	}
+	if (confirm("注意：只有在您重启路由器后，您所做的修改才能生效！"))
+	{		
+		return true;		
+	}
+	else
+	{	
+		return false;
+	}
+	return true;
+}
+//--></script></head>
+<body><center><form action="FixMapCfgRpm.htm" enctype="multipart/form-data" method="get" >
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">静态地址分配</td></tr>
+<tr><td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br> </td>
+<td width="500">
+<table width="430" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本页设置DHCP服务器的静态地址分配功能。</td></tr></table> 
+<table width="430" border="0" align="center" cellpadding="2" cellspacing="2" class="space">
+<TR><TD>MAC地址：</TD><TD><input name="Mac" type="text" class="text" value="" size="17" maxlength="17"></TD></TR>
+<TR><TD>IP地址：</TD><TD><input name="Ip" type="text" class="text" value="" size="15" maxlength="15"></TD></TR>
+<TR><TD>状态：</TD>
+<TD><select size="1" name="State" class="list">
+<option value="0" selected>失效&nbsp;</option>
+<option value="1" >生效&nbsp;</option>
+</select></TD></TR>
+<TR><TD colspan=2></TD></TR></table>
+
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+<input name="Changed" type="hidden" value=1><input name="SelIndex" type="hidden" value="1"><input name="Page" type="hidden" value="1">&nbsp;&nbsp;<input name="Save" type="submit" class="button" value="保 存" onClick="return doSubmit();">
+&nbsp;<input type="button" value="返 回" name="Back" class="button" onClick="doBack(arEditInf[5]);">
+&nbsp;<input name="Help" type="button" class="button" value="帮 助" onClick="doHelp();">
+</td></tr><tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>			
+</table></td></tr></table><input name="curpage" type="hidden" value =""></form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript">
+document.forms[0].Mac.value =arEditInf[0];
+document.forms[0].Ip.value =arEditInf[1];
+document.forms[0].State.value = arEditInf[2];
+document.forms[0].Changed.value = arEditInf[3];
+document.forms[0].SelIndex.value = arEditInf[4];
+document.forms[0].Page.value = arEditInf[5];
+</script>

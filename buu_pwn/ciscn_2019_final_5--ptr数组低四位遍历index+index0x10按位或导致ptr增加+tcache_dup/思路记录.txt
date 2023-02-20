@@ -1,0 +1,33 @@
+本题是非常好的一道题
+
+
+网上的wp比较简单，没有调试过程，详细点可见exp.py的注释
+
+
+
+本题漏洞点——即add的index如果为16时会导致chunk的size被增大0x10
+
+本题关键点——edit和delete都是使用参数index从ptr数组中遍历最低位得到的第一个chunk而非直接的索引，所以可以任意地址写即得到ptr数组的控制权后需要精心构造特殊payload
+
+
+
+原文链接：https://blog.csdn.net/weixin_44145820/article/details/105514596
+
+漏洞分析
+如上所说，本题地址存放比较特别，但是如果index为16，并且原地址第五位为0，就会导致地址被修改
+
+而我们第一次申请时候地址最低12bits一般为0x260，即0010 0110 0000，和16即0001 0000或，就变成了0010 0111 0000即为0x270，我们就可以在chunk0
+的content中伪造一个chunk头部，把它释放之后再申请我们就能利用它控制下一个chunk了
+
+
+漏洞利用
+	添加一个note[0]，编号为16，size为0x10,内容为p64(0)+p64(0x91),再添加一个note[1]，编号为1，size为0xc0（这个大小正好可以包括住content和size数组）
+
+	释放note[0]和note[1]，重新申请一个0x80大小的note[2]，把note[1]头部size改为0x21，fd改为content数组0x6020e0
+	
+	申请一个0xc0大小的note[3]，再申请同样大小的note[4],填入free_got， puts_got+1和atoi_got-4，大小全部设为0x10
+	
+	先把free_got改为puts@plt（edit 8——free@got&0xf=8，atoi@got&0xf=8，所以需要减4），然后delete(1)泄露puts地址
+	
+	edit 4把system地址写入，然后发送/bin/sh\x00即可
+

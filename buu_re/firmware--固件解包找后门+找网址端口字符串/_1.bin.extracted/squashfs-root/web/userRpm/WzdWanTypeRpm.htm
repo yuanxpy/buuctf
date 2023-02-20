@@ -1,0 +1,44 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+</head>
+<script language="JavaScript"><!--
+function Click(){ window.event.returnValue=false;}
+document.oncontextmenu=Click;
+//--></script>
+<body><center><form action="WzdWanTypeRpm.htm" enctype="multipart/form-data" method="get">
+<table width="502" border="0" cellspacing="0" cellpadding="0"><tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">设置向导-上网方式</td></tr>
+<tr><td colspan="2">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="1" rowspan="15" class="vline"><br></td><td width="500"> <table width="430" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本向导提供三种最常见的上网方式供选择。若为其它上网方式，请点击左侧“网络参数”中“WAN口设置”进行设置。如果不清楚使用何种上网方式，请选择“让路由器自动选择上网方式”。</td></tr>
+
+</table>
+<table width="430" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td class=clk><input name="wan" type="radio" value="16">让路由器自动选择上网方式 (推荐)</td></tr>
+<tr><td class=clk><input name="wan" type="radio" value="2">PPPoE（ADSL虚拟拨号）</td></tr>
+<tr><td class=clk><input name="wan" type="radio" value="0">动态IP（以太网宽带，自动从网络服务商获取IP地址）</td></tr>
+<tr><td class=clk><input name="wan" type="radio" value="1">静态IP（以太网宽带，网络服务商提供固定IP地址）</td></tr></td></tr>
+
+</table></td>
+<td width="1" rowspan="15" class="vline"><br> </td></tr>
+<tr><td colspan="2" class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail" align="right">&nbsp; 
+<input name="Return" type="submit" class="button" value="上一步">&nbsp; 
+<input name="Next" type="submit" class="button" id="Submit"  value="下一步">&nbsp; 
+
+<input type="hidden" name="ClientId" value="">
+</td></tr>
+<tr><td colspan="2" class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr></table>
+
+</form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript">
+document.forms[0].wan[0].checked = true; 
+document.forms[0].ClientId.value = wzdWanTypeInf[1];
+if (window.parent == window)
+{
+	window.resizeTo(550,320);
+}
+</script>

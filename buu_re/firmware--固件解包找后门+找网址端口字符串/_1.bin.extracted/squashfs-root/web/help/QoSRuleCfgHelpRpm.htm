@@ -1,0 +1,69 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<center><form action="/userRpm/IPQoSCfgHelpRpm.htm" enctype="multipart/form-data" method="get">
+	<table width="502" height="24" border="0" cellpadding="0" cellspacing="0"><tr>
+		<td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+		<td width="495" align="left" valign="middle" class="title">
+帮助－IP带宽控制规则</td>
+</tr></table>
+<div class="sw-content">
+<table width="450" class="space"><tr><td width="128" >
+<tr><td colspan="2">您需要设置的条目如下：</td></tr>
+<tr><td colspan="2">&nbsp;</td></tr>
+<tr><td valign="top">启用：</td><td >规则状态。</td></tr>
+<tr><td valign="top">IP地址段：</td><td >内部主机的地址范围；当全部为空(或为0.0.0.0)时表示该域无效。</td></tr>
+<tr><td valign="top">端口段：</td><td >内部主机访问外部服务器的端口范围。当全部为空(或为0)时表示该域无效。</td></tr>
+<tr><td valign="top">协议：</td><td width="310" >传输层协议，这里有ALL(任意匹配)、TCP和UDP；该域只有在端口段选中下才有效。</td></tr>
+<!--<tr><td valign="top">模式：</td><td width="310" >可分为独立带宽和共享带宽；独立带宽表示地址或端口各自拥有上下行带宽值，共享带宽表示地址或端口共享上下行带宽值。</td></tr>-->
+<tr><td valign="top">上行带宽：</td><td >通过WAN口允许的最大上传速度限制和最小上传速度保证，最大带宽为0时表示采用上行总带宽。</td></tr>
+<tr><td valign="top">下行带宽：</td><td >通过WAN口允许的最大下载速度限制和最小下载速度保证，最大带宽为0时表示采用下行总带宽。</td></tr>
+</table>
+<table width="450" class="space"><tr><td width="10">
+<tr><td colspan="2">规则的匹配顺序为设定规则的先后顺序，按照序号从小至大依次匹配。下面为模式的举例说明（为描述简单，带宽的单位均为Mbps）：</td></tr>
+</table>
+<table width="450" border="1" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr align="center"><td>ID</td><td>地址段</td><td width="60">端口段</td><!--<td width="40">模式</td>--><td>上行带宽</td><td>下行带宽</td></tr>
+<tr align="center"><td>1</td><td>192.168.1.5 - 192.168.1.7</td><td>80-81</td>
+<!--<td>共享</td>--><td>最小1M、最大3M</td><td>最小1M、最大3M</td></tr>
+<!--<tr align="center"><td>2</td><td>192.168.1.5 - 192.168.1.7</td><td>80-81</td>
+<td>独立</td><td>最小1M、最大3M</td><td>最小1M、最大3M</td></tr>-->
+<tr align="center"><td>2</td><td>&nbsp;</td><td>80-81</td>
+<!--<td>独立</td>--><td>最小1M、最大3M</td><td>最小1M、最大3M</td></tr>
+<tr align="center"><td>3</td><td>192.168.1.5 - 192.168.1.7</td><td>&nbsp;</td>
+<!--<td>独立</td>--><td>最小1M、最大3M</td><td>最小1M、最大3M</td></tr>
+</table>
+<table width="450" class="space"><tr><td width="10">
+<tr><td valign="top">1. </td><td>该例子的规则表示局域网内IP地址为192.168.1.5到192.168.1.7的计算机访问外部服务端口80到81时，它们的带宽<STRONG ><font color=#FF0000>总和</font></STRONG>为上行带宽最小1M、最大3M，下行带宽最小1M、最大3M。
+</td></tr>
+<!--<tr><td valign="top">2. </td><td>该例子的规则表示局域网内IP地址为192.168.1.5到192.168.1.7的计算机访问外部服务端口80到81时，它们的的带宽<STRONG ><font color=#FF0000>分别</font></STRONG>为上行带宽最小1M、最大3M，下行带宽最小1M、最大3M。
+</td></tr>-->
+<tr><td valign="top">2. </td><td>该例子的规则表示局域网内的计算机访问外部端口80和81的带宽<STRONG ><font color=#FF0000>总和</font></STRONG>为上行带宽最小1M、最大3M，下行带宽最小1M、最大3M。
+</td></tr>
+<tr><td valign="top">3. </td><td>该例子的规则表示局域网内IP地址为192.168.1.5到192.168.1.7的三台计算机的带宽<STRONG ><font color=#FF0000>总和</font></STRONG>为上行带宽最小1M、最大3M，下行带宽最小1M、最大3M。
+</td></tr>
+</table>
+</div>
+<div class="sw-tail">
+<table><tr><td><input name="back" type="button" class="button" id="back" onClick="doPrev();" value="返 回"></tr></table></div>
+</form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<style type="text/css"><!--
+.sw-tail {
+	height:25px;
+	width:502px;
+	background-color:#F5F5F5;
+	border: none;
+	border-left:1px solid #FF9933;
+	border-bottom:1px solid #FF9933;
+	border-right:1px solid #FF9933;
+	text-align: left; }
+.sw-content {
+	width:502px;
+	background-color:#F5F5F5;
+	border: none;
+	border-left:1px solid #FF9933;
+	border-bottom:1px solid #FF9933;
+	border-right:1px solid #FF9933; }
+--></style>

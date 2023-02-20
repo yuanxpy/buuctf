@@ -1,0 +1,131 @@
+
+<script language="Javascript"><!--
+var wanType = new Array(
+"<option value=\"0\" id=t_dyna>动态IP</option>",			//动态IP
+"<option value=\"1\" id=t_stat>静态IP</option>",  			//静态IP
+"<option value=\"2\" id=t_pppoe>PPPoE</option>",  			//"PPPoE"
+"<option value=\"3\" id=t_802dy>802.1x + 动态IP</option>",	//"802.1x + 动态IP"
+"<option value=\"4\" id=t_802st>802.1x + 静态IP</option>",	//"802.1x + 静态IP"
+"<option value=\"5\" id=t_bpa>BPA</option>",		//"BigPond Cable"
+"<option value=\"6\" id=t_l2tp>L2TP</option>",				//"L2TP"
+"<option value=\"7\" id=t_pptp>PPTP</option>",				//"PPTP"
+"<option value=\"8\" id=t_dhpcplus selected>DHCP+</option>",		//"DHCP Plus"
+""	
+);
+
+function doSubmit(){
+var val; val=document.forms[0].mtu.value;
+if(val<576||val>1500||val=="")
+{
+	alert("MTU值输入错误，请重新输入！\n（576~1500,缺省为：1500）");
+	var element =document.forms[0].mtu;
+	if(element)
+	{
+		element.focus();element.select();
+	}
+	return false;
+}
+
+if (document.forms[0].dhcpPlusUsrName.value.length == 0)
+{
+	alert("用户名不能为空!");
+	document.forms[0].dhcpPlusUsrName.focus();
+	return false;
+}
+if (document.forms[0].dhcpPlusUsrPsw.value.length == 0)
+{
+	alert("密码不能为空!");
+	document.forms[0].dhcpPlusUsrPsw.focus();
+	return false;
+}
+
+if(!is_ipaddr(document.forms[0].defaultSvrAddr.value)){var element =document.forms[0].defaultSvrAddr;if(element){element.focus();element.select();} return false;}return true;}
+function doLoad(){return true;}
+function doSelect(){return true;}
+function doHelp(){location.href="/help/WanDhcpPlusCfgHelpRpm.htm?ieeeType=5";}
+var stopRefresh=0;
+function doClick(){stopRefresh=1; return true;}
+function doRefresh(){if (0==stopRefresh){location.href="WanDhcpPlusCfgRpm.htm";} return true;}
+function doChange(){
+/*var n = document.forms[0].wantype.value;
+if(document.forms[0].wantype.selectedIndex == 0){location.href = "WanDynamicIpCfgRpm.htm?ieeeType=0";}
+if(document.forms[0].wantype.selectedIndex == 1){location.href = "WanStaticIpCfgRpm.htm?ieeeType=1";}
+if(document.forms[0].wantype.selectedIndex == 2){location.href = "PPPoECfgRpm.htm";}
+if(document.forms[0].wantype.selectedIndex == 3){location.href = "WanDynamicIpCfgRpm_8021X.htm?ieeeType=3";}
+if(document.forms[0].wantype.selectedIndex == 4){location.href = "WanStaticIpCfgRpm_8021X.htm?ieeeType=4";}
+if(document.forms[0].wantype.selectedIndex == 5){location.href = "WanBpaCfgRpm.htm";}
+if(document.forms[0].wantype.selectedIndex == 6){location.href = "L2TPCfgRpm.htm";}
+if(document.forms[0].wantype.selectedIndex == 7){location.href = "PPTPCfgRpm.htm";}
+if(document.forms[0].wantype.selectedIndex == 8){location.href = "WanDhcpPlusCfgRpmHtm.htm";*/
+var n = 0;
+if(dhcpPlusInf[0] > 1)	{
+n = document.forms[0].wan.value;
+}
+s = "wan="+n;
+var t = document.forms[0].wantype.selectedIndex;
+location.href = "/userRpm/"+wantypeinfo[t*2+2]+"?"+s;
+}
+
+//--></SCRIPT>
+<META content="MSHTML 6.00.2900.2668" name=GENERATOR></HEAD>
+<BODY onload=doLoad();>
+<CENTER><FORM onsubmit="return doSubmit();" action=/userRpm/WanDhcpPlusCfgRpm.htm method=get encType=multipart/form-data>
+<TABLE cellSpacing=0 cellPadding=0 width=502 border=0><TBODY>
+<TR><TD class=title width=7><IMG height=24 src="/images/arc.gif" width=7></TD><TD class=title vAlign=center align=left width=495>WAN口设置</TD></TR>
+<TR><TD colSpan=2>
+<TABLE cellSpacing=0 cellPadding=0 width=502 border=0><TBODY>
+<TR><TD class=vline rowSpan=15><BR></TD><TD width=500>
+<TABLE class=space cellSpacing=0 cellPadding=2 width=400 align=center border=0><TBODY>
+<tr><td width="111">WAN口连接类型：</td>
+<td width="285"><select name="wantype" class="list" onChange="doChange()" onFocus="doClick();">
+<script language="JavaScript">
+for ( var t=0; t < wantypeinfo[0]; t++){document.write(wanType[wantypeinfo[t*2+1]]);}
+</script>
+</select></td></tr>
+<TR><TD colSpan=2>&nbsp;</TD></TR>
+<TR><TD>上网账号：</TD><TD><INPUT class=text name=dhcpPlusUsrName maxLength=64 size=25 value=username onFocus="doClick();"></TD></TR>
+<TR><TD>上网口令：</TD><TD><INPUT class=text name=dhcpPlusUsrPsw maxLength=64 size=25 value=password type=password onFocus="doClick();"></TD></TR>
+<TR><TD colSpan=2>&nbsp;</TD></TR>
+<TR><TD>IP地址:</TD><TD><DIV id=ip>0.0.0.0</DIV></TD></TR>
+<TR><TD>子网掩码:</TD><TD><DIV id=mask>0.0.0.0</DIV></TD></TR>
+<TR><TD>网关:</TD><TD><DIV id=gw>0.0.0.0</DIV></TD></TR>
+<TR><TD>首选DNS服务器:</TD><TD><DIV id=dns1>0.0.0.0</DIV></TD></TR>
+<TR><TD>备用DNS服务器:</TD><TD><DIV id=dns2>0.0.0.0</DIV></TD></TR>
+<TR><TD colSpan=2>&nbsp;</TD></TR>
+<TR><TD>数据包MTU：</TD><TD><INPUT class=text maxLength=5 size=5 value=1500 name=mtu onFocus="doClick();"> （缺省值为1500，如非必要，请勿更改）</TD></TR>
+<TR><TD>认证服务器：</TD><TD><INPUT class=text maxLength=15 size=15 value=218.29.0.227 name=defaultSvrAddr onFocus="doClick();"> （缺省为 218.29.0.227）</TD></TR>
+<TR><TD colSpan=2>&nbsp;</TD></TR>
+<TR><TD colSpan=2>根据您的需要，请选择对应连接模式：</TD></TR>
+<TR><TD colSpan=2><INPUT onclick=doSelect(); type=radio value=1 name=linktype onFocus="doClick();"> 自动连接，在开机和断线后自动进行连接。</TD></TR>
+<TR><TD colSpan=2><INPUT onclick=doSelect(); type=radio value=2 name=linktype onFocus="doClick();"> 手动连接，由用户手动进行连接。</TD></TR>
+</tbody></table>
+<table class="space" align="center" border="0" cellpadding="0" cellspacing="0" width="400"><tbody>
+<TR><TD  width="130"><INPUT class=button type=submit value="连 接" name=Connect>&nbsp;&nbsp;<INPUT class=button disabled type=submit value="断 线" name=Disconnect></TD><TD id=linkMsg>未连接</TD></TR>
+</TBODY></TABLE>
+</TD><TD class=vline rowSpan=15><BR></TD></TR>
+<TR><TD class=hline><IMG height=1 src="/images/empty.gif" width=1></TD></TR>
+<TR><TD class=tail height=30>&nbsp;
+<INPUT class=button id=save type=submit value="保 存" name=Save>&nbsp
+<input name="help" type="button" class="button" id="help" onClick="doHelp();" value="帮 助"></TD></TR>
+<TR><TD class=hline><IMG height=1 src="/images/empty.gif" width=1></TD></TR>
+</TBODY></TABLE>
+</TD></TR></TBODY></TABLE>
+</FORM></CENTER>
+<SCRIPT>
+document.forms[0].wantype.value = 8;
+if(true==dhcpPlusInf[11])window.setTimeout("doRefresh()",6000);
+document.forms[0].dhcpPlusUsrName.value = dhcpPlusInf[1];
+document.forms[0].dhcpPlusUsrPsw.value = dhcpPlusInf[2];
+document.getElementById("ip").innerHTML = dhcpPlusInf[3];
+document.getElementById("mask").innerHTML = dhcpPlusInf[4];
+document.getElementById("gw").innerHTML = dhcpPlusInf[5];
+document.getElementById("dns1").innerHTML = dhcpPlusInf[6];
+document.getElementById("dns2").innerHTML = dhcpPlusInf[7];
+document.getElementById("linkMsg").innerHTML =dhcpPlusInf[13];
+document.forms[0].mtu.value = dhcpPlusInf[8];
+document.forms[0].defaultSvrAddr.value = dhcpPlusInf[9];
+document.forms[0].linktype[dhcpPlusInf[10]-1].checked=true;
+if(1==dhcpPlusInf[12]){document.forms[0].Connect.disabled = false;document.forms[0].Disconnect.disabled = true;}else{document.forms[0].Connect.disabled = true;document.forms[0].Disconnect.disabled = false;}
+document.forms[0].Save.focus();
+</SCRIPT>
+<META http-equiv=pragma content=no-cache></BODY></HTML>

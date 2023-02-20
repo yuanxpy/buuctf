@@ -1,0 +1,97 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript">
+<!--
+function doHelp(){location.href="/help/QoSCfgHelpRpm.htm";}
+function doSubmit(){
+	if(document.forms[0].up_bandWidth.value == ""){
+		document.forms[0].up_bandWidth.value = 0;
+	}
+	if(!is_number(document.forms[0].up_bandWidth.value)){
+		alert("上行总带宽输入错误，请重新输入！");
+		document.forms[0].up_bandWidth.select();
+		return false;
+	}
+	if(document.forms[0].up_bandWidth.value < QoSCfgPara[3]){
+		alert("上行总带宽不能小于"+QoSCfgPara[3]+"，请重新输入！");
+		document.forms[0].up_bandWidth.select();
+		return false;
+	}
+	if(document.forms[0].down_bandWidth.value == ""){
+		document.forms[0].down_bandWidth.value = 0;
+	}
+	if(!is_number(document.forms[0].down_bandWidth.value)){
+		alert("下行总带宽输入错误，请重新输入！");
+		document.forms[0].down_bandWidth.select();
+		return false;
+	}
+	if(document.forms[0].down_bandWidth.value < QoSCfgPara[4]){
+		alert("下行总带宽不能小于"+QoSCfgPara[4]+"，请重新输入！");
+		document.forms[0].down_bandWidth.select();
+		return false;
+	}
+	if(parseInt(document.forms[0].up_bandWidth.value)>QoSCfgPara[6])
+	{
+		alert("上行总带宽不能大于"+QoSCfgPara[6]+"，请重新输入！");
+		document.forms[0].up_bandWidth.select();
+		return false;
+	}
+	if(parseInt(document.forms[0].down_bandWidth.value)>QoSCfgPara[6])
+	{
+		alert("下行总带宽不能大于"+QoSCfgPara[6]+"，请重新输入！");
+		document.forms[0].down_bandWidth.select();
+		return false;
+	}
+	return true;
+}
+//-->
+</script>
+</head>
+<body><form action="QoSCfgRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();"><center>
+<table width="580" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="570" align="left" valign="middle" class="title">IP带宽控制设置</td></tr>
+<tr><td colspan="2"><table width="580" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="578">
+<table width="520" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td colspan='2'>本页对IP带宽控制的开启与关闭进行设置。只有IP带宽控制的总开关是开启的时候，后续的“IP带宽控制规则”才能够生效，反之，则失效。</td></tr>
+<tr><td width='40'>注意：</td><td>1、带宽的换算关系为：1Mbps = 1024Kbps；</td></tr>
+<tr><td>&nbsp;</td><td>2、选择宽带线路类型及填写带宽大小时，请根据实际情况进行选择和填写，如不清楚，请咨询您的带宽提供商（如电信、网通等）；</td></tr>
+<tr><td>&nbsp;</td><td>3、修改下面的配置项后，请点击“保存”按钮，使配置项生效。</td></tr>
+</table>
+<center>
+<table border="1" width="520" cellspacing="0" cellpadding="5" class="space">
+<tr><td width="520" class="space" colspan=2>
+<table border="0" width="520" cellspacing="0" cellpadding="0">
+<tr><td width="21"><input name="QoSCtrl" type="checkbox" value="1"></td><td width="461">开启IP带宽控制</td></tr>
+</table></td></tr>
+<tr><td width="520" class="space" colspan=2>
+<table border="0" width="520" cellspacing="0" cellpadding="2">
+<TR>
+	<TD width="150">请选择您的宽带线路类型：</TD>
+	<TD><input name="userWanType" type="radio" value="0" Checked >&nbsp;ADSL线路
+		&nbsp;&nbsp;&nbsp;&nbsp;<input name="userWanType" type="radio" value="1">&nbsp;其它线路</TD>
+</TR>
+<tr valign=bottom><td>上行总带宽：</td><td><input name="up_bandWidth" type="text" value="" size="21" maxlength="7" class="text">&nbsp;Kbps</td></tr>
+<tr valign=bottom><td>下行总带宽：</td><td><input name="down_bandWidth" type="text" value="" size="21" maxlength="7" class="text">&nbsp;Kbps</td></tr>
+</table></td></tr></table>
+</center>
+</td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td class="hline"></td></tr>
+<tr><td class="tail" height="30">&nbsp; <input name="Save" type="submit" class="button" value="保 存">&nbsp;
+<input name="Help" type="button" class="button" onClick="doHelp();" value="帮 助">
+</td></tr><tr><td class="hline"></td></tr>
+</table></td></tr></table></center></form></body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript"><!--
+document.forms[0].QoSCtrl.checked = QoSCfgPara[0]?true:false;
+document.forms[0].up_bandWidth.value = QoSCfgPara[1];
+document.forms[0].down_bandWidth.value = QoSCfgPara[2];
+if (QoSCfgPara[5] == 0)
+{
+	document.forms[0].userWanType[0].checked =true;
+}
+else
+{
+	document.forms[0].userWanType[1].checked =true;
+}
+--></script>

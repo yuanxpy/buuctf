@@ -1,0 +1,75 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<SCRIPT language="JavaScript">
+<!-- 
+function doHelp(){location.href="/help/DMZHelpRpm.htm";}
+function doSubmit()
+{return true;}
+//-->
+</SCRIPT>
+</HEAD><BODY>
+<CENTER>
+  <FORM action="DMZRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+    <TABLE width="502" border="0" cellspacing="0" cellpadding="0">
+      <TR>
+        <TD width="7" class="title"><IMG src="/images/arc.gif" width="7" height="24"></TD>
+        <TD width="495" align="left" valign="middle" class="title">DMZ主机</TD>
+      </TR>
+      <TR>
+        <TD colspan="2"><TABLE width="502" border="0" cellspacing="0" cellpadding="0">
+            <TR>
+              <TD class="vline" rowspan="15"><BR></TD>
+              <TD width="500"><TABLE width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+                  <TR>
+                    <TD>在某些特殊情况下，需要让局域网中的一台计算机完全暴露给广域网，以实现双向通信，此时可以把该计算机设置为DMZ主机。</TD>
+				  </TR>
+                  <TR>
+                    <TD></TD>
+                  </TR>
+                </TABLE>
+                <TABLE width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+                  <TR>
+                    <TD width = "110">DMZ 状态：</TD>
+                    <TD><INPUT type="radio" value="1" name="enable" checked>
+                      启用&nbsp;&nbsp;
+                      <INPUT type="radio" value="2" name="enable">
+                      不启用</TD>
+                  </TR>
+                  <TR>
+                    <TD>&nbsp;</TD>
+                    <TD>&nbsp;</TD>
+                  </TR>
+                  <TR>
+                    <TD class=Item >DMZ 主机IP地址：
+                    <TD><INPUT type="text" class="text" value="" name="ipAddr" size="15" maxlength="15"></TD>
+                    <INPUT class="text" value="255.255.255.0" name="netmask" size="15" maxlength="15" style ="display:none">
+                </TABLE></TD>
+              <TD class="vline" rowspan="15"><BR></TD>
+            </TR>
+            <TR>
+              <TD class="hline"><IMG src="/images/empty.gif" width="1" height="1"></TD>
+            </TR>
+            <TR>
+              <TD class="tail">&nbsp;
+                <INPUT name="Save" type="submit" class="button" id="Submit" value="保 存">
+                &nbsp;
+                <INPUT name="Help" type="button" class="button" id="Help" onClick="doHelp();" value="帮 助"></TD>
+            </TR>
+            <TR>
+              <TD class="hline"><IMG src="/images/empty.gif" width="1" height="1"></TD>
+            </TR>
+          </TABLE></TD>
+      </TR>
+    </TABLE>
+  </FORM>
+</CENTER>
+</BODY>
+<HEAD>
+<META http-equiv="pragma" content="no-cache">
+</HEAD>
+</HTML><SCRIPT language="JavaScript">
+document.forms[0].enable[0].checked = DMZInf[0];
+document.forms[0].enable[1].checked = !(DMZInf[0]);
+document.forms[0].ipAddr.value = DMZInf[1];
+//document.getElementById("ipAddr").innerHTML = DMZInf[1];
+</SCRIPT>

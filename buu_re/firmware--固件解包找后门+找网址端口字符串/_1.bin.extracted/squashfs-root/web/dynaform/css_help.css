@@ -1,0 +1,30 @@
+body { font-size: 75%; color: #003399; background-color: #FFFFFF; padding-top: 10px; padding-left: 10px; font-family: "ËÎÌו", "Times New Roman"; } 
+td { font-size: 12px; line-height: 18px; text-decoration: none; } 
+input.button { font-size: 12px; font-style: normal; font-weight: normal; font-variant: normal; border: 1px solid #183ead; line-height: normal; background-color: #ddddff; color: #000000; height: 18px; } 
+input.text { font-size: 12px; font-style: normal; line-height: normal; font-weight: normal; font-variant: normal; height: 18px; border: 1px solid #183ead; color: #000000; padding-right: 3px; padding-left: 3px; } 
+td.title { font-size: 12px; color: #FFFFFF; background-color: #6699FF; height: 24px; } 
+td.tail { font-size: 12px; height: 25px; } 
+td.hline { background-color: #FF9933; height: 1px; color: #FF9933; } 
+td.vline { color: #FF9933; background-color: #FF9933; width: 1px; } 
+.space { margin-top: 10px; margin-bottom: 10px; } 
+table { background-color: #F5F5F5; } 
+select.list { font-size: 12px; font-style: normal; line-height: normal; font-weight: normal; font-variant: normal; height: 18px; color: #000000; border: 1px solid #183ead; } 
+input.buttonface { font-size: 12px; font-style: normal; font-weight: normal; font-variant: normal; border: 1px solid #183ead; line-height: normal; background-color: #ddddff; color: #000000; height: 18px; } 
+td.top { font-size: 12px; line-height: 18px; text-decoration: none; vertical-align: top; } 
+input.textspecial { font-size: 12px; font-style: normal; line-height: normal; font-weight: normal; font-variant: normal; height: 18px; border: 1px solid #183ead; color: #000000; } 
+.sw-tail   {
+height:25px;
+width:502px;
+background-color:#F5F5F5;
+border: none;
+border-left:1px solid  #FF9933;
+border-bottom:1px solid  #FF9933;
+border-right:1px solid  #FF9933;
+text-align: left;  }
+.sw-content   {
+width:502px;
+background-color:#F5F5F5;
+border: none;
+border-left:1px solid  #FF9933;
+border-bottom:1px solid  #FF9933;
+border-right:1px solid  #FF9933;  }

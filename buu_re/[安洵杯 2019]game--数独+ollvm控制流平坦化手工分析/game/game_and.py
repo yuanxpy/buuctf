@@ -1,0 +1,6 @@
+tmp = ord(input())
+print(bin(tmp))
+print(bin(tmp & 0xf3))
+print(bin(~tmp & 0xc))
+print(bin((tmp & 0xf3)|(~tmp & 0xc)))
+print(((tmp & 0xf3)|(~tmp & 0xc)))

@@ -1,0 +1,173 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doBack()
+{
+	var n = pppoeInf[5];
+	var s = "wan="+n;
+	location.href="/userRpm/PPPoECfgRpm.htm"+"?"+s;
+}
+function doSubmit()		    
+{
+	if(document.forms[0].fixedIpEn.checked)
+	{
+		if(!is_ipaddr(document.forms[0].fixedIp.value))
+		{
+			var element =document.forms[0].fixedIp;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+	}
+	if(document.forms[0].lcpMru.value>1492 || document.forms[0].lcpMru.value<576)
+	{
+		alert("数据包的MTU值已超出范围，请重新输入(576 - 1492)!"); 
+		return false;
+	}
+	if(document.forms[0].manual.checked)
+	{
+		if(!is_dnsaddr(document.forms[0].dnsserver.value))
+		{	
+			element =document.forms[0].dnsserver;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		if(document.forms[0].dnsserver2.value != "")
+		{
+			if(!is_dnsaddr(document.forms[0].dnsserver2.value))
+			{
+				element =document.forms[0].dnsserver2;
+				if(element)
+				{
+					element.focus();
+					element.select();
+				}
+				return false;
+			}
+		}
+	}
+	return true;
+}
+function doSet1()
+{
+	if(document.forms[0].fixedIpEn.checked)
+	{
+		document.forms[0].fixedIp.disabled=false;
+	}
+	else
+	{
+		document.forms[0].fixedIp.disabled=true;
+	}
+	return true;
+}
+function doSet()
+{
+	if(document.forms[0].manual.checked)
+	{
+		document.forms[0].dnsserver.disabled = false;
+		document.forms[0].dnsserver2.disabled = false;
+	}
+	else
+	{
+		document.forms[0].dnsserver.disabled = true;
+		document.forms[0].dnsserver2.disabled = true;
+	}
+	return true;
+}
+function doLoad()
+{
+	if(document.forms[0].manual.checked)
+	{
+		document.forms[0].dnsserver.disabled = false;
+		document.forms[0].dnsserver2.disabled = false;
+	}
+	else
+	{
+		document.forms[0].dnsserver.disabled = true;
+		document.forms[0].dnsserver2.disabled = true;
+	}
+	if(document.forms[0].fixedIpEn.checked)
+	{
+		document.forms[0].fixedIp.disabled=false;
+	}
+	else
+	{
+		document.forms[0].fixedIp.disabled=true;
+	}
+	return true;
+}
+
+function doHelp(){location.href="/help/PPPoECfgAdvHelpRpm.htm";}
+//--></script></head>
+
+<BODY onLoad="doLoad();">
+<center><form action="PPPoECfgAdvRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="562" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><IMG height=24 src="/images/arc.gif" width=7></td>
+<td width="555" align="left" valign="center" class="title">PPPoE高级设置</td>
+</tr><tr><td colspan="2">
+<table width="562" border="0" cellspacing="0" cellpadding="0">
+<input type="hidden" name="wan" value="">
+<tr><td class="vline" rowspan="15"><br></td>
+<td width="560">
+<table width="460" border="0" align="center" class="space" cellspacing="2" cellpadding="2">
+<tr><td height=36 width="110">数据包MTU(字节)：</TD><TD><input name="lcpMru" class="text" value="" size="4" maxlength="4">&nbsp（默认是1480， 如非必要，请勿修改）</TD></TR>
+<TR><TD >服务名：</TD><TD><input name="ServiceName" class="text" value="" size="15" maxlength="31">&nbsp（如非必要，请勿填写）</TD></TR>
+<TR><TD >服务器名：</TD><TD><input name="AcName" class="text" value="" size="15" maxlength="31">&nbsp（如非必要，请勿填写）</TD></TR>
+<TR><TD colspan="2"><input name="fixedIpEn" type="checkbox" onClick="doSet1();" value="2">&nbsp使用ISP指定的IP地址</TD></TR>
+<TR><TD >ISP指定的IP地址：</TD><TD><input name="fixedIp" type="text" class="text" value="" size="15" maxlength="15"></TD></TR>
+<TR><TD height=30>在线检测间隔时间：</TD><TD><input name="EchoReq" class="text" value="" size="3" maxlength="3">&nbsp;秒&nbsp（0 ～ 120 秒， 0 表示不发送）</TD></TR>
+<TR><TD colspan="2"><input name="manual" type="checkbox" value="2" onClick="doSet();">&nbsp手动设置DNS服务器</TD></TR>
+<TR>
+                    <TD >DNS服务器：</TD>
+                    <TD><input name="dnsserver" class="text" value="" size="15" maxlength="15"></TD></TR>
+<TR><TD >备用DNS服务器：</TD><TD><input name="dnsserver2" class="text" value="" size="15" maxlength="15">&nbsp;（可选）</TD></TR>
+</table>
+<table width="460" border="0" align="center" cellpadding=2 cellspacing=0 class="space" id="showBandWidth" style="display:none;">
+<tr><td colspan="2">请在以下的输入框中输入ISP指定的线路带宽值，如不清楚可以向您的ISP咨询；如该值为0则表示由路由器自动控制。</td></tr>
+<TR><TD width="110">下行带宽：</TD><TD><input name="downBandwidth" class="text" value="" size="7" maxlength="7"> Kbps&nbsp;（可选）</TD></TR>
+<TR><TD >上行带宽：</TD><TD><input name="upBandwidth" class="text" value="" size="7" maxlength="7"> Kbps&nbsp;（可选）</TD></TR>
+</table>
+<table width="460" border="0" align="left" cellpadding=2 cellspacing=0 class="space">
+<tr><td>&nbsp;&nbsp;<input name="Back" type="button" class="button" onClick="doBack();" value="返 回"></td></tr>
+</table>
+</td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr>
+<tr><td height="30" class="tail">&nbsp;&nbsp;<input name="Save" type="submit" class="button" value="保 存">&nbsp;
+<input name="help" type="button" class="button" onClick="doHelp();" value="帮 助">
+<input name="Advanced" type="hidden" value="Advanced"></TD></TR>
+<tr><td class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr>			
+</table></td></tr></table>
+</form></center></BODY><head><meta http-equiv="pragma" content="no-cache"></head></HTML>
+<script language="JavaScript">
+document.forms[0].wan.value = pppoeInf[5];
+document.forms[0].lcpMru.value = pppoeInf[9];
+document.forms[0].ServiceName.value = pppoeInf[10];
+document.forms[0].AcName.value = pppoeInf[11];
+var tempB = (pppoeInf[12]==true)?true:false;
+document.forms[0].fixedIpEn.checked = tempB;
+tempB = (pppoeInf[12]==true)?false:true;
+document.forms[0].fixedIp.value = pppoeInf[13];
+document.forms[0].fixedIp.disabled = tempB;
+document.forms[0].EchoReq.value = pppoeInf[14];
+tempB=(pppoeInf[15]==1)?true:false;
+document.forms[0].manual.checked = tempB;
+tempB=(pppoeInf[15]==0)?true:false;
+document.forms[0].dnsserver.value = pppoeInf[16];
+document.forms[0].dnsserver.disabled = tempB;
+document.forms[0].dnsserver2.value = pppoeInf[17];
+document.forms[0].dnsserver2.disabled = tempB;
+document.forms[0].downBandwidth.value = pppoeInf[18];
+document.forms[0].upBandwidth.value = pppoeInf[19];
+if(pppoeInf[0] > 1)
+{
+	document.getElementById('showBandWidth').style.display = "block";
+}
+</script>

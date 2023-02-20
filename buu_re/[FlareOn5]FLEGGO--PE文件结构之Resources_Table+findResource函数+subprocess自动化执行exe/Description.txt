@@ -1,0 +1,3 @@
+When you are finished with your media interviews and talk show appearances after that crushing victory at the Minesweeper Championship, I have another task for you. Nothing too serious, as you'll see, this one is child's play.
+
+Hint:本题解出相应字符串后请用flag{}包裹，形如：flag{123456@flare-on.com}

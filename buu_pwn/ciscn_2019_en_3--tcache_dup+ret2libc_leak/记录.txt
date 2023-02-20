@@ -1,0 +1,6 @@
+本地堆知识点很简单就是tcache的double_free
+
+但是存在一般用于ret2libc中的puts溢出打印泄露libc地址的知识点实在不应该没想起来
+
+
+另外要注意本地要先patchelf要不然打印出的地址会找错

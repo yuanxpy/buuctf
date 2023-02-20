@@ -1,0 +1,3 @@
+密文：ouauuuoooeeaaiaeauieuooeeiea
+hint：VGhlIGxlbmd0aCBvZiB0aGlzIHBsYWludGV4dDogMTQ=
+flag:解出明文后，请加上BJD{}

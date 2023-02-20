@@ -1,0 +1,74 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body><center><form action="#" enctype="multipart/form-data" method="get">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">
+帮助－上网控制规则管理</td>
+</tr><tr><td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0"><tr><td class="vline" rowspan="15"><br></td>
+<td><table width="430" border="0" align="center" cellpadding="0" cellspacing="0" class="space"><tr>
+<td>路由器提供方便而又强大的上网控制功能，可以对内部主机的上网行为进行控制。在这里，您可以将您之前设置好的“主机列表”“访问目标”“日程计划”灵活地组合起来，达到限制内部主机访问网络的目的。</td></tr></table> <table width="430" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td>开启上网控制：</td><td>打开/关闭上网控制功能。</td></tr>
+<tr><td>缺省过滤规则</td><td>对符合规则的数据包的缺省处理，允许/禁止通过</td></tr>
+<tr><td>规则描述：</td><td>对规则的简单描述。</td></tr>
+<tr><td>主机列表：</td><td>您所选择的主机列表。</td></tr>
+<tr><td>访问目标：</td><td>您所选择的访问目标。</td></tr>
+<tr><td>日程计划：</td><td>您所选择的日程计划。</td></tr>
+<tr><td>状态：</td><td>只有设为“启用”的时候本条目所设置的规则才能生效。</td></tr>
+<tr><td>配置：</td><td>可以对条目进行修改或者直接删除。</td></tr>
+</table>
+<table width="430" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>举例说明：如果您打算限制局域网中MAC地址为00-11-22-33-44-AA的计算机的上网行为，仅允许其在周六与周日的18点至20点访问www.google.com，禁止局域网中的其它主机访问网络。您需要进行如下的设置：</td></tr></table>
+<table width="430" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>1、在主机列表中添加一台主机，其列表名为PC_1，MAC地址为00-11-22-33-44-AA。</td></tr>
+<tr><td>2、在访问目标中添加一个列表，其列表名为Target_1，选择域名模式，填入www.google.com。</td></tr>
+<tr><td>3、在日程计划中添加一个列表，其列表名为Sched_1，选择周六和周日，开始时间为1800，结束时间为2000。</td></tr>
+<tr><td>4、回到本设置页面，请启用上网控制功能，选择缺省过滤规则为“只有符合已设上网控制规则的数据包，允许通过本路由器”。</td></tr>
+<tr><td>5、点击“增加单个条目”按钮，在添加条目的页面中进行如下设置：</td></tr>
+<tr><td><table>
+<tr><td width=40>&nbsp;</td><td>- 填入唯一的规则名，例如：Rule_1；</td></tr>
+<tr><td width=40>&nbsp;</td><td>- 选择主机列表PC_1；</td></tr>
+<tr><td width=40>&nbsp;</td><td>- 选择访问目标Target_1；</td></tr>
+<tr><td width=40>&nbsp;</td><td>- 选择日程计划Sched_1；</td></tr>
+<tr><td width=40>&nbsp;</td><td>- 选择“生效”，点击“保存”按钮。</td></tr>
+</table></td></tr>
+</table>
+<table width="432" align="center" border="0" cellpadding="0" cellspacing="0" class="space">
+<tr><td colspan=8>完成上述的设置之后，您将看到的规则是：</td></tr>
+<tr align="center">
+<td>ID</td>
+<td>规则描述</td>
+<td>主机列表</td>
+<td>访问目标</td>
+<td>日程计划</td>
+<td>状态</td>
+<td>配置</td>
+</tr>
+<tr align="center"><td width="26">1</td>
+<td nowrap>Rule_1</td>
+<td nowrap>PC_1</td>
+<td nowrap>Target_1</td>
+<td nowrap>Sched_1</td>
+<td nowrap>生效</td>
+<td nowrap>编辑&nbsp;删除</td>
+</tr>
+</table>
+<table width="430" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td colspan="2">就像上面提到的那样，在详细的参数设置界面中，您可以进行列表的组合。</td></tr>
+<tr><td>规则描述：</td><td>您需要给访问控制规则一个唯一的描述。</td></tr>
+<tr><td>主机列表：</td><td>您必须为规则指定一个主机列表。</td></tr>
+<tr><td>访问目标：</td><td>指定目标列表，缺省为任何目标。</td></tr>
+<tr><td>日程计划：</td><td>指定日程列表，缺省为任何时间。</td></tr>
+<tr><td>生效：</td><td>使规则生效/失效。</td></tr>
+</table>
+<table width="430" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td colspan="2">注意：</td></tr>
+<tr><td>当缺省过滤规则为“只有符合已设上网控制规则的数据包，<font color="#FF0000">允许</font>通过本路由器”，且规则列表为空时，所有数据包都无法通过本路由器。</td></tr>
+<tr><td>当缺省过滤规则为“只有符合已设上网控制规则的数据包，<font color="#FF0000">禁止</font>通过本路由器”，且规则列表为空时，所有数据包都可以通过本路由器。</td></tr>
+</table>
+</td><td class="vline" rowspan="15"><br></td>
+</tr><tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr><tr><td height="30" class="tail">&nbsp;
+<input name="back" type="button" class="button" id="back" onClick="doPrev();" value="返 回"></td></tr><tr>
+<td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr></table></td></tr></table></form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>

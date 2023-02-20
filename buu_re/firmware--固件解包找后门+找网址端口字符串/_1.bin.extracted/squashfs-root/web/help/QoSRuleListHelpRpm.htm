@@ -1,0 +1,21 @@
+
+<SCRIPT language=javascript src="/dynaform/help.js" type=text/javascript></SCRIPT>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<SCRIPT type="text/javascript">
+dohelp("帮助－IP带宽控制规则列表", 210);
+	begin();
+		writeline("IP带宽控制规则包含条目如下：");
+	end();
+	begin();
+		writeline("ID：", "表示的是第几条规则。");
+		writeline("描述：", "描述的信息可包含地址段，传输层的端口段和协议；格式有：1. 地址段/端口段/协议；2. 端口段/协议；3. 端口段；4. 地址段。");
+		writeline("上行带宽：", "通过WAN口允许的最大上传速度限制和最小上传速度保证，为0时表示采用缺省值。");
+		writeline("下行带宽：", "通过WAN口允许的最大下载速度限制和最小下载速度保证，为0时表示采用缺省值。");
+		writeline("启用：", "规则状态，表示规则是否生效。");
+		writeline("配置：", "可对规则进行编辑和删除操作。");		
+	end();				
+done();
+</SCRIPT>
+</body></html>

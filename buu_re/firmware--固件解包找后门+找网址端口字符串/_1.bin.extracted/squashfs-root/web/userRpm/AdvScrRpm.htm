@@ -1,0 +1,132 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<SCRIPT language="JavaScript"><!-- 
+function doHelp(){location.href="/help/MiscHelpRpm.htm";}
+function doShow(){location.href="/userRpm/MiscShowRpm.htm";}
+function doSubmit(){
+if (advPara[0]){
+var element;
+element=document.forms[0].usIcmpFlood;
+if((!is_number(element.value,5,3600))||(element.value=="")) {alert("ICMP-FLOOD数据包阈值有误，请重新输入（5～3600）！"); if(element){element.focus();element.select();}return false;}
+element=document.forms[0].usUdpFlood;
+if((!is_number(element.value,5,3600))||(element.value=="")) {alert("UDP-FLOOD数据包阈值有误，请重新输入（5～3600）！"); if(element){element.focus();element.select();}return false;}
+element=document.forms[0].usTcpSynFlood;
+if((!is_number(element.value,5,3600))||(element.value=="")) {alert("TCP-SYN-FLOOD数据包阈值有误，请重新输入（5～3600）！"); if(element){element.focus();element.select();}return false;}
+}return true;
+}
+function showDosOpt(show)
+{
+	if(!advPara[0])
+	{
+		return true;
+	}	
+	document.forms[0].bIcmpFlood.disabled  = !show;
+	document.forms[0].usIcmpFlood.disabled  = !show;
+	document.forms[0].bUdpFlood.disabled  = !show;
+	document.forms[0].usUdpFlood.disabled  = !show;
+	document.forms[0].bTcpSynFlood.disabled  = !show;
+	document.forms[0].usTcpSynFlood.disabled  = !show;
+	document.forms[0].ping.disabled  = !show;
+	document.forms[0].lanPing.disabled = !show;
+	return true;
+}
+//--></SCRIPT>
+</HEAD>
+
+<BODY onload="showDosOpt(advPara[3]);"><CENTER><FORM action="AdvScrRpm.htm" enctype="multipart/form-data" method="get" >
+<TABLE width="502" border="0" cellspacing="0" cellpadding="0">
+<TR><TD width="7" class="title"><IMG src="/images/arc.gif" width="7" height="24"></TD>
+<TD width="495" align="left" valign="middle" class="title"><DIV ID="pageTitle">-</DIV></TD></TR>
+<TR><TD colspan="2"><TABLE width="502" border="0" cellspacing="0" cellpadding="0">
+<TR><TD class="vline" rowspan="15"><BR> </TD>
+<TD width="500">
+	<TABLE width="400" height="100" border="0" align="center" cellpadding="0" cellspacing="0">
+		<TR><TD>&nbsp</TD></TR>
+	<TR><TD>本页设置高级安全防范配置。</TD></TR>
+<TR><TD>
+<TABLE border="0" width="398" cellspacing="0" cellpadding="0" class="space">
+
+<TR>
+	<TD width="49" class="top">注意：</TD>
+	<TD width="351">1、只有启用了“DoS攻击防范”，后面的设置才能够生效。</TD>
+</TR>
+<TR>
+	<TD>&nbsp;</TD>
+	<TD>2、这里“数据包统计时间间隔”与“系统工具”－“流量统计”中的“数据包统计时间间隔”为同一值，无论在哪一个模块进行修改都会覆盖另一模块里的数值。</TD>
+</TR>
+<TR>
+	<TD>&nbsp;</TD>
+	<TD>3、由于“DoS攻击防范”的部分功能是以相关数据包的统计为依据的，因此，如果“系统工具”-“流量统计”中的流量统计功能被关闭，那么将会导致这部分功能失效。</TD>
+</TR>
+</TABLE>
+<TABLE border="0" width="398" cellspacing="0" cellpadding="0" class="space">
+<SCRIPT language="JavaScript">
+if (advPara[0] && advPara[1])
+	document.getElementById("pageTitle").innerHTML = "高级安全选项";
+else if (advPara[1])
+	document.getElementById("pageTitle").innerHTML = "Ping";
+else
+	document.getElementById("pageTitle").innerHTML = "Ping from WAN";
+if (advPara[0]) {
+document.write('<TR><TD >数据包统计时间间隔：（5～60）</TD><TD><select name=interval class=list>');
+document.write('<option value=5>  5 </option>');
+document.write('<option value=10> 10 </option>');
+document.write('<option value=15> 15 </option>');
+document.write('<option value=20> 20 </option>');
+document.write('<option value=25> 25 </option>');
+document.write('<option value=30> 30 </option>');
+document.write('<option value=35> 35 </option>');
+document.write('<option value=40> 40 </option>');
+document.write('<option value=45> 45 </option>');
+document.write('<option value=50> 50 </option>');
+document.write('<option value=55> 55 </option>');
+document.write('<option value=60> 60 </option>');
+document.write('</select>&nbsp;秒</TD></TR>');
+document.write('<TR><TD colspan=2>&nbsp;</TD></TR>');
+document.write('<TR><TD >DoS攻击防范：</TD><TD><input type=\"radio\" value=1 name=\"dosAttack\" Checked onclick="showDosOpt(false);">不启用<input type="radio" value="2" name="dosAttack"  onclick="showDosOpt(true);">启用</TD></TR>');
+document.write('<TR><TD colspan=2>&nbsp;</TD></TR>');
+document.write('<TR><TD >开启ICMP-FLOOD攻击过滤：</TD><td><input name="bIcmpFlood" type="checkbox" value="2"  ></td></TR>');
+document.write('<TR><TD >ICMP-FLOOD数据包阈值：（5～3600）</TD><TD><input name="usIcmpFlood" type="text" class="text" value="50" size="6" maxlength="5">&nbsp;包/秒</TD></TR> ');
+document.write('<TR><TD colspan=2>&nbsp;</TD></TR>');
+document.write('<TR><TD >开启UDP-FLOOD过滤：</TD><td><input name="bUdpFlood" type="checkbox" value="2"  ></td></TR>');
+document.write('<TR><TD >UDP-FLOOD数据包阈值：（5～3600）</TD><TD><input name="usUdpFlood" type="text" class="text" value="500" size="6" maxlength="5">&nbsp;包/秒</TD></TR>');
+document.write('<TR><TD colspan=2>&nbsp;</TD></TR>');
+document.write('<TR><TD >开启TCP-SYN-FLOOD攻击过滤：</TD><td><input name="bTcpSynFlood" type="checkbox" value="2"  ></td></TR>');
+document.write('<TR><TD >TCP-SYN-FLOOD数据包阈值：（5～3600）</TD><TD><input name="usTcpSynFlood" type="text" class="text" value="50" size="6" maxlength="5">&nbsp;包/秒</TD></TR>');
+document.write('<TR><TD colspan=2>&nbsp;</TD></TR>');
+document.forms[0].interval.value =advPara[2];
+if (advPara[3] == 0)	
+{
+	document.forms[0].dosAttack[0].checked =true;
+}
+else	
+{
+	document.forms[0].dosAttack[1].checked =true;	
+}	
+document.forms[0].bIcmpFlood.checked =advPara[4];
+document.forms[0].usIcmpFlood.value =advPara[5];
+document.forms[0].bUdpFlood.checked =advPara[6];
+document.forms[0].usUdpFlood.value =advPara[7];
+document.forms[0].bTcpSynFlood.checked =advPara[8];
+document.forms[0].usTcpSynFlood.value =advPara[9];	}
+</SCRIPT><TR><TD width="218">忽略来自WAN口的Ping：</TD>
+<TD width="176"><INPUT name="ping" type="checkbox" id="ping" value="2"  ></TD></TR>
+<SCRIPT language="JavaScript">
+document.forms[0].ping.checked =advPara[10];
+if (advPara[1]) {
+document.write('<TR><TD  width="218">禁止来自LAN口的Ping包通过路由器：</TD><td width="176"><input name=lanPing type=checkbox value=2> （防范冲击波病毒）</td></TR>');
+document.forms[0].lanPing.checked =advPara[11];}
+</SCRIPT>
+</TABLE>
+</TD></TR>
+</TABLE> 
+</TD><TD class="vline" rowspan="15"><BR> </TD></TR>
+<TR><TD class="hline"><IMG src="/images/empty.gif" width="1" height="1"></TD></TR>
+<TR><TR><TD height="30" class="tail"> &nbsp; <INPUT name="Save" type="submit" class="button" id="Submit" value="保 存" onClick="return doSubmit();">&nbsp;
+<INPUT name="Help" type="button" class="button" id="Help" onClick="doHelp();" value="帮 助">
+<SCRIPT language="JavaScript">
+if (advPara[0]) {
+	document.write('<input name=Show type=button class=button onClick=\"doShow();\" value=\"DoS 被禁主机列表\">');}
+</SCRIPT>
+</TD></TR><TR><TD class="hline"><IMG src="/images/empty.gif" width="1" height="1"></TD></TR>
+</TABLE></TD></TR></TABLE></FORM></CENTER></BODY><HEAD><META http-equiv="pragma" content="no-cache"></HEAD></HTML>

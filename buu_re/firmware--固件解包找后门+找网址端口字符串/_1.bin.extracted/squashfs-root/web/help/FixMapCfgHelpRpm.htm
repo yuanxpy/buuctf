@@ -1,0 +1,18 @@
+
+<SCRIPT language=javascript src="/dynaform/help.js" type=text/javascript></SCRIPT>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<SCRIPT type="text/javascript">
+dohelp("帮助－静态地址分配", 160, 450);
+	begin();
+		writeline("为了方便您对局域网中计算机的IP地址进行控制，本路由器内置了静态地址分配功能。静态地址分配表可以为具有指定MAC地址的计算机预留静态的IP地址。之后，此计算机请求DHCP服务器获得IP地址时，DHCP服务器将给它分配此预留的IP地址。");
+	end();
+	begin();
+		writeline("MAC地址：", "欲预留IP地址的计算机的MAC地址。");
+		writeline("IP地址：", "预留的IP地址。");
+		writeline("状态：", "当前条目是否生效。");
+	end();				
+done();
+</SCRIPT>
+</body></html>

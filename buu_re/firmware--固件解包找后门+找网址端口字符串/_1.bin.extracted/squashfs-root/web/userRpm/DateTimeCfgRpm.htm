@@ -1,0 +1,239 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doHelp(){window.location.href="/help/DateTimeCfgHelpRpm.htm";}
+function doGetTime(){location.href="GetGMTRpm.htm?GetTime=GetTime";}
+function doSubmit()
+{
+    for(var i = 1; i < 7; i ++)
+    {
+        if(document.forms[0].elements[i].value == "")
+        {
+            alert("请输入时间！");
+            var element = document.forms[0].elements[i];
+            if(element)
+            {
+                element.focus();element.select();
+            }
+            return false;
+        }
+    }
+    if(!is_number(document.forms[0].year.value,1900,2037))
+    {
+        alert("年份输入不正确，请重新输入(1970-2037)！");
+        var element =document.forms[0].year;
+        if(element)
+        {
+            element.focus();element.select();
+        }
+            return false;
+    }
+    if(!is_number(document.forms[0].month.value,1,12))
+    {
+        alert("月份输入不正确，请重新输入(1-12)！");
+        var element =document.forms[0].month;
+        if(element)
+        {
+            element.focus();
+            element.select();
+        }
+        return false;
+    }
+    if(!is_number(document.forms[0].day.value,1,31))
+    {
+        alert("日期输入不正确，请重新输入(1-31)！");
+        var element =document.forms[0].day;
+        if(element)
+        {
+            element.focus();
+            element.select();
+        }
+        return false;
+    }
+    if(!is_number(document.forms[0].hour.value,0,24))
+    {
+        alert("小时输入不正确，请重新输入(0-24)！");
+        var element =document.forms[0].hour;
+        if(element)
+        {
+            element.focus();
+            element.select();
+        }
+        return false;
+    }
+    if(!is_number(document.forms[0].minute.value,0,60))
+    {
+        alert("分钟输入不正确，请重新输入(0-60)！");
+        var element =document.forms[0].minute;
+        if(element)
+        {   
+            element.focus();
+            element.select();
+        }
+        return false;
+    }
+    if(!is_number(document.forms[0].second.value,0,60))
+    {
+        alert("秒钟输入不正确，请重新输入(0-60)！");
+        var element =document.forms[0].second;
+        if(element)
+        {
+            element.focus();
+            element.select();
+        }
+        return false;
+    }
+	
+	if((document.forms[0].year.value!=timeInf[2])||
+		(document.forms[0].month.value!=timeInf[0])||
+		(document.forms[0].day.value!=timeInf[1])||
+		(document.forms[0].hour.value!=timeInf[3])||
+		(document.forms[0].minute.value!=timeInf[4])||
+		(document.forms[0].second.value!=timeInf[5]))
+	{
+		document.forms[0].isTimeChanged.value = "1";
+	}										
+	
+    if(document.forms[0].ntpA.value == "")
+    {
+		document.forms[0].ntpA.value = "0.0.0.0";
+    }
+
+    if(document.forms[0].ntpB.value == "")
+    {
+		document.forms[0].ntpB.value = "0.0.0.0";
+	}
+	if(is_domain(document.getElementById("ntpB").value)==false)
+	{
+		var element = document.getElementById("ntpB");
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	if(is_domain(document.getElementById("ntpA").value)==false)
+	{
+		var element = document.getElementById("ntpA");
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+    return true;
+}
+//--></script></head>
+<body>
+
+<center>
+<form action="DateTimeCfgRpm.htm" enctype="multipart/form-data" method="get" >
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">时间设置</td>
+</tr><tr><td colspan="2">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br> </td>
+<td width="500">
+<table width="420" border="0" align="center" cellpadding="0" cellspacing="2" class="space">
+<tr> <td>本页设置路由器的系统时间，您可以选择自己设置时间或者从互联网上获取标准的GMT时间。</td></tr>
+</table> 
+<table width="420" border="0" align="center" cellpadding="2" cellspacing="2" class="space">
+<tr> <td>注意：关闭路由器电源后，时间信息会丢失，当您下次开机连上Internet后，路由器将会自动获取GMT时间。您必须先连上Internet获取GMT时间或到此页设置时间后，其他功能（如上网控制）中的时间限定才能生效。</td></tr>
+</table>
+<table width="420" border="0" align="center" cellpadding="0" cellspacing="2" class="space">
+<tr><td>时区： <select name="timezone" id="timezone" class="list">
+<option value="0">（GMT-12:00）埃尼威托克，夸贾林岛</option>
+<option value="60" >（GMT-11:00）中途岛，萨摩亚群岛</option>
+<option value="120" >（GMT-10:00）夏威夷</option>
+<option value="180" >（GMT-09:00）阿拉斯加</option>
+<option value="240" >（GMT-08:00）太平洋时间（美国和加拿大）；蒂华</option>
+<option value="300" >（GMT-07:00）山地时间（美国和加拿大）；亚利桑那</option>
+<option value="360" >（GMT-06:00）中部时间（美国和加拿大）；中美洲，墨西哥城</option>
+<option value="420" >（GMT-05:00）东部时间（美国和加拿大）；波哥达，利马</option>
+<option value="480" >（GMT-04:00）大西洋时间（加拿大）；加拉加斯，圣地亚哥</option>
+
+<OPTION value="510">（GMT-03:30） 纽芬兰</OPTION>
+
+<option value="540" >（GMT-03:00）巴西利亚，布宜诺斯艾利斯，乔治敦，格陵兰</option>
+<option value="600" >（GMT-02:00）中大西洋</option>
+<option value="660" >（GMT-01:00）佛得角群岛，亚速尔群岛</option>
+<option value="720" >（GMT）格林威治平时；都柏林，爱丁堡，伦敦，里斯本</option>
+<option value="780" >（GMT＋01:00）阿姆斯特丹，柏林，罗马，斯得哥尔摩，巴黎</option>
+<option value="840" >（GMT＋02:00）开罗，雅典，伊斯坦布尔，明斯克，耶路撒冷</option>
+<option value="900" >（GMT＋03:00）巴格达，科威特，利雅得，莫斯科，圣彼得堡</option>
+
+<OPTION value="930" >（GMT＋03:30） 德黑兰</OPTION>
+
+<option value="960" >（GMT＋04:00）阿布扎比，马斯喀特，巴库，第比利斯，埃里温</option>
+
+<OPTION value="990" >（GMT＋04:30） 喀布尔</OPTION>
+
+<option value="1020" >（GMT＋05:00）叶卡捷林堡，伊斯兰堡，卡拉奇，塔什干</option>
+
+<OPTION value="1050" >（GMT＋05:30） 马德拉斯，加尔各答，孟买，新德里</OPTION>
+<OPTION value="1065" >（GMT＋05:45） 加德满都</OPTION>
+
+<option value="1080" >（GMT＋06:00）阿拉木图，新西伯利亚，阿斯塔纳，达卡</option>
+
+<OPTION value="1110" >（GMT＋06:30） 仰光</OPTION>
+
+<option value="1140" >（GMT＋07:00）曼谷，雅加达，河内</option>
+<option value="1200" >（GMT＋08:00）北京，重庆，乌鲁木齐，香港特别行政区，台北</option>
+<option value="1260" >（GMT＋09:00）东京，大坂，札幌，汉城，雅库茨克</option>
+
+<OPTION value="1290" >（GMT＋09:30） 阿德莱德</OPTION>
+
+<option value="1320" >（GMT＋10:00）布里斯班，关岛，堪培拉，墨尔本，悉尼</option>
+<option value="1380" >（GMT＋11:00）马加丹，索罗门群岛，新喀里多尼亚</option>
+<option value="1440" >（GMT＋12:00）富士，勘察加半岛，马绍尔群岛，惠灵顿</option>
+<option value="1500" >（GMT＋13:00）努库阿洛法</option>
+</select></td></tr>
+<tr><td>日期： 
+<input name="year" type="text" class="text" id="year" value="2003" size="4" maxlength="4"> 年 
+<input name="month" type="text" class="text" id="month" value="5" size="2" maxlength="2"> 月 
+<input name="day" type="text" class="text" id="day" value="1" size="2" maxlength="2"> 日 
+</td></tr>
+<tr><td>时间： 
+<input name="hour" type="text" class="text" id="hour" value="9" size="2" maxlength="2"> 时 
+<input name="minute" type="text" class="text" id="minute" value="5" size="2" maxlength="2"> 分 
+<input name="second" type="text" class="text" id="second" value="27" size="2" maxlength="2"> 秒 
+</td></tr>
+<TR><TD class=Item>优先使用NTP服务器1：&nbsp;&nbsp;<input name="ntpA" type="text" class="text" value="" size="31" maxlength="31"></TD>
+</TR>
+<TR><TD class=Item>优先使用NTP服务器2：&nbsp;&nbsp;<input name="ntpB" type="text" class="text" value="" size="31" maxlength="31"></TD>
+</TR>
+<tr><td height="30">
+<input name="GetGmtTime" type="submit" class="button" id="Submit"  value="获取GMT时间" >
+（仅在连上互联网后才能获取GMT时间）</td></tr>
+
+</table>
+
+</td>
+<td class="vline" rowspan="15"><br> </td></tr>
+<tr> <td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td class="tail"> &nbsp; 
+<input name="Save" type="submit" class="button" id="Submit" value="保 存" onClick="return doSubmit();">&nbsp;
+<input name="Help" type="button" class="button" id="Help" onClick="doHelp();" value="帮 助"></td></tr>
+<input type="hidden" name="isTimeChanged" id="isTimeChanged" value="0"></td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr></table>
+</form></center></body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+
+<script language="JavaScript">
+document.forms[0].timezone.value = timeInf[6];
+document.forms[0].month.value = timeInf[0];
+document.forms[0].day.value = timeInf[1];
+document.forms[0].year.value = timeInf[2];
+document.forms[0].hour.value = timeInf[3];
+document.forms[0].minute.value = timeInf[4];
+document.forms[0].second.value = timeInf[5];
+if (timeInf[7] == "")
+timeInf[7] = "0.0.0.0";
+if (timeInf[8] == "")
+timeInf[8] = "0.0.0.0";
+document.forms[0].ntpA.value = timeInf[7];
+document.forms[0].ntpB.value = timeInf[8];
+</script>

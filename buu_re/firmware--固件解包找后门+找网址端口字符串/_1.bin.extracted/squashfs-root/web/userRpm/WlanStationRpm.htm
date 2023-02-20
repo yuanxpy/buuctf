@@ -1,0 +1,83 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doHelp(){location.href="/help/WlanStationHelpRpm.htm";}
+function doPage(nPage){location.href="/userRpm/WlanStationRpm.htm?Page="+nPage;}
+var wlanStatusStringArray = new Array( 
+"认证",
+"连接",
+"连接(WPA)",
+"连接(WPA-PSK)",
+"连接(WPA2)",
+"连接(WPA2-PSK)",
+"802-1X",
+"加入",
+"启用",
+"关闭",
+"断开"
+);
+//--></script></head>
+
+<BODY>
+<center><form action="WlanStationRpm.htm" enctype="multipart/form-data" method="get">
+<table width="502" border="0" cellpadding="0" cellspacing="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">无线网络主机状态</td></tr>
+<tr><td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="1" rowspan="15" class="vline"><br></td><td width="500">
+<table width="450" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本页显示连接到本无线网络的所有主机的基本信息。</td></tr>
+</table> 
+<table width="450" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<TR><TD width="140">当前所连接的主机数：<script language="JavaScript">document.write('<b>'+wlanHostPara[0]+'</b>');  </script></TD><TD width="320">
+&nbsp;&nbsp;&nbsp;<input name="Refresh" type="button" class="button" value="刷 新" onClick ="doPage(curPage);">
+</TD></TR>
+</table> 
+<table width="450" border="0" align="center" class="space"  cellspacing="0" cellpadding="0">
+<TR><TD colspan=2><table border=1 width="450" align="center" cellspacing="0" cellpadding="0">
+<TR align="center"><TD>ID</TD><TD >MAC地址</TD><td >当前状态</td><TD >接收数据包数</TD><TD >发送数据包数</TD></TR>
+<script language="JavaScript">
+var listLen = (wlanHostPara[0]-(wlanHostPara[1]-1)*wlanHostPara[2]);
+var showNextPage = 0;
+if (listLen > wlanHostPara[2]){	
+	listLen = wlanHostPara[2];	showNextPage = 1;}
+
+if (listLen >0)	{
+var row = 0;
+var statusIndex;
+var idStart = (wlanHostPara[1]-1)*wlanHostPara[2];
+
+for(var i = 0; i < listLen ; i++)
+    {
+    	row = i * wlanHostPara[4];
+    	statusIndex = hostList[row+1];
+    	idStart++;
+    	document.write('<tr align="center"><td >' + idStart + '</td>');
+    	document.write('<td >' + hostList[row] + '</td>');
+    	document.write('<td >' + wlanStatusStringArray[statusIndex] + '</td>');
+    	document.write('<td >' + hostList[row+2] + '</td>');
+    	document.write('<td >' + hostList[row+3] + '</TD></TR>');
+    }
+}
+//else
+	//document.write('<tr align="center"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></TR>');
+</script>
+</table></TD></TR></table>
+</td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+&nbsp;<input name="previous" type="button" class="button" onClick="doPage(prePage);" value="上一页">
+&nbsp;<input name="next" type="button" class="button" onClick="doPage(nextPage);" value="下一页">
+&nbsp;<input name="help" type="button" class="button" id="help" value="帮 助" onClick="doHelp();">
+</td></tr><tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr></table>
+</form></center></BODY><head><meta http-equiv="pragma" content="no-cache"></head></HTML>
+<script language="JavaScript"><!-- 
+var curPage = wlanHostPara[1];
+var prePage = (wlanHostPara[1] == 1)?1:wlanHostPara[1]-1;
+var nextPage = wlanHostPara[1]+1;
+document.forms[0].previous.disabled = (wlanHostPara[1] < 2)?true:false;
+document.forms[0].next.disabled = (showNextPage == 0)?true:false;
+if(window.parent != window)
+	window.setTimeout("doPage(curPage)",wlanHostPara[3]);
+//--></script>

@@ -1,0 +1,30 @@
+
+<SCRIPT language=javascript src="/dynaform/help.js" type=text/javascript></SCRIPT>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<SCRIPT type="text/javascript">
+dohelp("帮助－高级安全设置", 190, 572);
+	begin();
+		writeline("DoS（Denial of Service，拒绝服务）是一种利用合理的服务请求占用过多的服务资源，从而使合法用户无法得到服务响应的网络攻击行为。在正常情况下，路由器的速度将会因为这种攻击导致运行速度降低，庆幸的是，本路由器针对当前几种常见的DoS攻击手段都提供了防范措施。");
+	end();
+	begin();
+		writeline("数据包统计时间间隔：", "对当前这段时间里的数据进行统计，如果统计得到的某种数据包（例如UDP FLOOD）达到了指定的阈值，那么系统将认为UDP-FLOOD 攻击已经发生，如果UDP-FLOOD过滤已经开启，那么路由器将会停止接收该类型的数据包,从而达到防范攻击的目的。");
+		blank();
+		writeline("DoS攻击防范：", "这是开启以下所有防范措施的总开关，只有选择此项后，以下的几种防范措施才能生效。");
+		blank();
+		writeline("开启ICMP-FLOOD攻击过滤：", "如果需要防范ICMP-FLOOD攻击，请选择此项。");
+		writeline("ICMP-FLOOD数据包阈值：", "当开启ICMP-FLOOD功能时，如果ICMP包到达这个指定的数目，防范措施则立即启动。 ");
+		blank();
+		writeline("开启UDP-FLOOD攻击过滤：", "如果需要防范UDP-FLOOD，请选择此项。");
+		writeline("UDP-FLOOD数据包阈值", "当开启UDP-FLOOD功能时，如果UDP包到达这个指定的数目，防范措施则立即启动。");
+		blank();
+		writeline("开启TCP-SYN-FLOOD攻击过滤：", "如果需要防范TCP-SYN-FLOOD，请选择此项。");
+		writeline("TCP-SYN-FLOOD数据包阈值：", "当开启TCP-SYN-FLOOD功能时，如果TCP的SYNC包到达这个指定的数目，防范措施则立即启动。");
+		blank();
+		writeline("忽略来自WAN口的Ping：", "	当开启该功能后，广域网的计算机将不能Ping到本路由器。");
+		writeline("禁止来自LAN口的Ping包通过路由器：", "当开启该功能后，局域网的计算机将不能Ping到广域网的计算机。");
+	end();				
+done();
+</SCRIPT>
+</body></html>

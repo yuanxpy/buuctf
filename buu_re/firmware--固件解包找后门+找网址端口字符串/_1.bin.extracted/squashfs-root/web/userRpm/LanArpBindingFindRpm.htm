@@ -1,0 +1,223 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="Javascript"><!--
+var LP = location.pathname;
+function doBack(nPage)
+{
+	location.href="LanArpBindingRpm.htm?Page="+nPage;
+}
+function doAll(val){if(val=="DelAll"){if(!confirm("删除所有条目?")) return;} location.href="LanArpBindingRpm.htm?doAll="+val+"&Page="+curPage;}
+function doAdd(nPage){location.href="LanArpBindingRpm.htm?Add=Add&Page="+nPage;}
+function doPage(nPage){location.href=LP + "?Page="+nPage;}
+function doHelp(){location.href="/help/LanArpBindingHelpRpm.htm";}
+function is_spmac(mac_string)
+{
+	if(mac_string == "00-00-00-00-00-00")
+	{
+		alert("无效MAC地址，请重新输入！");
+		return false;
+	}
+	var ch = "Ff-";
+	for (var i = 0; i < mac_string.length; i++)
+	{
+		c = mac_string.charAt(i);
+		if(ch.indexOf(c) == -1)
+		return true;
+	}
+	alert("无效MAC地址，请重新输入！");
+	return false;
+}
+function doFindbyIpMac(ip, mac)
+{
+	var method = 'strict';
+	var str = '';
+	if(!ip)
+		method = 'bymac';
+	else
+		str += '&ip='+ ip;
+	if(!mac)
+	{
+		if(method == 'bymac')
+		{
+			alert("MAC地址和IP地址不能同时为空\n");
+			return false;
+		}
+		else
+			method = 'byip';
+	}
+	else
+		str += '&mac=' + mac;
+	if(document.forms[0].Mac.value != "")
+	{
+		if(!is_macaddr(document.forms[0].Mac.value))
+		{
+			var element = document.forms[0].Mac;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		if(!is_spmac(document.forms[0].Mac.value))
+		{
+			var element = document.forms[0].Mac;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+	}
+	if(document.forms[0].Ip.value != "")
+	{
+		if(!is_ipaddr(document.forms[0].Ip.value))
+		{
+			var element =document.forms[0].Ip;
+			if(element)
+			{
+				element.focus();element.select();
+			}
+			return false;
+		}
+	}
+	location.href= LP + "?findmethod=" + method + str;
+}
+function ResetStatus(strInfo){window.status='';return true;}
+function enableId(id){
+	var enable;
+	if(document.forms[0].elements['enable'+id].checked == true)
+		enable = 1;
+	else
+		enable = 0;
+	location.href = LP + "?enable=" + enable + "&enableId=" + id ;//+"&Page=" + arpFixmapFindPara[1];
+}
+function doSave()
+{
+	var DF = document.forms[0];
+	var n = DF.elements['arpServer'][1].checked?1:0;
+	location.href = LP + "?arpServer=" + n +"&Page=" + arpFixmapFindPara[1];
+	return true;
+}
+//--></script></head>
+<body><center><form action="LanArpBindingFindRpm.htm" enctype="multipart/form-data" method="get" >
+<table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="500" align="left" valign="middle" class="title">静态ARP条目查找</td></tr>
+<tr><td colspan="2"><table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="518">
+<table width="470" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>查找指定MAC地址和(或)IP地址的静态绑定条目</td></tr></table>
+<table width="470" border="1" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>
+<table width="450" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr>
+<TR><TD >MAC 地址：</TD><TD><input name="Mac" type="text" class="text" value="" size="18" maxlength="17"></TD></TR>
+<TR><TD height="10" colspan=2></TD></TR>
+<TR><TD>IP 地址：</TD><TD><input name="Ip" type="text" class="text" value="" size="16" maxlength="15"></TD></TR>
+<TR><TD height="10" colspan=2></TD></TR>
+<td>
+&nbsp;<input type="button" value="查 找" name="find" class="button" onclick="doFindbyIpMac(document.forms[0].Ip.value, document.forms[0].Mac.value);">
+</td>
+</tr></table>
+</tr></table>
+<table width="470" border="1" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td align="center">ID</td>
+<td align="center" width="180">MAC地址</td>
+<td align="center" width="130">IP地址</td>
+<td align="center" nowrap>绑定</td><td align="center">链接</td></tr>
+<script language="JavaScript">
+if (arpFixmapFindPara[1] > 0)
+{
+	var row = 0;
+	var idStart = 0;
+	var DisplayId = 0;
+	for(var i = 0; i < arpFixmapFindPara[1]; i++)
+	{
+		idStart++;
+		row = i * arpFixmapFindPara[2];
+		var modifyId = row + 3;
+		DisplayId = arpFixmapFindList[modifyId] + 1;
+		document.write('<tr><td align="center">' + DisplayId + '</td>');
+		document.write('<td align="center">' + arpFixmapFindList[row] + '</td>');
+		document.write('<td align="center">'
+					 + arpFixmapFindList[row+1] + '&nbsp;</td>');
+		var enableStatus = arpFixmapFindList[row+2]?"checked":"";
+		document.write('<td align="center"><input disabled type="checkbox" '
+					 + enableStatus +' name="enable' + arpFixmapFindList[modifyId]
+					 + '" value="1" onClick="enableId('
+					 + arpFixmapFindList[modifyId]
+					 + ');"></td>');
+		document.write('<td align="center"><a href=\"LanArpBindingRpm.htm?Page='
+						+ ((arpFixmapFindList[modifyId]-arpFixmapFindList[modifyId]%8)/8+1)
+						+ '&EntryIndex='
+						+ arpFixmapFindList[modifyId]
+						+'\" OnMouseOver=\"return ResetStatus(\'delete\');\">转至该页</a></td></tr>');
+		/*
+		document.write('<td align="center"><a href=\"LanArpBindingRpm.htm?Modify='
+						+arpFixmapFindList[modifyId]
+						+'\" OnMouseOver=\"return ResetStatus(\'modify\');\">修改</a>&nbsp;<a href=\"LanArpBindingRpm.htm?Del='
+						+arpFixmapFindList[modifyId]
+						+'\" OnMouseOver=\"return ResetStatus(\'delete\');\">删除</a></td></tr>');
+		*/
+	}
+}
+else
+{
+	document.write('<td align="center" colspan = 5>' + '当前查找结果为空' + '</td>');
+}
+</script>
+</table>
+<table width="470" align="center" border="0" cellpadding="0" cellspacing="0" class="space">
+<tr><td colspan="3" width="468">
+<!--
+<input type="button" value="增加单个条目" name="Add" class="button" onClick="doAdd(curPage);">&nbsp;
+<input name="find" type="button" class="button" value="查找单个条目" onClick="doFind();">&nbsp;
+-->
+</td></tr>
+</table>
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">&nbsp;
+<!--
+<input name="previous" type="button" class="button" onClick="doPage(prePage);" value="上一页" Disabled>
+&nbsp;<input name="next" type="button" class="button" onClick="doPage(NextPage);" value="下一页" Disabled>
+&nbsp;当前第
+<select onchange="doPage(document.forms[0].selPage.value);" size="1" name="selPage" class="list">
+<script language="JavaScript">
+var pageNum = (arpFixmapFindPara[5]+7)/8;
+var pIndex = 1;
+for(; pIndex <= pageNum; pIndex++)
+{
+	document.write("<option value='" + pIndex + "' selected>"+ pIndex +"</option>");
+}
+</script>
+</select>
+页
+&nbsp; <input name="Page" type="hidden" value="1">
+-->
+&nbsp;<input type="button" value="返 回" name="Return" class="button" onClick="doBack(1);">
+&nbsp;<input name="help" type="button" class="button" onClick="doHelp();" value="帮助"></td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr></table></form></center>
+<script language="JavaScript">
+var df = document.forms[0];
+if(arpFixmapFindList[0] == 0)
+{
+	df.elements['Mac'].value = '';
+	df.elements['Ip'].value = '';
+}
+else
+{
+	if(arpFixmapFindPara[3] & 0x1)//bymac
+	{
+		df.elements['Mac'].value = arpFixmapFindList[0];
+	}
+	if(arpFixmapFindPara[3] &0x2)//byip
+	{
+		df.elements['Ip'].value = arpFixmapFindList[1];
+	}
+}
+</script>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>

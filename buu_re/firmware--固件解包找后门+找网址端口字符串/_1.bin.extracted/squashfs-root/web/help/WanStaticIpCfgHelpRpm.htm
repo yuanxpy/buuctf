@@ -1,0 +1,26 @@
+
+<SCRIPT language=javascript src="/dynaform/help.js" type=text/javascript></SCRIPT>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<SCRIPT type="text/javascript">
+dohelp("帮助－静态IP设置");
+	begin();
+		writeline("WAN口连接类型：", "请根据您的Internet服务供应商（ISP）所提供的上网方式来选择相应的连接类型。例如，如果您可以从ISP获取由DHCP服务器自动分配的IP地址，请选择“动态IP”；如果您拥有ISP提供的固定IP地址，请选择“静态IP”；如果您的上网的方式为ADSL虚拟拨号方式，请选择“PPPoE”。");		
+		blank();
+		writeline("IP地址：", "	本路由器对广域网的IP地址，即ISP提供给您的IP地址，不清楚可以向ISP询问。");
+		writeline("子网掩码：", "本路由器对广域网的子网掩码，即ISP提供给您的子网掩码，一般为255.255.255.0。");
+		writeline("网关：", "填入ISP提供给您的网关，不清楚可以向ISP询问。");
+		blank();
+		writeline("数据包MTU：", "输入范围是576 ～ 1500，缺省为1500。");
+		writeline("DNS服务器：", "	填入ISP提供给您的DNS服务器，不清楚可以向ISP询问。");
+		writeline("备用DNS服务器：",  "可选项，如果ISP提供给您了两个DNS服务器，则您可以把另一个DNS服务器的IP地址填于此处。 ");		
+	end();
+	begin();
+		writeline("按钮功能",  "");
+		blank();
+		writeline("自动检测：", "如果您不清楚应选择何种WAN口连接类型，请点击此按钮来查看ISP所提供的上网方式。检测结果仅供参考，详情请咨询您的ISP。");
+	end();			
+done();
+</SCRIPT>
+</body></html>

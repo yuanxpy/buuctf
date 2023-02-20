@@ -1,0 +1,168 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript" src="/dynaform/custom.js" type="text/JavaScript"></script>
+<SCRIPT language="JavaScript"><!-- 
+var g_wpsStatus = wpsInf[0];
+var g_wpsPIN = wpsInf[1];
+var g_enWlan = wpsInf[2];
+
+function doSubmit()
+{
+    alert("注意：只有在您重启路由器后，" + str_wps_name_long + "更改才能生效！");
+	return true;
+}
+function doHelp()
+{
+    location.href = "/help/WlanWpsHelpRpm.htm";
+}
+function doOnClick()
+{
+    location.href = "/userRpm/WpsCfgRpm.htm?NewDev=ZQQ";
+}
+
+function onClickPinLockCheckbox()
+{
+	var isLocked;
+	if (document.forms[0].pin_lock.checked == true)
+	{
+		isLocked = 1;		
+	}
+	else
+	{
+		isLocked = 0;		
+	}
+	location.href = "/userRpm/WpsCfgRpm.htm?is_pin_locked=" + isLocked;
+}
+function doDefPin()
+{
+	location.href = "/userRpm/WpsCfgRpm.htm?DefPin=DefPin";
+}
+
+function doNewPin()
+{
+	location.href = "/userRpm/WpsCfgRpm.htm?NewPin=NewPin";
+}
+//--></SCRIPT></HEAD>
+<body ><center><form action="WpsCfgRpm.htm" enctype="multipart/form-data" method="get" onsubmit = "doSubmit()">
+<table width="502" border="0" cellspacing="0" cellpadding="0"><tr><td width="7" class="title"><IMG height=24 src="/images/arc.gif" width=7></td>
+<td width="495" align="left" valign="center" class="title" id = "tag_title">
+	<SCRIPT language="JavaScript">
+		document.write(str_wps_name_long);
+	</SCRIPT>
+</td></tr><tr> <td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br> </td><td width="500">
+<table width="450" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+</table>
+<TABLE width=450 border=0 align="center" cellpadding="0" cellspacing="0" class="space"><INPUT type=hidden name=address> 
+
+<TR id="enWlan"><TD colspan=2><B><font color="#FF0000" id="tag_allow">无线功能未启用，<A href="/userRpm/WlanBandRpm.htm">点击这里</A>打开路由器无线功能。</font></B></TD></TR>
+<TR id="enWlanBr"><TD colspan=2>&nbsp;</TD></TR>
+
+<TR>
+	<TD class="Item"><SCRIPT language="JavaScript">document.write(str_wps_name_short);</SCRIPT>功能：</TD>
+	<TD class="emp">
+		<SCRIPT language="JavaScript">
+		if (g_wpsStatus == 0)
+		{
+			document.write("已关闭");
+		}
+		else
+		{
+			document.write("已开启");
+		}
+		</SCRIPT>
+		&nbsp;&nbsp;
+		<SCRIPT language="JavaScript">
+		document.write('<INPUT name=\"EnWps\"  type=\"submit\" class=\"button\" value=\"启用'+ str_wps_name_short + '\">');
+		document.write('<INPUT name=\"DisWps\" type=\"submit\" class=\"button\" value=\"关闭'+ str_wps_name_short + '\">');
+		</SCRIPT>
+		
+	</TD>
+</TR>
+<TR>
+	<TD></TD>
+      <TD><INPUT type="checkbox" name="pin_lock" onClick = "onClickPinLockCheckbox();"> <SPAN id="t_withpsw">&nbsp;锁定路由PIN码</SPAN></TD>
+
+    </TR>
+    <TR>
+<TD colspan=2 class=blue>&nbsp;</TD></TR>
+
+<!--<TR><TD class="Item">PIN Settings</TD><TD></TD></TR>-->
+
+<TR>
+	<TD class="Item">当前PIN码：</TD>
+	<TD>
+		<SCRIPT>
+		document.write(g_wpsPIN);
+		</SCRIPT>
+		&nbsp;&nbsp;
+		<INPUT name="DefPin" type="button" class="button" value="恢复初始PIN码" onclick="doDefPin();">
+		<INPUT name="NewPin" type="button" class="button" value="产生新的PIN码" onclick="doNewPin();">
+	</TD>
+</TR>
+
+<TR><TD colspan=2>&nbsp;</TD></TR>
+
+<!--<TR><TD class="Item">Add a new device</TD><TD>&nbsp;</TD></TR>-->
+
+<TR>
+	<TD class="Item">添加新设备：</TD>
+	<TD>
+		<INPUT name="NewDev" type="button" class="button" value="添加设备" onclick = "doOnClick()">
+	</TD>
+</TR>
+
+<script language="JavaScript">
+if(wpsInf[3] == 1)
+{
+    document.write('<TR><TD colspan=2></TD></TR>');
+    document.write('<TR><TD colspan=2></BR></TD></TR>');
+    document.write('<TR><TD COLSPAN=2><FONT color=#FF0000>您已经更改了无线设置，</FONT></span><A href="../userRpm/SysRebootRpm.htm" id="t_click">重启</A><span id="t_to_reboot" style="color:#FF0000"><FONT color=#FF0000>后生效。</FONT> </TD></TR>'); 
+}
+</script>
+</TBODY></TABLE>
+
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td  class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr><tr>
+<td height="30" class="tail">&nbsp;&nbsp; 
+<INPUT class="button" type="button" name="Help"  value="帮 助"  onclick="return doHelp();">&nbsp;
+</td></tr>
+<tr><td class="hline"><IMG height=1 src="/images/empty.gif" width=1></td></tr>
+</table></td></tr></table>
+</form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+
+<SCRIPT language="JavaScript">
+if ((g_enWlan == 0) || (g_wpsStatus == 0) || (wpsInf[5]))
+{
+	document.forms[0].DisWps.disabled = true;
+	document.forms[0].EnWps.disabled = true;
+	document.forms[0].DefPin.disabled = true;
+	document.forms[0].NewPin.disabled = true;
+	document.forms[0].NewDev.disabled = true;
+	document.forms[0].pin_lock.disabled = true;
+}
+
+if (g_wpsStatus == 0)
+{
+	document.forms[0].DisWps.style.display = "none";
+}
+else
+{
+	document.forms[0].EnWps.style.display = "none";
+}
+if(wpsInf[5])
+{
+	document.forms[0].EnWps.disabled = true;
+}
+else
+{
+	document.forms[0].EnWps.disabled = false;
+}
+if (g_enWlan)
+{
+	document.getElementById("enWlan").style.display = "none";
+	document.getElementById("enWlanBr").style.display = "none";
+}
+document.forms[0].pin_lock.checked = wpsInf[4];
+</SCRIPT>

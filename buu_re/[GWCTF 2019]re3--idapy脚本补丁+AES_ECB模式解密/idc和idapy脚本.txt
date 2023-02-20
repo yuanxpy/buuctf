@@ -1,0 +1,21 @@
+idc
+
+#include <idc.idc>
+
+static main()
+{
+    auto addr = 0x402219;
+    auto i;
+    for(i = 0; i <= 223; ++i){
+        PatchByte(addr+i,Byte(addr+i)^0x99);
+    }
+}
+
+
+idapy
+
+addr = 0x402219
+for i in range(224):
+    idc.PatchByte(addr+i,idc.Byte(addr+i)^0x99)
+
+   

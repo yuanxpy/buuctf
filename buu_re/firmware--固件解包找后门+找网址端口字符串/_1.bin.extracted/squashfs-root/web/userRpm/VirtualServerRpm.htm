@@ -1,0 +1,113 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doAll(val)
+{
+     if(virServerPara[2] ==0 )	// not required
+    {
+        alert("虚拟服务器列表为空！");
+        return;
+    }
+    if(val=="DelAll"){if(!confirm("确定删除所有条目？")) return;}
+    location.href="/userRpm/VirtualServerRpm.htm?doAll="+val+"&Page="+curPage;
+}
+function doAdd(nPage){location.href="/userRpm/VirtualServerRpm.htm?Add=Add&Page="+nPage;}
+function doPage(nPage){location.href="VirtualServerRpm.htm?Page="+nPage;}
+function ResetStatus(strInfo){window.status=strInfo; return true;}
+var protocolList = new Array(
+"",
+"ALL",
+"TCP",
+"UDP"
+);
+function doHelp(){location.href="/help/VirtualServerHelpRpm.htm";}
+//--></script></head>
+<META content="MSHTML 6.00.2800.1106" name=GENERATOR></HEAD>
+
+<body><center><form action="VirtualServerRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="552" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="545" align="left" valign="middle" class="title">虚拟服务器</td></tr>
+<tr><td colspan="2"><table width="552" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br> </td>
+<td width="550"> <table width="470" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>虚拟服务器定义了广域网外部端口和局域网网络服务器之间的映射关系，所有对该广域网外部端口的访问将会被重定位给通过IP地址指定的局域网网络服务器。
+</td></tr>
+</table>
+<table width="470" border="1" align="center" cellpadding="0" cellspacing="0" class="space">
+<TR><TD align="center">ID</TD>
+<TD align="center">外部端口</TD>
+<TD align="center">内部端口</TD>
+<TD align="center">IP地址</TD>
+<TD align="center">协议</TD>
+<TD align="center">状态</TD>
+<TD align="center">编辑</TD></TR>
+<script language="JavaScript">
+if (virServerPara[2]>0){
+var row=0;
+var StatusString;
+var IdStart = (virServerPara[0]-1)*virServerPara[4];
+var modifyId;
+var protocolType;
+for (i=0;i< virServerPara[2];i++){
+	modifyId = IdStart;
+	IdStart++;
+	row = i*virServerPara[3];
+	StatusString = (virServerListPara[row+6]==0)?"失效":"生效";
+	protocolType = virServerListPara[row+5];
+	document.write('<tr><td align="center">'+ IdStart + '</td>');
+	if (virServerListPara[row]==virServerListPara[row+1])
+	{
+		document.write('<td align="center">'+ virServerListPara[row] +'</td>');
+	}
+	else {
+		document.write('<td align="center">'+ virServerListPara[row]+'-'+virServerListPara[row+1] +'</td>');
+	}
+	if (virServerListPara[row+2]==virServerListPara[row+3])
+	{
+		document.write('<td align="center">'+ virServerListPara[row+2] +'</td>');
+	}
+	else {
+		document.write('<td align="center">'+ virServerListPara[row+2]+'-'+virServerListPara[row+3] +'</td>');
+	}
+	document.write('<td align="center">'+ virServerListPara[row+4] +'</td>');
+	document.write('<td align="center">'+ protocolList[protocolType] +'</td>');
+	document.write('<td align="center">'+ StatusString +'</td>');
+	document.write('<td align="center"><a href=\"/userRpm/VirtualServerRpm.htm?Modify=' + 
+					modifyId+'&Page='+virServerPara[0]+
+					'\" OnMouseOver=\"return ResetStatus(\'modify\');\">编辑</a>&nbsp;<a href=\"/userRpm/VirtualServerRpm.htm?Del='+
+				 	modifyId+'&Page='+virServerPara[0]+
+					'\" OnMouseOver=\"return ResetStatus(\'delete\');\">删除</a></td></tr>');
+
+}
+}
+</script>
+</table>
+<table width="470" align="center" border="0" cellpadding="0" cellspacing="0" class="space">
+<tr><td colspan="3" width="468"><input type="button" value="添加新条目" name="Add" class="button" onClick="doAdd(curPage);">&nbsp;<input type="button" value="使所有条目生效" name="EnAll" class="button" onClick="doAll('EnAll');">&nbsp;<input type="button" value="使所有条目失效" name="DisAll" class="button" onClick="doAll('DisAll');">&nbsp;<input type="button" value="删除所有条目" name="DelAll" class="button" onClick="doAll('DelAll');"></td></tr>
+</table>
+
+
+</td>
+<td class="vline" rowspan="15"><br> </td></tr>		
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td class="tail" height="30">&nbsp;
+<input name="previous" type="button" class="button" onClick="doPage(prePage);" value="上一页" Disabled>
+&nbsp;<input name="next" type="button" class="button" onClick="doPage(NextPage);" value="下一页" Disabled>&nbsp;<input name="Page" type="hidden" value="1">
+<input name="help" type="button" class="button" onClick="doHelp();" value="帮 助"></td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr></table></td></tr></table>
+</table></td></tr></table>
+<input name="curpage" type="hidden" value ="1">
+</form></center><br></body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript">
+var  curPage = virServerPara[0];
+var  prePage = (virServerPara[0] == 1)?1:virServerPara[0]-1;
+var  NextPage = virServerPara[0]+1;
+document.forms[0].Page.value = curPage;
+document.forms[0].previous.disabled = (virServerPara[0] < 2)?true:false;
+document.forms[0].next.disabled = (virServerPara[1] > 0)?false:true;
+document.forms[0].EnAll.disabled = (virServerPara[2] > 0)? false : true;
+document.forms[0].DisAll.disabled = (virServerPara[2] > 0)? false : true;
+document.forms[0].DelAll.disabled = (virServerPara[2] > 0)? false : true;
+</script>
+

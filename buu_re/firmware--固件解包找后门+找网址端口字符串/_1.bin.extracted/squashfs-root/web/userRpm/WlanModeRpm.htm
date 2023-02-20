@@ -1,0 +1,617 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<SCRIPT language="javascript"><!--
+//if(window.parent == window){window.location.href="http://10.185.18.1";}
+//function Click(){ window.event.returnValue=false;}
+//document.oncontextmenu=Click;
+
+//Wireless mode array, each mode should define HTML code to be shown in IE(or other explorer) here !
+var apModeStr = new Array(
+	'<TR><TD colspan = 2><INPUT name="apMode" id="apMode" type="radio" value="0">&nbsp;关闭无线</TD></TR>' +
+	'<TR><TD colspan=2><br></TD></TR>'
+	,
+	'<TR><TD colspan = 2><INPUT name="apMode" id="apMode" type="radio" value="1">&nbsp;Access Point</TD></TR>' +
+	'<TR><TD colspan=2 style="padding-left:30px"><INPUT name="apBroadcast" id="apBroadcast" type="checkbox" value="2">&nbsp;打开SSID广播</TD></TR>' +
+	'<TR><TD colspan=2 style="padding-left:30px"><INPUT name="apMbssid" id="apMbssid" type="checkbox" value="2">&nbsp;打开多SSID支持</TD></TR>' +
+	'<TR><TD colspan=2><br></TD></TR>'
+	,
+	'<TR><TD colspan = 2><INPUT name="apMode" id="apMode" type="radio" value="2">Client</TD></TR>' +
+	'<TR><TD style="padding-left:30px"><INPUT name="staWds" id="staWds" type="checkbox" value="2">打开WDS</TD><TD>&nbsp</TD></TR>' +
+	'<TR><TD style="padding-left:30px"><INPUT name="staType" id="staType" type="radio" value="0">SSID:</TD><TD><INPUT name="staSsid" type="text" class="text" id="staSsid" value="" size="32" maxlength="32"></TD></TR>' +
+	'<TR><TD style="padding-left:30px"><INPUT name="staType" id="staType" type="radio" value="1">MAC of AP:</TD><TD><INPUT name="staBssid" type="text" class="text" id="staBssid" value="" size="17" maxlength="17"></TD></TR>' +
+	'<TR><TD colspan=2><br></TD></TR>'
+	,
+	'<TR><TD colspan = 2><INPUT name="apMode" id="apMode" type="radio" value="3">&nbsp;Repeater</TD></TR>' +
+	'<TR><TD style="padding-left:30px">MAC of AP:</TD><TD><INPUT id="rptBssid" name="rptBssid" type="text" class="text" value="" size="17" maxlength="17"></TD></TR>' +
+	'<TR><TD colspan=2><br></TD></TR>'
+	,
+	'<TR><TD colspan = 2><INPUT name="apMode" id="apMode" type="radio" value="4">&nbsp;Universal Repeater</TD></TR>' +
+	'<TR><TD style="padding-left:30px">MAC of AP:</TD><TD><INPUT id="urptBssid" name="urptBssid" type="text" class="text" value="" size="17" maxlength="17"></TD></TR>' +
+	'<TR><TD colspan=2><br></TD></TR>'
+	,
+	'<TR><TD colspan = 2><INPUT name="apMode" id="apMode" type="radio" value="5">&nbsp;Bridge (Point to Point)</TD></TR>' +
+	'<TR><TD colspan=2 style="padding-left:30px"><INPUT name="ppt_ap" id="ppt_ap" type="checkbox" value="2">&nbsp;With AP Mode</TD></TR>' +
+	'<TR><TD style="padding-left:30px">MAC of AP:</TD><TD><INPUT id="pptBssid" name="pptBssid" type="text" class="text" value="" size="17" maxlength="17"></TD></TR>' +
+	'<TR><TD colspan=2><br></TD></TR>'
+	,
+	'<TR><TD colspan = 2><INPUT name="apMode" id="apMode" type="radio" value="6">&nbsp;Bridge (Point to Multi-Point)</TD></TR>' +
+	'<TR><TD colspan=2 style="padding-left:30px"><INPUT name="mpt_ap" id="mpt_ap" type="checkbox" value="2">&nbsp;With AP Mode</TD></TR>' +
+	'<TR><TD style="padding-left:30px" nowrap>MAC of AP1:</TD><TD><INPUT id="mptBssid1" name="mptBssid1" type="text" class="text" value="" size="17" maxlength="17"></TD></TR>' +
+	'<TR><TD style="padding-left:30px">MAC of AP2:</TD><TD><INPUT id="mptBssid2" name="mptBssid2" type="text" class="text" value="" size="17" maxlength="17"></TD></TR>' +
+	'<TR><TD style="padding-left:30px">MAC of AP3:</TD><TD><INPUT id="mptBssid3" name="mptBssid3" type="text" class="text" value="" size="17" maxlength="17"></TD></TR>' +
+	'<TR><TD style="padding-left:30px">MAC of AP4:</TD><TD><INPUT id="mptBssid4" name="mptBssid4" type="text" class="text" value="" size="17" maxlength="17"></TD></TR>' +
+	'<TR><TD colspan=2><br></TD></TR>'
+	,
+	'<TR style="display:none"><TD><INPUT disabled name="apMode" id="apMode" type="radio" value="100">universal pad</TD></TR>'
+);
+function doSubmit()
+{
+	for(var i=0; i<mlist.count; i++)
+	{
+		if (mlist.itemShow(i))
+		{
+			if (false == mlist.item(i).checkPara())
+			{
+				return false;
+			}
+		}
+	}
+	
+	return true;
+}
+//Check invalid mac address
+function CheckMacAddr(macCtrl)
+{
+	if(macCtrl && macCtrl.value != "")
+	{
+		if(macverify(macCtrl.value)== false)
+		{
+			alert("Invalid value, please input correctly!");
+			macCtrl.focus();
+			macCtrl.select();
+			return false;
+		}
+		
+		return true;
+	}
+
+	return true;
+}
+//Check invalid SSID
+function checkSsid(ssidCtrl)
+{
+	if (ssidCtrl)
+	{
+		var ssidLen = getValLen(ssidCtrl.value);
+		if (ssidLen <= 0)
+		{
+			alert("Please input SSID!");
+			ssidCtrl.focus();
+			ssidCtrl.select();
+			return false;
+		}
+		else if (ssidLen > 32)
+		{
+			alert("The SSID cannot exceed 32 characters. Please input correctly!");
+			ssidCtrl.focus();
+			ssidCtrl.select();
+			return false;
+		}
+		
+		return true;
+	}
+	return false;
+}
+function checkEmpty(ssidCtrl)
+{
+	if (ssidCtrl)
+	{
+		if (ssidCtrl.value == "")
+		{
+			ssidCtrl.focus();
+			ssidCtrl.select();
+			return false;
+		}
+		return true;
+	}
+	return false;
+}
+//Get control's value
+function getValLen(val)
+{
+	var len = 0;
+	var i = 0;
+	for (i = 0; i < val.length; i ++)
+	{
+		var c = val.charAt(i);
+		len += ((c >= ' ') && (c <= '~')) ? 1 : 2;
+	}
+	return len;
+}
+//Disable wireless mode
+function mode_disable(idx, en, ps)
+{
+	this.setPara = function()
+	{
+	}
+	this.checkPara = function()
+	{
+		return true;
+	}
+}
+//Access point mode set and check functions
+function mode_ap(idx, father)
+{
+	this.setPara = function()
+	{
+		window.document.getElementById("apBroadcast").checked = (father.ps.apBroadcast == 1);
+		window.document.getElementById("apMbssid").checked = (father.ps.mbssid == 1);
+	}
+	this.checkPara = function()
+	{
+		return true;
+	}
+}
+//Client mode (without WDS function) set and check functions
+function mode_clientWds(idx, father)
+{
+	this.setPara = function()
+	{
+		window.document.getElementById("staWds").checked = (father.ps.wdsDisabled == 1);
+		window.document.getElementsByName("staType")[father.ps.staType].checked = true;
+		window.document.getElementById("staSsid").value = father.ps.staSsid;
+		window.document.getElementById("staBssid").value = father.ps.staBssid;
+	}
+	this.checkPara = function()
+	{
+		if (!father.itemShow(idx))
+		{
+			return true;
+		}
+
+		var typeCtrl = window.document.getElementsByName("staType");
+		var ssidCtrl = window.document.getElementById("staSsid");
+		var bssidCtrl = window.document.getElementById("staBssid");
+		
+		if (father.checkIdx(idx) && typeCtrl[0].checked && !checkSsid(ssidCtrl))
+		{
+			return false;
+		}
+		else if (typeCtrl[1].checked && !CheckMacAddr(bssidCtrl))
+		{
+			return false;
+		}
+		else if (father.checkIdx(idx) && typeCtrl[1].checked && !checkEmpty(bssidCtrl))
+		{
+			alert("You must input a client MAC address!");
+			return false;
+		}
+		
+		if (father.ps.secType == 2 && father.checkIdx(idx))
+		{
+			if (!confirm("Current mode check will disable security config, continue?"))
+			{
+				return false;
+			}
+			else
+			{
+				window.document.getElementById("secDisable").checked = true;
+			}
+		}
+
+		return true;
+	}
+}
+//Repeater mode set and check functions
+function mode_repeater(idx, father)
+{
+	this.setPara = function()
+	{
+		window.document.getElementById("rptBssid").value = father.ps.rptBssid;
+	}
+	this.checkPara = function()
+	{
+		if (!father.itemShow(idx))
+		{
+			return true;
+		}
+
+		var ssidCtrl = window.document.getElementById("rptBssid");
+		if (father.checkIdx(idx) && !checkEmpty(ssidCtrl))
+		{
+			alert("You must input a repeater MAC address!");
+			return false;
+		}
+		else if (!CheckMacAddr(ssidCtrl))
+		{
+			return false;
+		}
+		
+		if ((father.ps.secType == 2 || father.ps.secType == 3) && father.checkIdx(idx))
+		{
+			if (!confirm("Current mode check will disable security config, continue?"))
+			{
+				return false;
+			}
+			else
+			{
+				window.document.getElementById("secDisable").checked = true;
+			}
+		}
+		return true;
+	}
+}
+//Universal repeater set and check functions
+function mode_uRepeater(idx, father)
+{
+	this.setPara = function()
+	{
+		window.document.getElementById("urptBssid").value = father.ps.urptBssid;
+	}
+	this.checkPara = function()
+	{
+		if (!father.itemShow(idx))
+		{
+			return true;
+		}
+		
+		var ssidCtrl = window.document.getElementById("urptBssid");
+		if (father.checkIdx(idx) && !checkEmpty(ssidCtrl))
+		{
+			alert("You must input a repeater MAC address!");
+			return false;
+		}
+		else if (!CheckMacAddr(ssidCtrl))
+		{
+			return false;
+		}
+
+		if ((father.ps.secType == 2 || father.ps.secType == 3) && father.checkIdx(idx))
+		{
+			if (!confirm("Current mode check will disable security config, continue?"))
+			{
+				return false;
+			}
+			else
+			{
+				window.document.getElementById("secDisable").checked = true;
+			}
+		}
+		return true;
+	}
+}
+//Bridge set and check functions
+function mode_bridge(idx, father)
+{
+	this.setPara = function()
+	{
+		window.document.getElementById("ppt_ap").checked = (father.ps.pptApMode == 1);
+		window.document.getElementById("pptBssid").value = father.ps.pptBssid;
+	}
+	this.checkPara = function()
+	{
+		if (!father.itemShow(idx))
+		{
+			return true;
+		}
+
+		var ssidCtrl = window.document.getElementById("pptBssid");
+		if (father.checkIdx(idx) && !checkEmpty(ssidCtrl))
+		{
+			alert("You must input a bridge MAC address!");
+			return false;
+		}
+		else if (!CheckMacAddr(ssidCtrl))
+		{
+			return false;
+		}
+		
+		if ((father.ps.secType == 2 || father.ps.secType == 3) && father.checkIdx(idx))
+		{
+			if (!confirm("Current mode check will disable security config, continue?"))
+			{
+				return false;
+			}
+			else
+			{
+				window.document.getElementById("secDisable").checked = true;
+			}
+		}		
+		
+		return true;
+	}
+}
+//Multiple bridge set and check functions
+function mode_mBridge(idx, father)
+{
+	this.setPara = function()
+	{
+		window.document.getElementById("mpt_ap").checked = (father.ps.mptApMode == 1);
+		window.document.getElementById("mptBssid1").value = father.ps.mptBssid1;
+		window.document.getElementById("mptBssid2").value = father.ps.mptBssid2;
+		window.document.getElementById("mptBssid3").value = father.ps.mptBssid3;
+		window.document.getElementById("mptBssid4").value = father.ps.mptBssid4;
+	}
+	this.checkPara = function()
+	{
+		if (!father.itemShow(idx))
+		{
+			return true;
+		}
+
+		var ssidCtrl1 = window.document.getElementById("mptBssid1");
+		var ssidCtrl2 = window.document.getElementById("mptBssid2");
+		var ssidCtrl3 = window.document.getElementById("mptBssid3");
+		var ssidCtrl4 = window.document.getElementById("mptBssid4");
+		var inputNum = 0;
+		if (ssidCtrl1.value != "")
+		{
+			if (!CheckMacAddr(ssidCtrl1))
+			{
+				return false;
+			}
+			else if (ssidCtrl1.value.toLowerCase() == ssidCtrl2.value.toLowerCase()
+			      || ssidCtrl1.value.toLowerCase() == ssidCtrl3.value.toLowerCase()
+				  || ssidCtrl1.value.toLowerCase() == ssidCtrl4.value.toLowerCase())
+			{
+				alert("Duplicate Mac Address, please input another one.");
+				ssidCtrl1.focus();
+				ssidCtrl1.select();
+				return false;
+			}
+			else
+			{
+				inputNum ++;
+			}
+		}
+
+		if (ssidCtrl2.value != "")
+		{
+			if (!CheckMacAddr(ssidCtrl2))
+			{
+				return false;
+			}
+			else if (ssidCtrl2.value.toLowerCase() == ssidCtrl1.value.toLowerCase() 
+			      || ssidCtrl2.value.toLowerCase() == ssidCtrl3.value.toLowerCase() 
+				  || ssidCtrl2.value.toLowerCase() == ssidCtrl4.value.toLowerCase())
+			{
+				alert("Duplicate Mac Address, please input another one.");
+				ssidCtrl2.focus();
+				ssidCtrl2.select();
+				return false;
+			}
+			else
+			{
+				inputNum ++;
+			}
+		}
+
+		if (ssidCtrl3.value != "")
+		{
+			if (!CheckMacAddr(ssidCtrl3))
+			{
+				return false;
+			}
+			else if (ssidCtrl3.value.toLowerCase() == ssidCtrl1.value.toLowerCase()
+			      || ssidCtrl3.value.toLowerCase() == ssidCtrl2.value.toLowerCase() 
+				  || ssidCtrl3.value.toLowerCase() == ssidCtrl4.value.toLowerCase())
+			{
+				alert("Duplicate Mac Address, please input another one.");
+				ssidCtrl3.focus();
+				ssidCtrl3.select();
+				return false;
+			}
+			else
+			{
+				inputNum ++;
+			}
+		}
+
+		if (ssidCtrl4.value != "")
+		{
+			if (!CheckMacAddr(ssidCtrl4))
+			{
+				return false;
+			}
+			else if (ssidCtrl4.value.toLowerCase() == ssidCtrl1.value.toLowerCase() 
+			      || ssidCtrl4.value.toLowerCase() == ssidCtrl2.value.toLowerCase() 
+				  || ssidCtrl4.value.toLowerCase() == ssidCtrl3.value.toLowerCase())
+			{
+				alert("Duplicate Mac Address, please input another one.");
+				ssidCtrl4.focus();
+				ssidCtrl4.select();
+				return false;
+			}
+			else
+			{
+				inputNum ++;
+			}
+		}
+		
+		if (inputNum < 2 && father.ps.checkIdx == idx)
+		{
+			alert("You must set 2 or more MAC addresses of AP.");
+			ssidCtrl1.focus();
+			ssidCtrl1.select();
+			return false;
+		}
+		
+		if ((father.ps.secType == 2 || father.ps.secType == 3) && father.checkIdx(idx))
+		{
+			if (!confirm("Current mode check will disable security config, continue?"))
+			{
+				return false;
+			}
+			else
+			{
+				window.document.getElementById("secDisable").checked = true;
+			}
+		}		
+
+		return true;
+	}
+}
+//Common check or set
+function mode_default(idx, father)
+{
+	this.setPara = function()
+	{
+		var isApModeChecked = false;
+		var apModeCtrl = window.document.getElementsByName("apMode");
+		for (var i=0; i<apModeCtrl.length; i++)
+		{
+			if (apModeCtrl[i].value == father.ps.apModeChk && father.itemShow(apModeCtrl[i].value))
+			{
+				isApModeChecked = true;
+				apModeCtrl[i].checked = true;
+			}
+		}
+		if (!isApModeChecked)
+		{
+			if (0 != apModeCtrl.length)
+			{
+				apModeCtrl[0].checked = true;
+			}
+		}
+		window.document.getElementsByName("secDisable").checked = false;
+	}
+	this.checkPara = function()
+	{
+		return true;
+	}
+}
+//A class to encapsulation some vars and common functions
+function modeList()
+{
+	//This value should be mode num + 1
+	this.count = 8;
+	this.htmls = apModeStr;
+
+	this.ps = new function()
+	{
+		this.apModeChk = apModePara[0];
+		this.modes = apModePara[1];
+		this.staType = apModePara[2];
+		this.wdsDisabled = apModePara[3];
+		this.staSsid = apModePara[4];
+		this.staBssid = apModePara[5];
+		this.rptBssid = apModePara[6];
+		this.urptBssid = apModePara[7];
+		this.pptBssid = apModePara[8];
+		this.mptBssid1 = apModePara[9];
+		this.mptBssid2 = apModePara[10];
+		this.mptBssid3 = apModePara[11];
+		this.mptBssid4 = apModePara[12];
+		this.pptApMode = apModePara[13];
+		this.mptApMode = apModePara[14];
+		this.apBroadcast = apModePara[15];
+		this.secType = apModePara[16];
+		this.mbssid = apModePara[17];
+	}
+	
+	this.checkIdx = function(idx)
+	{
+		var apModeCtrl = window.document.getElementsByName("apMode");
+		for (var i=0; i<apModeCtrl.length; i++)
+		{
+			if (apModeCtrl[i].checked)
+			{
+				break;
+			}
+		}
+		if (idx == apModeCtrl[i].value)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	this.itemShow = function(idx)
+	{
+		return this.ps.modes.charAt(idx) == '1';
+	}
+	
+	this.itemHtml = function(idx)
+	{
+		return this.htmls[idx];
+	}
+		
+	this.item = function (item)
+	{
+		switch (item)
+		{
+			case 0:
+				return new mode_disable(item, this);
+			case 1:
+				return new mode_ap(item, this);
+			case 2:
+				return new mode_clientWds(item, this);
+			case 3:
+				return new mode_repeater(item, this);
+			case 4:
+				return new mode_uRepeater(item, this);
+			case 5:
+				return new mode_bridge(item, this);
+			case 6:
+				return new mode_mBridge(item, this);
+			default:
+				return new mode_default(item, this);
+		}
+	}
+}
+var mlist = new modeList();
+//--></SCRIPT>
+</HEAD>
+
+<BODY><CENTER>
+<FORM action="WlanModeRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+
+<TABLE width="502" border="0" cellpadding="0" cellspacing="0"><TBODY>
+<TR><TD width="7" class="title"><IMG src="/images/arc.gif" width="7" height="24"></TD><TD width="495" align="left" valign="middle" class="title">无线模式设置</TD></TR>
+<TR><TD colspan="2"><TABLE width="502" border="0" cellspacing="0" cellpadding="0">
+<TR><TD width="1" rowspan="15" class="vline"><br></TD><TD width="500">
+
+<TABLE align="center" width="400" border="0" cellpadding="2" cellspacing="0" class="space">
+<TR><TD>本页面设置路由器无线模式参数。 </TD> </TR>
+</TABLE>
+
+<TABLE align="center" width="400" border="0" cellpadding="2" cellspacing="0" class="space">
+
+<TR><TD class=blue colSpan=2></TD></TR>
+<SCRIPT language="javascript">
+for(var i=0; i<mlist.count; i++)
+{
+	if (mlist.itemShow(i))
+	{
+		document.write(mlist.itemHtml(i));
+	}
+}
+</SCRIPT>
+<TR><TD class=blue colSpan=2></TD></TR>
+<TR style="display:none"><TD colSpan=2><INPUT id="secDisable" name="secDisable" type="checkbox" value="2"></TD></TR>
+
+</TABLE>
+</TD><TD class="vline" rowspan="15"><br></TD></TR>
+<TR><TD class="hline"><img src="/images/empty.gif" width="1" height="1"></TD></TR>
+<TR><TD height="30" class="tail">
+&nbsp;<INPUT name="Save" type="submit" class="button" id="Save" value="保 存">
+&nbsp;<INPUT name="help" type="button" class="button" id="help" value="帮 助" onClick="doHelp();">
+</TD></TR>
+<TR><TD class="hline"><img src="/images/empty.gif" width="1" height="1"></TD></TR>
+
+</TABLE></TBODY></TABLE>
+
+</FORM></CENTER></BODY>
+<SCRIPT language="javascript">
+for(var i=0; i<mlist.count; i++)
+{
+	if (mlist.itemShow(i))
+	{
+		mlist.item(i).setPara();
+	}
+}
+</SCRIPT>
+</HTML>

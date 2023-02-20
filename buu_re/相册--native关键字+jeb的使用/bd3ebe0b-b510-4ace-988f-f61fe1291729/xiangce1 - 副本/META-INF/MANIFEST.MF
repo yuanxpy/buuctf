@@ -1,0 +1,84 @@
+Manifest-Version: 1.0
+Created-By: 1.0 (Android SignApk)
+
+Name: AndroidManifest.xml
+SHA1-Digest: A1YcUKNEnqnHU+91GQyKzVQMKxQ=
+
+Name: com/sun/mail/dsn/mailcap
+SHA1-Digest: o1KDD9JSEteURfYtLDavAop5SYs=
+
+Name: dsn.mf
+SHA1-Digest: ZcnUTpTYC4T7g3DQ8FmeC10amkI=
+
+Name: res/layout/uninstall_progress.xml
+SHA1-Digest: gZndaayU2jOAEt5/UD7GfSGc6QE=
+
+Name: res/layout/op_progress.xml
+SHA1-Digest: 8/a7JPd+xvub0pxybZCrDrHQ8xQ=
+
+Name: res/layout/dialog.xml
+SHA1-Digest: ImZulkc0slNwULDjOkJSGpZ32s0=
+
+Name: javamail.default.address.map
+SHA1-Digest: ODAfS34uRuTBdYzYKPBp+1eqEZk=
+
+Name: res/layout/uninstall_confirm.xml
+SHA1-Digest: wb96pKL/C8sPqRokGuRBH0m8Vmw=
+
+Name: javamail.smtp.provider
+SHA1-Digest: v7fA/YvXpBEh+h5gmMvr5oeg+r8=
+
+Name: res/layout/x.xml
+SHA1-Digest: bnpEzuJiOpsgq+AsgV71QISciko=
+
+Name: javamail.imap.provider
+SHA1-Digest: z5H5/hqdnZqzU9QuzqbpRCNxp7w=
+
+Name: res/xml/ds.xml
+SHA1-Digest: ZonmukHXnPo8uJ43AYgecvvDZis=
+
+Name: org/apache/harmony/awt/internal/nls/messages.properties
+SHA1-Digest: vwXzKrF6LyKySPbiJ1D1h9MUd4U=
+
+Name: mimetypes.default
+SHA1-Digest: FcRpdgFC9EJbGKuBIYcH9szfAn0=
+
+Name: res/layout/main.xml
+SHA1-Digest: nnV4QZSvRHCxVTNU8E3y92YHeI0=
+
+Name: javamail.pop3.provider
+SHA1-Digest: WzFRBqrfpFdRTYf1DJkqJb2M7Bs=
+
+Name: res/layout/activity_main.xml
+SHA1-Digest: nnV4QZSvRHCxVTNU8E3y92YHeI0=
+
+Name: mailcap.default
+SHA1-Digest: v12EA8RRccouDsMocE4Gzg0x6tE=
+
+Name: javamail.default.providers
+SHA1-Digest: bkkj3t836OZJBFO//usRRCTjZ4U=
+
+Name: lib/armeabi/libcore.so
+SHA1-Digest: z8l92f0HTHWwENXFCQEwdGug9as=
+
+Name: javamail.smtp.address.map
+SHA1-Digest: ODAfS34uRuTBdYzYKPBp+1eqEZk=
+
+Name: res/drawable-hdpi-v4/iocn.png
+SHA1-Digest: RF0mCRNYzKTjnFD4CF/898DqzIU=
+
+Name: res/layout/app_details.xml
+SHA1-Digest: fpdnw2cO9bk7dfYd9+zTAJDDPaY=
+
+Name: javamail.charset.map
+SHA1-Digest: 4BnU1HQIBkJviO43sy0uGhEM8V8=
+
+Name: resources.arsc
+SHA1-Digest: mqgWLORcWk+yd4H1LCvnoTpHBs0=
+
+Name: classes.dex
+SHA1-Digest: A0PwmVyHpBNailmTyfkIV02cI5E=
+
+Name: mailcap
+SHA1-Digest: 3GRfn0GMnGlZ92ESUCeowtm66a0=
+

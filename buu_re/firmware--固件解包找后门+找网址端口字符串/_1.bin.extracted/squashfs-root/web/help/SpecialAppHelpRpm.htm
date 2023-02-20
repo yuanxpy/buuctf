@@ -1,0 +1,72 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<center><form action="virtualserverhelp.htm" enctype="multipart/form-data" method="get">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="../images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">
+帮助－特殊应用程序</td>
+</tr><tr><td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="500">
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td width="63" valign="top">触发端口：</td>
+<td width="333">用于触发应用程序的端口号。</td></tr>
+<tr><td width="63">触发协议：</td><td width="333">用于触发应用程序的协议类型。</td></tr>
+<tr><td width="63" valign="top">开放端口：</td><td width="333
+">当触发端口被探知后，在该端口上通向内网的数据包将被允许穿过防火墙，以使相应的特殊应用程序能够在NAT路由下正常工作。
+您可以输入最多5组的端口（或端口段），每组端口必须以英文符号“,”相隔。例如2000-2038,2050-2051,2069,2085,3010-3030</td></tr>
+<tr><td width="63">开放协议：</td><td width="333">开放端口使用的协议类型。</td></tr>
+<tr><td width="63">状态：</td><td width="333">当前条目是否生效。</td></tr></table>
+<table width="450" border="0" align="center" cellpadding="0" cellspacing="0" class="space"></table>
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td width="90" class="top">常用应用程序：</td>
+<td width="333">常用应用程序中列举了一些常用的特殊应用程序，您可以从中选择您所需要的应用程序，然后单击此按钮把对应的服务端口填入上面的列表当中。</td>
+</tr></table>
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td width="398">举例说明：如果您希望能够使用Dialpad这个应用程序，您可以如   
+ID 1所设置。（请注意“开放端口”的输入格式，除以下所列数字与标点，其它的字符都将被认为非法。）<br>允许输入字符：
+&nbsp;&nbsp; 
+<font color="#0000FF">-,0123456789</font></td>
+</tr></table>
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td width="16" align="center">ID</td>
+<td width="60">
+<p align="center">触发端口</td>
+<td width="58">
+<p align="center">触发协议</td>
+<td width="177">
+<p align="center">开放端口</td>
+<td width="56">
+<p align="center">开放协议</td>
+<td width="31">
+<p align="center">状态</td>
+</tr><tr><td width="16" align="center">1</td>
+<td width="60">&nbsp;7175</td>
+<td width="58" align="center">ALL</td>
+<td width="177">&nbsp;&nbsp;&nbsp;51200-51201,51210</td>
+<td width="56" align="center">ALL</td>
+<td width="31">
+<p align="center">
+生效
+</td></tr>
+<tr><td width="16" align="center">2</td>
+<td width="60">&nbsp;12053</td>
+<td width="58" align="center">ALL</td>
+<td width="177">&nbsp;&nbsp;&nbsp;12120,12122,24150-24220</td>
+<td width="56" align="center">TCP</td>
+<td width="31">
+<p align="center">生效</td></tr></table>
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space"> 
+<tr><td valign="top" colspan="2">特殊应用程序使用说明：</td></tr>
+<tr><td valign="top">1.</td><td valign="top">当内网主机向外网主机的触发端口发出连接请求时，其相应的开放端口将被打开，允许外网的主机通过这些开放端口与内网主机建立连接；</td></tr>
+<tr><td valign="top">2.</td><td valign="top">内网主机与外网主机的触发端口的连接请求释放时，其相应的开放端口将关闭；</td></tr>
+<tr><td valign="top">3.</td><td valign="top">每条规则在同一时刻只允许一台内网主机使用，其他内网主机的连接请求将被拒绝；</td></tr>
+<tr><td valign="top">4.</td><td valign="top">在同一时刻打开的开放端口不能重复。</td></tr></table>
+</td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td class="hline"><img src="../images/empty.gif" width="1" height="1"></td>
+</tr><tr><td height="30" class="tail">&nbsp;    
+<input name="back" type="button" class="button" id="back" onClick="doPrev();" value="返 回">
+</td></tr><tr><td class="hline"><img src="../images/empty.gif" width="1" height="1"></td>
+</tr></table></td></tr></table></form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>

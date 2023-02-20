@@ -1,0 +1,73 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doSubmit()
+{
+	if(document.forms[0].filename.value == "")
+	{
+		alert("请选择要升级的文件！");
+		return false;
+	}
+	var tmp = document.forms[0].filename.value
+	if(tmp.substr(tmp.length - 4) != ".bin")
+	{
+		alert("错误的文件类型，请使用bin类型的升级文件。");
+		return false;
+	}
+	var arr = tmp.substr(tmp.lastIndexOf('\\') + 1);
+	if(arr.length >= 64)
+	{
+		alert("升级文件文件名过长(需小于64字节)，请修改文件名后再重新尝试。");
+		return false;
+	}
+	if(!confirm("确认要进行软件升级吗?"))
+	{
+		return false;
+	}
+	return true;
+}
+//--></script></head>
+
+<body>
+
+<center><form action="/incoming/Firmware.htm" enctype="multipart/form-data" method="post" onSubmit="return doSubmit();">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">软件升级</td>
+</tr>
+<tr>
+<td colspan="2">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr> 
+<td class="vline" rowspan="15"><br> </td>
+<td width="500">
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>通过升级本路由器的软件，您将获得新的功能。</td></tr>
+</table> 
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td width="105">文 件：</td>
+<td width="295"><input class="text" name="filename" type="file" size="20"></td>
+</tr>
+</table>
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space" >
+
+<tr><td  width="105">当前软件版本：</td><td width="295" ><DIV ID="fversion"></DIV> </td></tr><tr>
+<td >当前硬件版本：</td>
+<td><DIV ID="hversion"></DIV></td></tr>
+<tr><td height=8></td></tr>
+<tr><td colspan="2">注意：<font color=red>升级时请选择与当前硬件版本一致的软件。</font>升级过程不能关闭路由器电源，否则将导致路由器损坏而无法使用。升级过程约60秒，当升级结束后，路由器将会自动重新启动。</td></tr>
+</table>
+</td>
+<td class="vline" rowspan="15"><br> </td>
+</tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td class="tail"> &nbsp; <input name="Upgrade" type="submit" class="button" id="Submit" value="升 级"></td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr></table></form></center>
+
+</BODY><head><meta http-equiv="pragma" content="no-cache"></head></HTML>
+<script language="JavaScript">
+document.getElementById("fversion").innerHTML = softUpInf[0];
+document.getElementById("hversion").innerHTML = softUpInf[1];
+</script>
+

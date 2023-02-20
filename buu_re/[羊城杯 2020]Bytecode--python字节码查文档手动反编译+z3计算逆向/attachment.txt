@@ -1,0 +1,367 @@
+  4           0 LOAD_CONST               0 (3)      en = [3,37,72,9,6,132]
+              3 LOAD_CONST               1 (37)
+              6 LOAD_CONST               2 (72)
+              9 LOAD_CONST               3 (9)
+             12 LOAD_CONST               4 (6)
+             15 LOAD_CONST               5 (132)
+             18 BUILD_LIST               6
+             21 STORE_NAME               0 (en)
+
+  5          24 LOAD_CONST               6 (101) output = [101,96,23,68,112,42,107,62,96,53,176,179,98,53,67,29,41,120,60,106,51,101,178,189,101,48]
+             27 LOAD_CONST               7 (96)
+             30 LOAD_CONST               8 (23)
+             33 LOAD_CONST               9 (68)
+             36 LOAD_CONST              10 (112)
+             39 LOAD_CONST              11 (42)
+             42 LOAD_CONST              12 (107)
+             45 LOAD_CONST              13 (62)
+             48 LOAD_CONST               7 (96)
+             51 LOAD_CONST              14 (53)
+             54 LOAD_CONST              15 (176)
+             57 LOAD_CONST              16 (179)
+             60 LOAD_CONST              17 (98)
+             63 LOAD_CONST              14 (53)
+             66 LOAD_CONST              18 (67)
+             69 LOAD_CONST              19 (29)
+             72 LOAD_CONST              20 (41)
+             75 LOAD_CONST              21 (120)
+             78 LOAD_CONST              22 (60)
+             81 LOAD_CONST              23 (106)
+             84 LOAD_CONST              24 (51)
+             87 LOAD_CONST               6 (101)
+             90 LOAD_CONST              25 (178)
+             93 LOAD_CONST              26 (189)
+             96 LOAD_CONST               6 (101)
+             99 LOAD_CONST              27 (48)
+            102 BUILD_LIST              26
+            105 STORE_NAME               1 (output)
+
+  7         108 LOAD_CONST              28 ('welcome to GWHT2020')     print('welcome to GWHT2020') #待定
+            111 PRINT_ITEM          
+            112 PRINT_NEWLINE       
+
+  9         113 LOAD_NAME                2 (raw_input)
+            116 LOAD_CONST              29 ('please input your flag:')      flag = raw_input('please input your flag:')
+            119 CALL_FUNCTION            1
+            122 STORE_NAME               3 (flag)  //保存局部变量到flag
+
+ 10         125 LOAD_NAME                3 (flag)                            str = flag
+            128 STORE_NAME               4 (str)
+
+ 12         131 LOAD_NAME                5 (len)                a = len(flag)
+            134 LOAD_NAME                4 (str)
+            137 CALL_FUNCTION            1
+            140 STORE_NAME               6 (a)
+
+ 13         143 LOAD_NAME                6 (a)                 if(a>=39):												
+            146 LOAD_CONST              30 (38)	
+            149 COMPARE_OP               0 (<)
+            152 POP_JUMP_IF_FALSE      173
+
+ 14         155 LOAD_CONST              31 ('lenth wrong!')        print('lenth wrong!')
+            158 PRINT_ITEM          
+            159 PRINT_NEWLINE       
+
+ 15         160 LOAD_NAME                7 (exit)                 exit(0)
+            163 LOAD_CONST              32 (0)
+            166 CALL_FUNCTION            1
+            169 POP_TOP             
+            170 JUMP_FORWARD             0 (to 173)
+
+ 17     >>  173 LOAD_NAME                8 (ord)            if((((ord(str[1])+2020*ord(str[0]))*2020+ord(str[2]))*2020+ord(str[3]))*2020+ord(str[4])!=1182843538814603):   
+            176 LOAD_NAME                4 (str)
+            179 LOAD_CONST              32 (0)
+            182 BINARY_SUBSCR       
+            183 CALL_FUNCTION            1
+            186 LOAD_CONST              33 (2020)
+            189 BINARY_MULTIPLY     
+            190 LOAD_NAME                8 (ord)
+            193 LOAD_NAME                4 (str)
+            196 LOAD_CONST              34 (1)
+            199 BINARY_SUBSCR       
+            200 CALL_FUNCTION            1
+            203 BINARY_ADD          
+            204 LOAD_CONST              33 (2020)
+            207 BINARY_MULTIPLY     
+            208 LOAD_NAME                8 (ord)
+            211 LOAD_NAME                4 (str)
+            214 LOAD_CONST              35 (2)
+            217 BINARY_SUBSCR       
+            218 CALL_FUNCTION            1
+            221 BINARY_ADD          
+            222 LOAD_CONST              33 (2020)
+            225 BINARY_MULTIPLY     
+            226 LOAD_NAME                8 (ord)
+            229 LOAD_NAME                4 (str)
+            232 LOAD_CONST               0 (3)
+            235 BINARY_SUBSCR       
+            236 CALL_FUNCTION            1
+            239 BINARY_ADD          
+            240 LOAD_CONST              33 (2020)
+            243 BINARY_MULTIPLY     
+            244 LOAD_NAME                8 (ord)
+            247 LOAD_NAME                4 (str)
+            250 LOAD_CONST              36 (4)
+            253 BINARY_SUBSCR       
+            254 CALL_FUNCTION            1
+            257 BINARY_ADD          
+            258 LOAD_CONST              37 (1182843538814603)
+            261 COMPARE_OP               2 (==)
+            264 POP_JUMP_IF_FALSE      275
+
+ 18         267 LOAD_CONST              38 ('good!continue\xe2\x80\xa6\xe2\x80\xa6')    print('good!continue\xe2\x80\xa6\xe2\x80\xa6')  jmp 290      
+            270 PRINT_ITEM          
+            271 PRINT_NEWLINE       
+            272 JUMP_FORWARD            15 (to 290)
+
+ 20     >>  275 LOAD_CONST              39 ('bye~')             print('bye~')
+            278 PRINT_ITEM          
+            279 PRINT_NEWLINE       
+
+ 21         280 LOAD_NAME                7 (exit)                exit(0)
+            283 LOAD_CONST              32 (0)
+            286 CALL_FUNCTION            1
+            289 POP_TOP             
+
+ 23     >>  290 BUILD_LIST               0             x=[]
+            293 STORE_NAME               9 (x)
+
+ 24         296 LOAD_CONST              40 (5)         k=5
+            299 STORE_NAME              10 (k)
+
+ 25         302 SETUP_LOOP             128 (to 433)
+            305 LOAD_NAME               11 (range)
+            308 LOAD_CONST              41 (13)
+            311 CALL_FUNCTION            1             for i in range(13):
+            314 GET_ITER            
+        >>  315 FOR_ITER               114 (to 432)
+            318 STORE_NAME              12 (i)
+
+ 26         321 LOAD_NAME                8 (ord)            b = ord(str[k])
+            324 LOAD_NAME                4 (str)
+            327 LOAD_NAME               10 (k)
+            330 BINARY_SUBSCR       
+            331 CALL_FUNCTION            1
+            334 STORE_NAME              13 (b)
+
+ 27         337 LOAD_NAME                8 (ord)            c = ord(str[k+1])
+            340 LOAD_NAME                4 (str)
+            343 LOAD_NAME               10 (k)
+            346 LOAD_CONST              34 (1)
+            349 BINARY_ADD          
+            350 BINARY_SUBSCR       
+            351 CALL_FUNCTION            1
+            354 STORE_NAME              14 (c)
+
+ 28         357 LOAD_NAME               14 (c)           all = en[(i%6)]^c
+            360 LOAD_NAME                0 (en)
+            363 LOAD_NAME               12 (i)
+            366 LOAD_CONST               4 (6)
+            369 BINARY_MODULO       
+            370 BINARY_SUBSCR       
+            371 BINARY_XOR          
+            372 STORE_NAME              15 (a11)
+
+ 29         375 LOAD_NAME               13 (b)            a22 = en[(i%6)]^b
+            378 LOAD_NAME                0 (en)
+            381 LOAD_NAME               12 (i)
+            384 LOAD_CONST               4 (6)
+            387 BINARY_MODULO       
+            388 BINARY_SUBSCR       
+            389 BINARY_XOR          
+            390 STORE_NAME              16 (a22)
+
+ 30         393 LOAD_NAME                9 (x)           x.append(all)
+            396 LOAD_ATTR               17 (append)
+            399 LOAD_NAME               15 (a11)
+            402 CALL_FUNCTION            1
+            405 POP_TOP             
+
+ 31         406 LOAD_NAME                9 (x)           x.append(a22)
+            409 LOAD_ATTR               17 (append)
+            412 LOAD_NAME               16 (a22)
+            415 CALL_FUNCTION            1
+            418 POP_TOP             
+
+ 32         419 LOAD_NAME               10 (k)
+            422 LOAD_CONST              35 (2)           k=k+2
+            425 INPLACE_ADD         
+            426 STORE_NAME              10 (k)
+            429 JUMP_ABSOLUTE          315
+        >>  432 POP_BLOCK           
+
+ 33     >>  433 LOAD_NAME                9 (x)        if x==output: jump
+            436 LOAD_NAME                1 (output)
+            439 COMPARE_OP               2 (==)
+            442 POP_JUMP_IF_FALSE      453
+
+ 34         445 LOAD_CONST              38 ('good!continue\xe2\x80\xa6\xe2\x80\xa6')
+            448 PRINT_ITEM          
+            449 PRINT_NEWLINE       
+            450 JUMP_FORWARD            15 (to 468)
+
+ 36     >>  453 LOAD_CONST              42 ('oh,you are wrong!')  
+            456 PRINT_ITEM          			print('oh,you are wrong!')
+            457 PRINT_NEWLINE       
+
+ 37         458 LOAD_NAME                7 (exit)
+            461 LOAD_CONST              32 (0)          exit(0)
+            464 CALL_FUNCTION            1
+            467 POP_TOP             
+
+ 39     >>  468 LOAD_NAME                5 (len)      l = len(str)
+            471 LOAD_NAME                4 (str)
+            474 CALL_FUNCTION            1
+            477 STORE_NAME              18 (l)
+
+ 40         480 LOAD_NAME                8 (ord)         
+            483 LOAD_NAME                4 (str)      a1 = ord(st[l-7])
+            486 LOAD_NAME               18 (l)
+            489 LOAD_CONST              43 (7)
+            492 BINARY_SUBTRACT     
+            493 BINARY_SUBSCR       
+            494 CALL_FUNCTION            1
+            497 STORE_NAME              19 (a1)
+
+ 41         500 LOAD_NAME                8 (ord)
+            503 LOAD_NAME                4 (str)     a2 = ord(st[l-6])
+            506 LOAD_NAME               18 (l) 
+            509 LOAD_CONST               4 (6)
+            512 BINARY_SUBTRACT     
+            513 BINARY_SUBSCR       
+            514 CALL_FUNCTION            1
+            517 STORE_NAME              20 (a2)
+
+ 42         520 LOAD_NAME                8 (ord)
+            523 LOAD_NAME                4 (str)    a3 = ord(st[l-5])
+            526 LOAD_NAME               18 (l)
+            529 LOAD_CONST              40 (5)
+            532 BINARY_SUBTRACT     
+            533 BINARY_SUBSCR       
+            534 CALL_FUNCTION            1
+            537 STORE_NAME              21 (a3)
+
+ 43         540 LOAD_NAME                8 (ord)
+            543 LOAD_NAME                4 (str)   a4 = ord(st[l-4])
+            546 LOAD_NAME               18 (l)
+            549 LOAD_CONST              36 (4)
+            552 BINARY_SUBTRACT     
+            553 BINARY_SUBSCR       
+            554 CALL_FUNCTION            1
+            557 STORE_NAME              22 (a4)
+
+ 44         560 LOAD_NAME                8 (ord)
+            563 LOAD_NAME                4 (str)  a5 = ord(st[l-3])
+            566 LOAD_NAME               18 (l)
+            569 LOAD_CONST               0 (3)
+            572 BINARY_SUBTRACT     
+            573 BINARY_SUBSCR       
+            574 CALL_FUNCTION            1
+            577 STORE_NAME              23 (a5)
+
+ 45         580 LOAD_NAME                8 (ord)
+            583 LOAD_NAME                4 (str)  a6 = ord(st[l-2])
+            586 LOAD_NAME               18 (l)
+            589 LOAD_CONST              35 (2)
+            592 BINARY_SUBTRACT     
+            593 BINARY_SUBSCR       
+            594 CALL_FUNCTION            1
+            597 STORE_NAME              24 (a6)
+
+ 46         600 LOAD_NAME               19 (a1)
+            603 LOAD_CONST               0 (3)      if a1*3+a2*2+a3*5 != 1003:jmp 807
+            606 BINARY_MULTIPLY     
+            607 LOAD_NAME               20 (a2)
+            610 LOAD_CONST              35 (2)
+            613 BINARY_MULTIPLY     
+            614 BINARY_ADD          
+            615 LOAD_NAME               21 (a3)
+            618 LOAD_CONST              40 (5)
+            621 BINARY_MULTIPLY     
+            622 BINARY_ADD          
+            623 LOAD_CONST              44 (1003)
+            626 COMPARE_OP               2 (==)
+            629 POP_JUMP_IF_FALSE      807
+
+ 47         632 LOAD_NAME               19 (a1)  if :a1*4+a2*7+a3*9 !=2013:jmp 807
+            635 LOAD_CONST              36 (4)
+            638 BINARY_MULTIPLY     
+            639 LOAD_NAME               20 (a2)
+            642 LOAD_CONST              43 (7)
+            645 BINARY_MULTIPLY     
+            646 BINARY_ADD          
+            647 LOAD_NAME               21 (a3)
+            650 LOAD_CONST               3 (9)
+            653 BINARY_MULTIPLY     
+            654 BINARY_ADD          
+            655 LOAD_CONST              45 (2013)
+            658 COMPARE_OP               2 (==)
+            661 POP_JUMP_IF_FALSE      807
+
+ 48         664 LOAD_NAME               19 (a1)  if"a1+a2*8+a3*2! = 1109:jmp 807
+            667 LOAD_NAME               20 (a2)
+            670 LOAD_CONST              46 (8)
+            673 BINARY_MULTIPLY     
+            674 BINARY_ADD          
+            675 LOAD_NAME               21 (a3)
+            678 LOAD_CONST              35 (2)
+            681 BINARY_MULTIPLY     
+            682 BINARY_ADD          
+            683 LOAD_CONST              47 (1109)
+            686 COMPARE_OP               2 (==)
+            689 POP_JUMP_IF_FALSE      804
+
+ 49         692 LOAD_NAME               22 (a4) 
+            695 LOAD_CONST               0 (3)    if: a4*3+a5*2+a6*5 != 671:jmp 807
+            698 BINARY_MULTIPLY     
+            699 LOAD_NAME               23 (a5)
+            702 LOAD_CONST              35 (2)
+            705 BINARY_MULTIPLY     
+            706 BINARY_ADD          
+            707 LOAD_NAME               24 (a6)
+            710 LOAD_CONST              40 (5)
+            713 BINARY_MULTIPLY     
+            714 BINARY_ADD          
+            715 LOAD_CONST              48 (671)
+            718 COMPARE_OP               2 (==)
+            721 POP_JUMP_IF_FALSE      801
+
+ 50         724 LOAD_NAME               22 (a4)
+            727 LOAD_CONST              36 (4)   if: a4*4+a5*7+a6*9 != 1252:jmp 807
+            730 BINARY_MULTIPLY     
+            731 LOAD_NAME               23 (a5)
+            734 LOAD_CONST              43 (7)
+            737 BINARY_MULTIPLY     
+            738 BINARY_ADD          
+            739 LOAD_NAME               24 (a6)
+            742 LOAD_CONST               3 (9)
+            745 BINARY_MULTIPLY     
+            746 BINARY_ADD          
+            747 LOAD_CONST              49 (1252)
+            750 COMPARE_OP               2 (==)
+            753 POP_JUMP_IF_FALSE      798
+
+ 51         756 LOAD_NAME               22 (a4)
+            759 LOAD_NAME               23 (a5)  if: a4+a5*8+a6*2!=644:jmp 807
+            762 LOAD_CONST              46 (8)
+            765 BINARY_MULTIPLY     
+            766 BINARY_ADD          
+            767 LOAD_NAME               24 (a6)
+            770 LOAD_CONST              35 (2)
+            773 BINARY_MULTIPLY     
+            774 BINARY_ADD          
+            775 LOAD_CONST              50 (644)
+            778 COMPARE_OP               2 (==)
+            781 POP_JUMP_IF_FALSE      795
+
+ 52         784 LOAD_CONST              51 ('congraduation!you get the right flag!')
+            787 PRINT_ITEM           
+            788 PRINT_NEWLINE                      print('congraduation!you get the right flag!')  
+            789 JUMP_ABSOLUTE          795
+            792 JUMP_ABSOLUTE          798
+        >>  795 JUMP_ABSOLUTE          801
+        >>  798 JUMP_ABSOLUTE          804
+        >>  801 JUMP_ABSOLUTE          807
+        >>  804 JUMP_FORWARD             0 (to 807)
+        >>  807 LOAD_CONST              52 (None)
+            810 RETURN_VALUE 

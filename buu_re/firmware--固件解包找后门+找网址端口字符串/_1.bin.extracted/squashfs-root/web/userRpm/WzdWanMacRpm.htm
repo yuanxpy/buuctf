@@ -1,0 +1,61 @@
+
+<SCRIPT type="text/javascript">
+function Click(){ window.event.returnValue=false;}
+document.oncontextmenu=Click;
+
+function doSubmit()
+{
+	if(!is_macaddr(document.forms[0].wan_mac.value))
+	{
+		var element =document.forms[0].wan_mac;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	return true;
+}
+
+function doBack()
+{	
+	location.href="WzdWanMacRpm.htm?Return=Back";
+}
+</SCRIPT>
+</HEAD>
+<body>
+<center><form action="WzdWanMacRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">设置向导 - Mac克隆</td></tr>
+<tr><td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td>
+<td width="500">
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>推荐使用调制解调器的用户进行Mac克隆。要获取详细信息，请仔<br>细阅读帮助。</td></tr></table>
+<table width="400" border="0" align="center" class="space" cellspacing="2" cellpadding="2">
+		<TR>
+			<TD colspan=2>
+				<INPUT name="is_need_clone" type="radio" value="1" checked>&nbsp;
+				<SPAN id = "t_need_clone">是，我当前使用的计算机是管理计算机（克隆MAC地址）</SPAN><br><br>
+				<INPUT name="is_need_clone" type="radio" value="0">&nbsp;
+				<SPAN id = "t_not_need_clone">不，我使用的是其他计算机（不克隆MAC地址）</SPAN><br><br>
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan=2><SPAN style="color:#FF0000" id="t_macClone_note">注意：完成快速配置后，如遇到问题，请尝试重启<u>调制解调器</u>。</TD>
+		</TR>
+</table>
+<br></td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td  class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+<input name="Back" type="button" class="button" value="上一步" onClick="doBack();">&nbsp; 
+<input name="Next" type="submit" class="button" value="下一步" onClick="return doSubmit();">&nbsp; 
+<INPUT type=hidden name=ClientId>
+</td></tr><tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td>
+</tr></table></td></tr></table></form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<SCRIPT type="text/javascript">
+document.forms[0].ClientId.value=wzdMacClone[0];
+</SCRIPT>

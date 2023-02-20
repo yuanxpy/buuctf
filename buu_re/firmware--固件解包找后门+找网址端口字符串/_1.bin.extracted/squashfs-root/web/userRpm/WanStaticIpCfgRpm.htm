@@ -1,0 +1,275 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+var wanType = new Array(
+"动态IP",	//	WAN_TYPE_DHCP = 0,
+"静态IP",	//	WAN_TYPE_STATIC_IP, 
+"PPPoE",	//	WAN_TYPE_PPPOE, 
+"802.1x 动态IP",	//	WAN_TYPE_802_1X_DHCP,
+"802.1x 静态IP",	//	WAN_TYPE_802_1X_STATIC_IP,
+"BPA",	//	WAN_TYPE_BPA,
+"L2TP",	//	WAN_TYPE_L2TP,
+"PPTP",	//	WAN_TYPE_PPTP,
+"DHCP+",	//WAN_TYPE_DHCP_PLUS,
+""	//	WAN_TYPE_END
+);
+
+function doSubmit()
+{
+	var val; 
+	val=document.forms[0].mtu.value;
+	if(val<576||val>1500||val=="")
+	{
+		alert("错误的MTU,请重新输入!\n(576 ~ 1500,默认是1500)");
+		return false;
+	}
+	if(!is_ipaddr(document.forms[0].ip.value))
+	{
+		var element =document.forms[0].ip;
+		if(element)
+		{
+			element.focus();element.select();
+	    }
+		return false;
+    }
+	if(!is_maskaddr(document.forms[0].mask.value))
+	{
+		var element =document.forms[0].mask;
+		if(element)
+		{
+			element.focus();element.select();
+		}
+		return false;
+	}
+	if(document.forms[0].gateway.value != "")
+	{
+		if(!is_gatewayaddr(document.forms[0].gateway.value))
+		{
+			var element =document.forms[0].gateway;
+			if(element)
+			{
+				element.focus();element.select();
+			}
+			return false;
+		}
+	}
+	if(document.forms[0].dnsserver.value != "")
+	{
+		if(!is_dnsaddr(document.forms[0].dnsserver.value))
+		{
+			var element =document.forms[0].dnsserver;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+		return false;
+		}
+	}
+	if(document.forms[0].dnsserver2.value != "")
+	{
+		if(!is_dnsaddr(document.forms[0].dnsserver2.value))
+		{
+			var element =document.forms[0].dnsserver2;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+		return false;
+		}
+	}
+	return true;
+}
+
+function doChange()
+{   
+	var n = 0;
+	if(staticIpInf[0] > 1)
+	{
+		n = document.forms[0].wan.value;
+	}
+	s = "wan="+n;
+	var t = document.forms[0].wantype.selectedIndex;
+	location.href = "/userRpm/"+wantypeinfo[t*2+2]+"?"+s;
+}
+function doWanChange()
+{
+	var n = document.forms[0].wan.selectedIndex;
+	var s = "wan="+n;
+	location.href = "/userRpm/WanCfgRpm.htm"+"?"+s;
+}
+function netClick()
+{
+	if(document.forms[0].Intranet.checked==false) 
+	{
+		document.forms[0].netRange.disabled=true;
+	} 
+	else
+	{
+		document.forms[0].netRange.disabled=false;
+	}
+}
+function checkIP()
+{
+	var obj = document.getElementById("netRange").value;
+	var n = obj.indexOf("-");
+	if(n == -1)
+	{
+		alert("内网地址范围输入错误，请重新输入！");
+		return false;
+	}
+	var beginIP = obj.substring(0,n)
+	var endIP = obj.substring(n+1);
+	if(ipverify(beginIP) && ipverify(endIP))
+	{
+		return true;
+	}
+	else
+	{
+		alert("内网地址范围输入错误，请重新输入！");
+		return false;
+	}
+}
+function doHelp()
+{
+	location.href="/help/WanStaticIpCfgHelpRpm.htm?ieeeType=1";
+}
+function doDetect()
+{
+	location.href="/userRpm/WanStaticIpCfgRpm.htm?detect=1";
+}
+function refresh()
+{	
+	location.href="/userRpm/WanStaticIpCfgRpm.htm";	
+}
+
+//--></script></head>
+<BODY>
+<center><form action="WanStaticIpCfgRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">WAN口设置</td></tr>
+<tr><td colspan="2">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"></td>
+<td width="500">
+	<table width="400" border="0" align="center" cellpadding="2" cellspacing="0" class="space">
+		<script language="JavaScript">
+		if(staticIpInf[0] > 1)
+		{
+		document.write('<TR><TD width="120">WAN口：</TD><TD><select name="wan"  id="wan" onChange="doWanChange()">');
+		for(var i=0;i<staticIpInf[0];i++)
+		{
+			document.write('<option value=\"'+i+'\">WAN口'+(i+1)+'</option>');
+		}
+		document.write('</select></td></tr>');
+		}
+		</script>
+	</table>
+	<table width="400" border="0" align="center" cellpadding="2" cellspacing="0" class="space">
+		<TR>			
+			<TD width="120">WAN口连接类型：</TD>
+			<TD>
+				<select name="wantype" class="list" onChange="doChange()">
+					<script language="JavaScript">
+					for ( var t=0; t < wantypeinfo[0]; t++)
+					{
+						document.write('<option value="'+wantypeinfo[t*2+1]+'">'+wanType[wantypeinfo[t*2+1]]+'</option>');
+					}
+					</script>
+				</select>
+				&nbsp;
+				<input name="Discover" type="button" class="button" id="discover" value="自动检测" onClick=doDetect()>
+				<script language="JavaScript">
+					var HAVE_NOT_DETECTED = 0;
+					var DETECTIING = 1;
+					var HAVE_DETECTED = 2;
+					var DISCONNECTED = 3;
+					 
+					var detected_wan_type = wanTypeDetectInfoArray[0];
+					var wan_type_detect_stat = wanTypeDetectInfoArray[1];
+					var wait_time = wanTypeDetectInfoArray[2];
+								
+					switch (wan_type_detect_stat)
+					{
+					case HAVE_NOT_DETECTED:
+						document.write('&nbsp;<font color="0000FF">' + '         ' + '</font>');
+						break;
+					case DETECTIING:
+						document.write('&nbsp;<span style="color:#0000FF" id="t_det">正在检测...</span>');
+						window.setTimeout("refresh()", wait_time);
+						break;
+					case HAVE_DETECTED:
+						document.write('&nbsp;<font color="0000FF">' + wanType[detected_wan_type] + '</font>');
+						break;
+					case DISCONNECTED:
+						document.write('&nbsp;<span style="color:#FF0000" id="t_unplugged">WAN口无连接</span>');
+						break;
+					default:
+						break;
+					}
+				</script>
+			</TD>
+		</TR>
+	</table>
+	<table width="400" border="0" align="center" cellpadding="2" cellspacing="0" class="space" id="showIntranet" style="display:none;">
+		<tr>
+			<td width="120"><input type="checkbox" name="Intranet" value="2" onclick="netClick();" onFocus="doFocus();">内网地址范围：</td> 
+			<td>
+				<input name="netRange" value="" type="text" class="text" size="32" maxlength="31" onblur = "checkIP()" onFocus="doFocus();">
+			</td>
+		</tr>
+	</table>
+	<table width="400" border="0" align="center" class="space">
+		<TR><TD width="120">IP 地址：</TD><TD width"289"><input name="ip" type="text" class="text" value="" size="15" maxlength="15"></TD></TR>
+		<TR><TD >子网掩码：</TD><TD><input name="mask" type="text" class="text" value="" size="15" maxlength="15"></TD></TR>
+<TR>
+                    <TD >网关：</TD>
+                    <TD><input name="gateway" type="text" class="text" value="" size="15" maxlength="15"></TD>
+</TR>
+<TR>
+	<TD >数据包MTU（字节）：</TD><TD><input name="mtu" type="text" class="text" value="" size="5" maxlength="5">&nbsp;（默认是1500，如非必要，请勿修改）</TD>
+</TR>
+
+<TR>
+                    <TD >DNS服务器：</TD>
+                    <TD><input name="dnsserver" type="text" class="text" value="" size="15" maxlength="15">&nbsp;</TD></TR>
+<TR><TD >备用DNS服务器：</TD><TD><input name="dnsserver2" type="text" class="text" value="" size="15" maxlength="15">&nbsp;（可选）</TD></TR></table>
+<table width="400" border="0" align="center" cellpadding="2" cellspacing="0" class="space"  id="showBandWidth" style="display:none;">
+<tr><td colspan="2">请在以下的输入框中输入ISP指定的线路带宽值，如不清楚可以向您的ISP咨询；如该值为0则表示由路由器自动控制。</td></tr>
+<TR><TD width="120">下行带宽：</TD><TD><input name="downBandwidth" type="text" class="text" value="" size="7" maxlength="7"> Kbps&nbsp;（可选）</TD></TR>
+<TR><TD >上行带宽：</TD><TD><input name="upBandwidth" type="text" class="text" value="" size="7" maxlength="7"> Kbps&nbsp;（可选）</TD></TR>
+</table></td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">&nbsp;
+<input name="Save" type="submit" class="button" id="save" value="保 存">&nbsp;
+<input name="help" type="button" class="button" id="help" onClick="doHelp();" value="帮 助">
+</td></tr><tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td>
+</tr></table></td></tr></table>
+</form></center></BODY><head><meta http-equiv="pragma" content="no-cache"></head></HTML>
+<script language="JavaScript">
+if(staticIpInf[0] != 1)
+{
+document.forms[0].wan.selctedIndex = staticIpInf[5];
+}
+document.forms[0].wantype.selectedIndex = staticIpInf[6];
+document.forms[0].ip.value = staticIpInf[12];
+document.forms[0].mask.value = staticIpInf[13];
+document.forms[0].gateway.value = staticIpInf[14];
+document.forms[0].mtu.value = staticIpInf[15];
+document.forms[0].dnsserver.value = staticIpInf[16];
+document.forms[0].dnsserver2.value = staticIpInf[17];
+document.forms[0].downBandwidth.value = staticIpInf[18];
+document.forms[0].upBandwidth.value = staticIpInf[19];
+//document.forms[0].Intranet.checked = (staticIpInf[20])?true:false;
+//document.forms[0].netRange.value = staticIpInf[21];
+netClick();
+if(staticIpInf[0] > 1)
+{
+	document.getElementById('showBandWidth').style.display = "block";
+//	document.getElementById('showIntranet').style.display = "block";
+}
+
+</script>
+

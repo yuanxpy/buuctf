@@ -1,0 +1,31 @@
+
+<SCRIPT language=javascript src="/dynaform/help.js" type=text/javascript></SCRIPT>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<SCRIPT type="text/javascript">
+dohelp("帮助－动态IP设置");
+	begin();
+		writeline("WAN口连接类型：", "请根据您的Internet服务供应商（ISP）所提供的上网方式来选择相应的连接类型。例如，如果您可以从ISP获取由DHCP服务器自动分配的IP地址，请选择“动态IP”；如果您拥有ISP提供的固定IP地址，请选择“静态IP”；如果您的上网的方式为ADSL虚拟拨号方式，请选择“PPPoE”。");		
+		blank();
+		writeline("IP地址：", "从ISP的DHCP服务器动态得到的IP地址。");
+		writeline("子网掩码：", "从ISP的DHCP服务器动态得到的子网掩码。");
+		writeline("网关：", "从ISP的DHCP服务器动态得到的网关。");
+		blank();
+		writeline("数据包MTU：", "输入范围是576 ～ 1500，缺省为1500。");
+		writeline("DNS服务器：", "从ISP的DHCP服务器动态得到的DNS服务器，或者您可以在此处手动设置自己的DNS服务器。");
+		writeline("备用DNS服务器：",  "从ISP的DHCP服务器动态得到的备用DNS服务器，或者您可以在此处手动设置自己的备用DNS服务器。");
+		blank();
+		writeline("主机名：",  "设置路由器的主机名（DHCP Host Name）。");
+		writeline("单播方式获取IP：",  "少数ISP的DHCP服务器不支持广播的请求方式，如果您在网络连接正常的情况下无法获取IP地址，可以选择单播的方式。（一般情况下不需要选择此项）");
+	end();
+	begin();
+		writeline("按钮功能",  "");
+		blank();
+		writeline("自动检测：", "如果您不清楚应选择何种WAN口连接类型，请点击此按钮来查看ISP所提供的上网方式。检测结果仅供参考，详情请咨询您的ISP。");
+		writeline("更新：",  "单击此按钮，您可以从ISP的DHCP服务器更新WAN口的IP地址、子网掩码、网关、DNS服务器等设置。");
+		writeline("释放：",  "单击此按钮，本路由器将发送DHCP释放请求到ISP的DHCP服务器，释放IP设置。");
+	end();			
+done();
+</SCRIPT>
+</body></html>

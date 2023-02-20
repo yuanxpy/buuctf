@@ -1,0 +1,10 @@
+这题限制了add时chunk的size，为0x8和0x80，edit时只能从+0x10处改0x70个字符
+1.先add一个chunk，在add一个chunk，这个chunk里的name填/bin/sh\x00
+(这时0x8chunk中存有指向binsh地址的指针了)，我们释放第一个chunk，由于0x80大小，释放到unsortbin中，我们show，就能泄露libc
+2.我们接下来的目的是控制申请0x8大小中存的指针为free_hook
+再add一个chunk时，0x8的控制chunk会从unsortbin中割0x20，剩下的unsortbin的chunk放入small_bin中，但由于edit时只能从+0x10处改0x70个字符，我们故技重施再add一个chunk，仍旧从small_bin中割0x20，我们就能改到0x8中存的指针为free_hook了
+3.我们用edit改free_hook为system
+4.利用原本有存有binsh地址的0x8chunk,delete它就是执行system(/bin/sh)
+————————————————
+版权声明：本文为CSDN博主「Nqoinaen」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/m0_51251108/article/details/121321652

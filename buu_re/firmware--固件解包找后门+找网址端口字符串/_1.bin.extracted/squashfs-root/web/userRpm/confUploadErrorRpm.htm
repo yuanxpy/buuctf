@@ -1,0 +1,36 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doPrev()
+{
+	location.href="/userRpm/BakNRestoreRpm.htm";
+}
+//--></script>
+</head>
+<body onload="parent.setTagStr(document,'conf_upload_error');">
+<center>
+<table width="502" border="0" cellpadding="0" cellspacing="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">错误</td></tr>
+<tr><td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="1" rowspan="15" class="vline"><br></td><td width="500">
+<table align="center" height="120">
+<TR><TD align="left">配置文件格式错误，请确保上传的文件<br></TD></TR>
+<tr><td><table><tr><td>错误命令</td><td>错误类型</td></tr>
+<script language="Javascript"><!--
+var i=0;
+for(;i<confUplaodErrorInfo[0];i++)
+{
+	document.write('<tr><td>'+confUplaodErrorInfo[i*2+1]+'</td><td>'+confUplaodErrorInfo[i*2+2]+'</td></tr>');
+}
+--></script>
+</table></td></tr>
+</table>
+</td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td class="hline"></td></tr>
+<tr><td height="30" class="tail" align="right" nowrap>
+<input name="Back" type="button" class="button" value="返回" onClick="doPrev();return false;">
+</td></tr>
+<tr><td class="hline"></td></tr>
+</table></td></tr></table>
+</center></body></html>

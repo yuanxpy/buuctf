@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id -->
+<html class="hasSidebar hasPageActions hasBreadcrumb conceptual has-default-focus js-focus-visible theme-light" lang="en-us" dir="ltr" data-css-variable-support="true" data-authenticated="false" data-auth-status-determined="true" data-target="docs" x-ms-format-detection="none" data-js-focus-visible=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta property="og:title" content="ALG_ID (Wincrypt.h) - Win32 apps">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id">
+			<meta property="og:description" content="Specifies an algorithm identifier.">
+		<meta property="og:image" content="https://docs.microsoft.com/en-us/media/logos/logo-ms-social.png">
+		<meta property="og:image:alt" content="Microsoft Logo">
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@docsmsft">
+
+	<meta name="color-scheme" content="light dark">
+
+
+	<meta name="author" content="lastnameholiu">
+<meta name="breadcrumb_path" content="/windows/desktop/breadcrumb/toc.json">
+<meta name="depot_name" content="MSDN.win32">
+<meta name="description" content="Specifies an algorithm identifier.">
+<meta name="document_id" content="18e19b0f-5a25-7b61-7dea-2c1eb1172d27">
+<meta name="document_version_independent_id" content="e4fda0d2-3d1c-05fe-905f-539c5ccdd538">
+<meta name="gitcommit" content="https://github.com/MicrosoftDocs/win32-pr/blob/2fd25eb0d185d553258bfc624fc10babe7bdf1ce/desktop-src/SecCrypto/alg-id.md">
+<meta name="locale" content="en-us">
+<meta name="ms.assetid" content="557436b4-f7f1-4708-acc7-c6b47e6322ad">
+<meta name="ms.author" content="alholiu">
+<meta name="ms.date" content="05/31/2018">
+<meta name="ms.prod" content="desktop">
+<meta name="ms.technology" content="security-identity">
+<meta name="ms.topic" content="reference">
+<meta name="original_content_git_url" content="https://github.com/MicrosoftDocs/win32-pr/blob/live/desktop-src/SecCrypto/alg-id.md">
+<meta name="schema" content="Conceptual">
+<meta name="search.ms_docsetname" content="win32">
+<meta name="search.ms_product" content="MSDN">
+<meta name="search.ms_sitename" content="Docs">
+<meta name="site_name" content="Docs">
+<meta name="uhfHeaderId" content="MSDocsHeader-WinDevCenter">
+<meta name="updated_at" content="2021-01-07 08:47 PM">
+<meta name="page_type" content="conceptual">
+<meta name="toc_rel" content="toc.json">
+<meta name="pdf_url_template" content="https://docs.microsoft.com/pdfstore/en-us/MSDN.win32/{branchName}{pdfName}">
+<meta name="word_count" content="1022">
+
+
+	<meta name="scope" content="Windows, Desktop">
+<link href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id" rel="canonical">
+	<title>ALG_ID (Wincrypt.h) - Win32 apps | Microsoft Docs</title>
+
+		<link rel="stylesheet" href="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/e6141ec8.site-ltr.css">
+
+	
+
+
+	<script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/saved_resource"></script><script async="" defer="" crossorigin="anonymous" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/lux.js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/analytics.js"></script><script id="msdocs-script">
+	var msDocs = {
+		data: {
+			timeOrigin: Date.now(),
+			contentLocale: 'en-us',
+			contentDir: 'ltr',
+			userLocale: 'en-us',
+			userDir: 'ltr',
+			pageTemplate: 'Conceptual',
+			brand: '',
+			context: {
+
+			},
+			hasBinaryRating: true,
+			hasGithubIssues: false,
+			showFeedbackReport: false,
+			enableTutorialFeedback: false,
+			feedbackSystem: 'None',
+			feedbackGitHubRepo: '',
+			feedbackProductUrl: '',
+			contentGitUrl: 'https://github.com/MicrosoftDocs/win32/blob/docs/desktop-src/SecCrypto/alg-id.md',
+			extendBreadcrumb: false,
+			isEditDisplayable: true,
+			hideViewSource: false,
+			hasPageActions: true,
+			hasBookmark: true,
+			hasShare: true,
+			hasRecommendations: true,
+			contributors: [
+						{ name: "lastnameholiu", url: "https://github.com/lastnameholiu" },
+						{ name: "v-kents", url: "https://github.com/v-kents" },
+						{ name: "drewbatgit", url: "https://github.com/drewbatgit" },
+						{ name: "DCtheGeek", url: "https://github.com/DCtheGeek" },
+						{ name: "mijacobs", url: "https://github.com/mijacobs" },
+						{ name: "msatranjr", url: "https://github.com/msatranjr" },
+						{ name: "mcleblanc", url: "https://github.com/mcleblanc" }
+],
+		},
+		functions:{}
+	};
+	</script>
+	<script src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/wcp-consent.js"></script>
+	<script src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/ms.jsll-3.min.js"></script>
+	<script>window.onedsAwa = window.awa; delete window.awa;</script>	
+	<script src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/jsll-4.js"></script>
+	<script nomodule="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/bluebird.min.js" integrity="sha384-aD4BDeDGeLXLpPK4yKeqtZQa9dv4a/7mQ+4L5vwshIYH1Mc2BrXvHd32iHzYCQy5" crossorigin="anonymous"></script>
+	<script nomodule="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/fetch.umd.min.js" integrity="sha384-EQIXrC5K2+7X8nGgLkB995I0/6jfAvvyG1ieZ+WYGxgJHFMD/alsG9fSDWvzb5Y1" crossorigin="anonymous"></script>
+	<script nomodule="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/template.min.js" integrity="sha384-1zKzI6ldTVHMU7n0W2HpE/lhHI+UG4D9IIaxbj3kT2UhCWicdTuJkTtnKuu0CQzN" crossorigin="anonymous"></script>
+	<script nomodule="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/url.min.js" integrity="sha384-vn7xBMtpSTfzaTRWxj0kVq0UcsbBrTOgZ/M1ISHqe1V358elYva+lfiEC+T8jLPc" crossorigin="anonymous"></script>
+	<script src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/2c6911d0.index-polyfills.js"></script>
+
+		<script src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/961b0564.index-docs.js"></script><style></style>
+<script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t.js"></script><style type="text/css" media="print">.usabilla_live_button_container { display: none; }</style><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(1).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(2).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(3).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(4).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(5).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(6).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(7).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(8).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(9).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(10).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(11).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(12).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(13).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(14).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(15).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(16).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(17).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(18).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(19).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(20).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(21).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(22).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(23).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(24).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(25).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(26).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(27).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(28).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(29).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(30).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(31).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(32).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(33).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(34).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(35).js"></script><script async="" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/t(36).js"></script><script async="" src="https://web.vortex.data.microsoft.com/collect/v1/t.js?ver=%272.1%27&amp;name=%27Ms.Webi.PageAction%27&amp;time=%272021-07-07T06%3A43%3A52.272Z%27&amp;os=%27Windows%27&amp;appId=%27JS%3ADocs%27&amp;-ver=%271.0%27&amp;-impressionGuid=%27c27814b1-2a29-402e-95d1-90e07ef6cc2a%27&amp;-pageName=%2718e19b0f-5a25-7b61-7dea-2c1eb1172d27%27&amp;-uri=%27https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fwindows%2Fwin32%2Fseccrypto%2Falg-id%27&amp;-pageTags=%27%7B%22author%22%3A%22lastnameholiu%22%2C%22depotname%22%3A%22MSDN.win32%22%2C%22document_version_independent_id%22%3A%22e4fda0d2-3d1c-05fe-905f-539c5ccdd538%22%2C%22gitcommit%22%3A%22https%3A%2F%2Fgithub.com%2FMicrosoftDocs%2Fwin32-pr%2Fblob%2F2fd25eb0d185d553258bfc624fc10babe7bdf1ce%2Fdesktop-src%2FSecCrypto%2Falg-id.md%22%2C%22asst%22%3A%22557436b4-f7f1-4708-acc7-c6b47e6322ad%22%2C%22pgauth%22%3A%22alholiu%22%2C%22date%22%3A%2205%2F31%2F2018%22%2C%22product%22%3A%22desktop%22%2C%22technology%22%3A%22security-identity%22%2C%22pgtop%22%3A%22reference%22%2C%22giturl%22%3A%22https%3A%2F%2Fgithub.com%2FMicrosoftDocs%2Fwin32-pr%2Fblob%2Flive%2Fdesktop-src%2FSecCrypto%2Falg-id.md%22%2C%22publishtime%22%3A%222021-01-07%2008%3A47%20PM%22%2C%22contentlocale%22%3A%22en-us%22%2C%22highContrast%22%3A%22false%22%2C%22metaTags%22%3A%7B%7D%7D%27&amp;-contentVer=%272.0%27&amp;-market=%27en-us%27&amp;-pageType=%27conceptual%27&amp;-actionType=%27O%27&amp;-behavior=300&amp;-content=%27%5B%7B%22event%22%3A%22page-focus-changed%22%2C%22value%22%3A%22blur%22%7D%5D%27&amp;*baseType=%27Ms.Content.PageAction%27&amp;*timeToAction=6950685&amp;*cookieEnabled=true&amp;*isJs=true&amp;*title=%27ALG_ID%20(Wincrypt.h)%20-%20Win32%20apps%20%7C%20Microsoft%20Docs%27&amp;*isLoggedIn=false&amp;*isManual=true&amp;*referrerUri=%27https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fwindows%2Fwin32%2Fapi%2Fwincrypt%2Fnf-wincrypt-cryptcreatehash%27&amp;ext-javascript-ver=%271.1%27&amp;ext-javascript-libVer=%274.3.4%27&amp;ext-javascript-domain=%27docs.microsoft.com%27&amp;ext-javascript-msfpc=%27GUID%3D67b2fc9aa1674158a66bb5ccce56901e%26HASH%3D67b2%26LV%3D202103%26V%3D4%26LU%3D1615302056097%27&amp;ext-javascript-userConsent=true&amp;ext-javascript-anid=%27A%3D79C879B315E990278B6A3A6AFFFFFFFF%27&amp;ext-user-localId=%27t%3A07D67346789B63680A2F7CB479D862A8%27&amp;$mscomCookies=false"></script></head>
+
+<body lang="en-us" dir="ltr"><div style="display: none;" id="lightningjs-usabilla_live"><div><iframe frameborder="0" id="lightningjs-frame-usabilla_live" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/saved_resource.html"></iframe></div></div>
+	<div class="header-holder has-default-focus">
+		<a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id#main" class="skip-to-main-link has-outline-color-text visually-hidden-until-focused position-fixed has-inner-focus focus-visible top-0 left-0 right-0 padding-xs has-text-centered has-body-background" tabindex="1">Skip to main content</a>
+		
+		<div hidden="" id="cookie-consent-holder"></div>
+		<!-- liquid-tag banners global -->
+		<div id="headerAreaHolder" data-bi-name="header">
+<header role="banner" itemscope="itemscope" itemtype="http://schema.org/Organization"><!----> <div class="nav-bar"><!---->  <div class="nav-bar-brand">
+		<a class="nav-bar-button" itemprop="url" href="https://www.microsoft.com/" aria-label="Microsoft">
+			<div class="nav-bar-logo" role="presentation" aria-hidden="true" itemprop="logo" itemscope="itemscope">
+				<svg xmlns="http://www.w3.org/2000/svg" width="108" height="23" viewBox="72 72 337 74" preserveAspectRatio="xMidYMin slice">
+					<g data-name="MS-symbol">
+						<clippath id="a">
+							<path transform="matrix(1 0 0 -1 0 216)" d="M0 216h482V0H0z"></path>
+						</clippath>
+						<g clip-path="url(#a)">
+							<path class="has-fill-current-color has-text-subtle" d="M394.942 104.59h-10.858v25.003h-7.38V104.59h-5.182v-5.965h5.182v-4.308c0-3.254 1.06-5.92 3.178-7.998 2.12-2.079 4.835-3.118 8.15-3.118.882 0 1.666.045 2.35.135a9.37 9.37 0 011.806.407v6.296c-.24-.14-.663-.31-1.265-.512-.603-.2-1.296-.3-2.078-.3-1.528 0-2.702.476-3.526 1.43-.824.954-1.235 2.365-1.235 4.232v3.736h10.858v-6.959l7.321-2.229v9.188h7.381v5.965h-7.38v14.49c0 1.91.345 3.254 1.038 4.037.693.783 1.782 1.175 3.27 1.175.42 0 .927-.1 1.52-.3a7.178 7.178 0 001.552-.724v6.025c-.463.261-1.23.502-2.305.723a15.742 15.742 0 01-3.178.331c-3.073 0-5.378-.817-6.914-2.455-1.537-1.637-2.305-4.102-2.305-7.396zm-48.407 9.73c0 3.233.733 5.703 2.2 7.411 1.465 1.707 3.564 2.56 6.295 2.56 2.652 0 4.67-.853 6.055-2.56 1.386-1.708 2.08-4.238 2.08-7.592 0-3.334-.719-5.849-2.155-7.547-1.436-1.697-3.45-2.545-6.04-2.545-2.67 0-4.745.888-6.22 2.666-1.477 1.777-2.215 4.313-2.215 7.607m-7.592.24c0-5.12 1.446-9.177 4.338-12.17 2.892-2.993 6.91-4.489 12.05-4.489 4.841 0 8.621 1.441 11.343 4.323 2.721 2.883 4.082 6.774 4.082 11.674 0 5.021-1.447 9.018-4.338 11.99-2.892 2.973-6.829 4.458-11.81 4.458-4.8 0-8.61-1.41-11.432-4.232-2.822-2.82-4.233-6.673-4.233-11.554m-16.417-7.802c0 1.045.331 1.863.994 2.456.662.592 2.128 1.34 4.398 2.243 2.912 1.166 4.956 2.476 6.131 3.932 1.175 1.456 1.762 3.22 1.762 5.287 0 2.912-1.12 5.252-3.359 7.02-2.24 1.767-5.267 2.65-9.083 2.65-1.285 0-2.706-.155-4.263-.467-1.556-.31-2.877-.707-3.96-1.19v-7.169a17.945 17.945 0 004.277 2.198c1.526.543 2.911.814 4.157.814 1.647 0 2.862-.23 3.645-.693.784-.46 1.175-1.235 1.175-2.319 0-1.005-.406-1.853-1.22-2.546-.813-.693-2.355-1.492-4.624-2.395-2.69-1.125-4.599-2.39-5.724-3.796-1.125-1.406-1.687-3.193-1.687-5.362 0-2.792 1.11-5.086 3.33-6.884 2.217-1.797 5.095-2.696 8.63-2.696 1.084 0 2.3.12 3.645.361 1.346.242 2.47.553 3.374.934v6.93c-.964-.644-2.089-1.195-3.374-1.658-1.286-.462-2.56-.693-3.826-.693-1.386 0-2.465.271-3.238.813-.774.543-1.16 1.286-1.16 2.23m-35.066 7.562c0 3.233.733 5.703 2.2 7.411 1.465 1.707 3.564 2.56 6.295 2.56 2.652 0 4.67-.853 6.055-2.56 1.386-1.708 2.08-4.238 2.08-7.592 0-3.334-.719-5.849-2.155-7.547-1.436-1.697-3.449-2.545-6.039-2.545-2.672 0-4.745.888-6.222 2.666-1.476 1.777-2.214 4.313-2.214 7.607m-7.592.24c0-5.12 1.446-9.177 4.338-12.17 2.893-2.993 6.91-4.489 12.051-4.489 4.84 0 8.621 1.441 11.342 4.323 2.721 2.883 4.082 6.774 4.082 11.674 0 5.021-1.446 9.018-4.338 11.99-2.892 2.973-6.828 4.458-11.809 4.458-4.8 0-8.61-1.41-11.433-4.232-2.822-2.82-4.233-6.673-4.233-11.554m-3.136-16.448c.582 0 1.105.041 1.567.121.462.08.853.18 1.175.301v7.38c-.382-.28-.939-.546-1.672-.798-.733-.25-1.622-.376-2.666-.376-1.788 0-3.299.753-4.534 2.26-1.235 1.505-1.853 3.825-1.853 6.958v15.635h-7.29V98.624h7.29v4.88h.12c.663-1.687 1.667-3.007 3.013-3.96 1.346-.954 2.962-1.432 4.85-1.432m-27.956 26.18c1.084 0 2.28-.25 3.585-.754a15.06 15.06 0 003.615-1.988v6.778c-1.165.663-2.485 1.165-3.962 1.506-1.475.342-3.098.512-4.865.512-4.559 0-8.265-1.44-11.116-4.323-2.852-2.88-4.278-6.562-4.278-11.04 0-4.98 1.456-9.083 4.37-12.307 2.91-3.224 7.037-4.835 12.38-4.835 1.366 0 2.746.176 4.143.527 1.395.352 2.504.758 3.328 1.22v6.99c-1.125-.824-2.274-1.462-3.45-1.914a9.966 9.966 0 00-3.599-.678c-2.872 0-5.192.934-6.959 2.802-1.768 1.868-2.652 4.388-2.652 7.562 0 3.132.85 5.573 2.546 7.32 1.697 1.748 4.002 2.621 6.914 2.621m-22.112 5.302h-7.29V98.624h7.29zm-8.044-39.916c0-1.205.437-2.214 1.311-3.028.874-.813 1.913-1.22 3.118-1.22 1.285 0 2.35.417 3.193 1.25.844.834 1.266 1.833 1.266 2.998 0 1.185-.432 2.18-1.296 2.982-.864.804-1.918 1.205-3.163 1.205-1.246 0-2.295-.406-3.148-1.219-.854-.815-1.28-1.803-1.28-2.968m-6.274-3.284v43.2h-7.5v-33.86h-.12l-13.408 33.86h-4.97l-13.738-33.86h-.09v33.86h-6.929v-43.2h10.755l12.412 32.024h.18l13.105-32.024z"></path>
+							<path d="M106.214 106.214H71.996V71.996h34.218z" fill="#f25022"></path>
+							<path d="M143.993 106.214h-34.218V71.996h34.218z" fill="#7fba00"></path>
+							<path d="M106.214 143.993H71.996v-34.218h34.218z" fill="#00a4ef"></path>
+							<path d="M143.993 143.993h-34.218v-34.218h34.218z" fill="#ffb900"></path>
+						</g>
+					</g>
+				</svg>
+			</div>
+		</a>
+	</div> 
+				
+		<div class="nav-bar-item is-hidden-tablet">
+			<div class="nav-bar-menu">
+				<button class="nav-bar-button is-title" title="Global navigation" aria-expanded="false">
+					<span class="nav-bar-menu-title"><!---->Documentation<!----></span>
+					<div class="nav-bar-burger">
+						<span></span>
+						<span></span>
+						<span></span>
+						<span class="nav-bar-burger-label"><!---->Global navigation<!----></span>
+					</div>
+				</button>
+			</div>
+		</div>
+	
+				
+		<nav class="nav-bar-nav" role="navigation" aria-label="Global">
+			<ul class="nav-bar-nav-list">
+				
+		<li class="nav-bar-item is-category">
+			<a class="nav-bar-button is-title has-hover-underline" itemprop="url" href="https://docs.microsoft.com/en-us/">
+				<span><!---->Docs<!----></span>
+			</a>
+		</li>
+	
+				<!----> <li class="nav-bar-item">
+				<a class=" nav-bar-button has-hover-underline is-active" href="https://docs.microsoft.com/en-us/documentation">
+					<span><!---->Documentation<!----></span>
+				</a>
+		  </li><!----> <li class="nav-bar-item">
+				<a class=" nav-bar-button has-hover-underline " href="https://docs.microsoft.com/en-us/learn/">
+					<span><!---->Learn<!----></span>
+				</a>
+		  </li><!----> <li class="nav-bar-item">
+				<a class=" nav-bar-button has-hover-underline " href="https://docs.microsoft.com/en-us/answers/products/">
+					<span><!---->Q&amp;A<!----></span>
+				</a>
+		  </li><!----> <li class="nav-bar-item">
+				<a class=" nav-bar-button has-hover-underline " href="https://docs.microsoft.com/en-us/samples/browse/">
+					<span><!---->Code Samples<!----></span>
+				</a>
+		  </li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-61">
+			<span><!---->More<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-61" aria-label="More">
+			<!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button is-active" href="https://docs.microsoft.com/en-us/documentation"><!---->Documentation<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://docs.microsoft.com/en-us/learn/"><!---->Learn<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://docs.microsoft.com/en-us/answers/products/"><!---->Q&amp;A<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class=" nav-bar-button " href="https://docs.microsoft.com/en-us/samples/browse/"><!---->Code Samples<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+			</ul>
+		</nav>
+	
+				<span class="nav-bar-spacer"></span>
+				
+		<div class="nav-bar-search " id="ax-62" hidden="">
+			
+		<form class="nav-bar-search-form" method="GET" name="nav-bar-search-form" role="search" id="nav-bar-search-form" aria-label="Search" aria-expanded="false" action="https://docs.microsoft.com/en-us/search/">
+			<div class="autocomplete" data-bi-name="autocomplete"><!----> <div class="control ">
+				<input role="combobox" maxlength="100" aria-autocomplete="list" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" id="site-search-input" class="autocomplete-input input   is-small" type="search" name="terms" aria-expanded="false" aria-owns="ax-63-listbox" aria-activedescendant="" aria-label="Search" placeholder="Search">
+
+				<span aria-hidden="true" class="icon is-small is-left" hidden="">
+					<span class="has-text-primary docon docon-undefined"></span>
+				</span>
+
+				<span aria-hidden="true" class="autocomplete-loader loader has-text-primary " hidden=""></span>
+			</div>
+
+			<ul class="autocomplete-suggestions is-vertically-scrollable" role="listbox" id="ax-63-listbox" aria-label="site-search-input-suggestions" hidden="">
+				
+				
+			</ul><!----></div>
+			<!-- mobile safari will not dispatch submit event unless there's a submit button that is not display:none -->
+			<button type="submit" class="visually-hidden" tabindex="-1" aria-hidden="true"></button>
+			<input name="category" hidden="" value="">
+			<input name="scope" hidden="" value="Desktop">
+			
+			
+		</form>
+	
+		</div>
+		
+					<div class="nav-bar-search">
+						<!-- hidden when the width drops to tablet -->
+						
+		<form class="nav-bar-search-form" method="GET" name="nav-bar-search-form" role="search" id="nav-bar-search-form-desktop" aria-label="Search" aria-expanded="false" action="https://docs.microsoft.com/en-us/search/">
+			<div class="autocomplete" data-bi-name="autocomplete"><!----> <div class="control has-icons-left">
+				<input role="combobox" maxlength="100" aria-autocomplete="list" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" id="ax-64" class="autocomplete-input input control has-icons-left  is-small" type="search" name="terms" aria-expanded="false" aria-owns="ax-65-listbox" aria-activedescendant="" aria-label="Search" placeholder="Search">
+
+				<span aria-hidden="true" class="icon is-small is-left">
+					<span class="has-text-primary docon docon-search"></span>
+				</span>
+
+				<span aria-hidden="true" class="autocomplete-loader loader has-text-primary " hidden=""></span>
+			</div>
+
+			<ul class="autocomplete-suggestions is-vertically-scrollable" role="listbox" id="ax-65-listbox" aria-label="ax-64-suggestions" hidden="">
+				
+				
+			</ul><!----></div>
+			<!-- mobile safari will not dispatch submit event unless there's a submit button that is not display:none -->
+			<button type="submit" class="visually-hidden" tabindex="-1" aria-hidden="true"></button>
+			<input name="category" hidden="" value="">
+			<input name="scope" hidden="" value="Desktop">
+			
+			
+		</form>
+	
+					</div>
+			  
+		<div class="nav-bar-search " hidden="">
+			<div class="nav-bar-search-form-expander">
+				<button id="form-expander" class="nav-bar-button has-hover-underline " title="Search" aria-expanded="false" aria-controls="ax-62">
+					
+		<span class="is-visually-hidden-mobile"><!---->Search<!----></span>
+		<span class="icon" aria-hidden="true">
+			<span class="docon docon-search"></span>
+		</span>
+	
+				</button>
+			</div>
+		</div>
+	
+				
+		<div class="nav-bar-profile">
+			
+		<a class="docs-sign-in auth-status-determined not-authenticated" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id#"> Sign in </a>
+	 
+			<div class="dropdown has-caret auth-status-determined authenticated">
+				<button class="dropdown-trigger button-reset" aria-controls="user-menu" aria-expanded="false" aria-label="Your Account">
+					<figure class="image is-36x36">
+						<img class="has-body-background-medium is-rounded" alt="" data-profile-property="avatarUrl">
+					</figure>
+				</button>
+				<div class="dropdown-menu box justify-content-flex-start has-body-background" id="user-menu" role="menu">
+					<div class="media is-user-dir">
+						<div class="media-left">
+							<figure class="image is-48x48" aria-hidden="true">
+								<img class="has-body-background-medium is-rounded" aria-labelledby="displayName" data-profile-property="avatarUrl">
+							</figure>
+						</div>
+						<div class="media-content">
+							<p class="title font-size-l">
+								<span id="displayName" class="is-inline-truncated has-max-width-200" data-profile-property="displayName"></span>
+							</p>
+							<p class="subtitle font-size-s has-margin-bottom-none">
+								<span class="is-inline-truncated has-max-width-200" data-profile-property="upn"></span>
+							</p>
+						</div>
+					</div>
+					<ul class="has-padding-top-small has-padding-bottom-medium">
+						<li class="has-padding-top-extra-small has-padding-bottom-extra-small">
+							<a href="https://docs.microsoft.com/profile" data-profile-property="profileUrl"><!---->Profile<!----></a>
+						</li>
+						<li class="has-padding-top-extra-small has-padding-bottom-extra-small">
+							<a href="https://docs.microsoft.com/profile" data-profile-property="collectionsUrl"><!---->Collections<!----></a>
+						</li>
+						<li class="has-padding-top-extra-small">
+							<a href="https://docs.microsoft.com/profile" data-profile-property="challengesUrl"><!---->Challenges<!----></a>
+						</li>
+					</ul>
+					<div class="border-top has-padding-top-medium">
+						<a class="docs-sign-out" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id#"><!---->Sign out<!----></a>
+					</div>
+				</div>
+			</div>
+		
+		</div>
+	
+			 <!----></div> <div class="nav-bar border-top is-hidden-mobile"><!----> 
+		<a class="nav-bar-button is-title has-hover-underline" itemprop="url" href="https://docs.microsoft.com/windows/apps">
+			<span>
+				Windows Developer
+				
+			</span>
+		</a>
+	 
+		
+		<nav class="nav-bar-nav" role="navigation" aria-label="Site">
+			<ul class="nav-bar-nav-list">
+				
+				<!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-66">
+			<span><!---->Explore<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-66" aria-label="Explore">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/windows/get-started-windows-10"><!---->Get started developing for Windows<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/windows/windows-10-for-developers"><!---->What’s new for Windows 10<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/windows/enterprise"><!---->Build for enterprise<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/en-us/windows/apps/accessibility"><!---->Develop for accessibility<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-67">
+			<span><!---->Platforms<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-67" aria-label="Platforms">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/en-us/windows/apps/desktop/"><!---->Windows PCs<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/windows/iot"><!---->Windows IoT<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/mixed-reality"><!---->Mixed Reality<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/games"><!---->Games<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/web"><!---->Web<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/en-us/windows/uwp/"><!---->UWP<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="nav-bar-item">
+				<a class="has-external-link-indicator nav-bar-button has-hover-underline " href="https://developer.microsoft.com/windows/downloads">
+					<span><!---->Downloads<!----></span>
+				</a>
+		  </li><!----> <li class="nav-bar-item">
+				<a class="has-external-link-indicator nav-bar-button has-hover-underline " href="https://developer.microsoft.com/windows/samples">
+					<span><!---->Samples<!----></span>
+				</a>
+		  </li><!----> <li class="nav-bar-item">
+				<a class="has-external-link-indicator nav-bar-button has-hover-underline " href="https://developer.microsoft.com/windows/support">
+					<span><!---->Support<!----></span>
+				</a>
+		  </li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  has-hover-underline" aria-controls="ax-68">
+			<span><!---->More<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-68" aria-label="More">
+			<!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-69">
+			<span><!---->Explore<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-69" aria-label="Explore">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/windows/get-started-windows-10"><!---->Get started developing for Windows<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/windows/windows-10-for-developers"><!---->What’s new for Windows 10<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/windows/enterprise"><!---->Build for enterprise<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/en-us/windows/apps/accessibility"><!---->Develop for accessibility<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button  " aria-controls="ax-70">
+			<span><!---->Platforms<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-70" aria-label="Platforms">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/en-us/windows/apps/desktop/"><!---->Windows PCs<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/windows/iot"><!---->Windows IoT<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/mixed-reality"><!---->Mixed Reality<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/games"><!---->Games<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/web"><!---->Web<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="has-external-link-indicator nav-bar-button " href="https://docs.microsoft.com/en-us/windows/uwp/"><!---->UWP<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+				<li class="nav-bar-item" hidden="">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/windows/downloads"><!---->Downloads<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/windows/samples"><!---->Samples<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class="has-external-link-indicator nav-bar-button " href="https://developer.microsoft.com/windows/support"><!---->Support<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+			</ul>
+		</nav>
+	
+		<span class="nav-bar-spacer"></span>
+		
+		<ol class="nav-bar-list">
+			 
+		<li class="nav-bar-item ">
+			<a class="button is-small is-primary " href="https://partner.microsoft.com/dashboard">
+				Dashboard
+			</a>
+		</li>
+	
+		</ol>
+	 
+	 <!----></div> <!----></header>		</div>
+
+						<div class="content-header uhf-container has-padding has-default-focus border-bottom-none" data-bi-name="content-header">
+					<nav class="breadcrumb-holder has-padding-none has-padding-left-medium-tablet has-padding-right-medium-tablet has-padding-left-none-uhf-tablet has-padding-left-none-uhf-tablet has-padding-none-desktop flex-grow-1" data-bi-name="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList" role="navigation" aria-label="Breadcrumb">
+						<ul id="page-breadcrumbs" class="breadcrumbs"><!----><!---->
+			<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+				
+							<a itemprop="item" href="https://docs.microsoft.com/en-us/windows/">
+								<span itemprop="name"><!---->Windows<!----></span>
+							</a>
+					  
+				<meta itemprop="position" content="1">
+			</li>
+		<!---->
+			<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+				
+							<a itemprop="item" href="https://docs.microsoft.com/en-us/windows/apps/">
+								<span itemprop="name"><!---->Apps<!----></span>
+							</a>
+					  
+				<meta itemprop="position" content="2">
+			</li>
+		<!---->
+			<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+				
+							<a itemprop="item" href="https://docs.microsoft.com/en-us/windows/win32/">
+								<span itemprop="name"><!---->Win32<!----></span>
+							</a>
+					  
+				<meta itemprop="position" content="3">
+			</li>
+		<!---->
+			<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+				
+							<a itemprop="item" href="https://docs.microsoft.com/en-us/windows/win32/desktop-app-technologies">
+								<span itemprop="name"><!---->Desktop Technologies<!----></span>
+							</a>
+					  
+				<meta itemprop="position" content="4">
+			</li>
+		<!---->
+			<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+				
+							<a itemprop="item" href="https://docs.microsoft.com/en-us/windows/win32/security">
+								<span itemprop="name"><!---->Security and Identity<!----></span>
+							</a>
+					  
+				<meta itemprop="position" content="5">
+			</li>
+		<!---->
+			<li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+				
+							<a itemprop="item" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/cryptography-portal">
+								<span itemprop="name"><!---->Cryptography<!----></span>
+							</a>
+					  
+				<meta itemprop="position" content="6">
+			</li>
+		<!----><!----></ul>
+					</nav>
+				<div class="content-header-controls">
+					<button type="button" class="contents-button button" data-bi-name="contents-expand" aria-haspopup="true">
+						<span class="icon"><span class="docon docon-menu" aria-hidden="true"></span></span>
+						<span class="contents-expand-title">Contents</span>
+					</button>
+					<button type="button" class="ap-collapse-behavior ap-expanded button" data-bi-name="ap-collapse" aria-controls="action-panel">
+						<span class="icon"><span class="docon docon-exit-mode" aria-hidden="true"></span></span>
+						<span>Exit focus mode</span>
+					</button>
+				</div>
+				<div class="has-padding-none-tablet padding-xs font-size-s display-flex justify-content-space-between flex-grow-1 page-action-holder">
+					<ul class="is-hidden-mobile action-list justify-content-flex-start has-flex-justify-content-end-tablet display-flex flex-wrap-wrap flex-grow-1 is-unstyled">
+						<li hidden="">
+							<a id="lang-link" class="button is-text has-inner-focus is-small is-icon-only-touch" title="Read in English" data-bi-name="language-toggle" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id" data-bi="{&quot;cN&quot;:&quot;language-toggle&quot;,&quot;value&quot;:&quot;off&quot;}">
+								<span id="lang-link-icon" class="icon docon docon-locale-globe" aria-hidden="true"></span>
+								<span id="lang-link-text" class="is-visually-hidden-touch is-hidden-portrait" title="Read in English">Read in English</span>
+							</a>
+						</li>
+						<li>
+							<button type="button" class="collection button is-text has-inner-focus is-small is-icon-only-touch" data-list-type="collection" data-bi-name="collection" title="Add ALG_ID (Wincrypt.h) - Win32 apps | Microsoft Docs to a collection" aria-pressed="false">
+								<span class="icon" aria-hidden="true">
+									<span class="docon docon-circle-addition has-text-primary"></span>
+								</span>
+								<span class="collection-status is-visually-hidden-touch is-hidden-portrait">Save</span>
+							</button>
+						</li>
+								<li id="contenteditbtn">
+									<a href="https://github.com/MicrosoftDocs/win32/blob/docs/desktop-src/SecCrypto/alg-id.md" class="button is-text has-inner-focus is-icon-only-touch is-small" title="Edit This Document" data-bi-name="edit" data-original_content_git_url="https://github.com/MicrosoftDocs/win32-pr/blob/live/desktop-src/SecCrypto/alg-id.md" data-original_content_git_url_template="{repo}/blob/{branch}/desktop-src/SecCrypto/alg-id.md" data-pr_repo="" data-pr_branch="">
+									<span class="icon" aria-hidden="true">
+										<span class="docon docon-edit-outline"></span>
+									</span>
+									<span class="is-visually-hidden-touch is-hidden-portrait">Edit</span>
+								</a>
+							</li>
+						<li>
+<div class="sharing dropdown has-caret">
+	<button class="dropdown-trigger button is-text is-fullwidth justify-content-flex-start has-inner-focus is-small is-icon-only-touch" aria-controls="sharing-menu" aria-expanded="false" title="Share This Document" data-bi-name="share">
+		<span class="icon" aria-hidden="true">
+			<span class="docon docon-sharing"></span>
+		</span>
+		<span class="is-visually-hidden-touch is-hidden-portrait">Share</span>
+	</button>
+	<div class="dropdown-menu has-padding-small" id="sharing-menu">
+		<ul data-bi-name="share-links">
+			<li>
+				<a class="button is-text is-fullwidth justify-content-flex-start has-inner-focus is-small share-twitter" data-bi-name="twitter" href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fwindows%2Fwin32%2Fseccrypto%2Falg-id%3FWT.mc_id%3Dtwitter&amp;text=ALG_ID%20(Wincrypt.h)%20-%20Win32%20apps%20%7C%20Microsoft%20Docs&amp;tw_p=tweetbutton&amp;url=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fwindows%2Fwin32%2Fseccrypto%2Falg-id%3FWT.mc_id%3Dtwitter">
+					<span class="icon">
+						<span class="docon docon-brand-twitter has-text-primary" aria-hidden="true"></span>
+					</span>
+					<span>Twitter</span>
+				</a>
+			</li>
+			<li>
+				<a class="button is-text is-fullwidth justify-content-flex-start has-inner-focus is-small share-linkedin" data-bi-name="linkedin" href="https://www.linkedin.com/cws/share?url=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fwindows%2Fwin32%2Fseccrypto%2Falg-id%3FWT.mc_id%3Dlinkedin">
+					<span class="icon">
+						<span class="docon docon-brand-linkedin has-text-primary" aria-hidden="true"></span>
+					</span>
+					<span>LinkedIn</span>
+				</a>
+			</li>
+			<li>
+				<a class="button is-text is-fullwidth justify-content-flex-start has-inner-focus is-small share-facebook" data-bi-name="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fwindows%2Fwin32%2Fseccrypto%2Falg-id%3FWT.mc_id%3Dfacebook">
+					<span class="icon">
+						<span class="docon docon-brand-facebook has-text-primary" aria-hidden="true"></span>
+					</span>
+					<span>Facebook</span>
+				</a>
+			</li>
+			<li>
+				<a class="button is-text is-fullwidth justify-content-flex-start has-inner-focus is-small share-email" data-bi-name="email" href="mailto:?subject=%5BShared%20Article%5D%20ALG_ID%20(Wincrypt.h)%20-%20Win32%20apps%20%7C%20Microsoft%20Docs&amp;body=ALG_ID%20(Wincrypt.h)%20-%20Win32%20apps%20%7C%20Microsoft%20Docs%0A%0Ahttps%3A%2F%2Fdocs.microsoft.com%2Fen-us%2Fwindows%2Fwin32%2Fseccrypto%2Falg-id%3FWT.mc_id%3Demail">
+					<span class="icon">
+						<span class="docon docon-mail-message-fill has-text-primary" aria-hidden="true"></span>
+					</span>
+					<span>Email</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>						</li>
+					</ul>
+					<button type="button" class="border contents-button button is-small is-text is-hidden-tablet has-inner-focus" aria-label="Contents" data-bi-name="contents-expand">
+						<span class="icon">
+							<span class="docon docon-editor-list-bullet" aria-hidden="true"></span>
+						</span>
+						<span class="contents-expand-title">Table of contents</span>
+					</button>
+					<div class="is-invisible"></div>
+					<div class="is-hidden-tablet level-item is-flexible level-right">
+						<button type="button" class="page-actions-button button is-small is-text is-hidden-tablet has-inner-focus border is-full-height  has-margin-left-small" aria-label="Page Actions" data-bi-name="pageactions">
+							<span class="icon">
+								<span class="docon docon-more-vertical" aria-hidden="true"></span>
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+
+
+
+		<div id="disclaimer-holder" class="has-overflow-hidden has-default-focus">
+			<!-- liquid-tag banners sectional -->
+		</div>
+	</div>
+
+	<div class="mainContainer  uhf-container has-top-padding  has-default-focus" data-bi-name="body">
+
+		<div class="columns has-large-gaps is-gapless-mobile ">
+
+			<div id="left-container" class="left-container is-hidden-mobile column is-one-third-tablet is-one-quarter-desktop">
+				<nav id="affixed-left-container" class="position-fixed display-flex flex-direction-column" role="navigation" aria-label="Primary" style="width: 305.4px; top: 24px; bottom: 24px;" data-bi-name="left toc"><form action="javascript:" role="search" aria-label="Search" class="has-margin-bottom-small"><label class="visually-hidden" for="ax-71">Search</label><div class="autocomplete is-block" data-bi-name="autocomplete"><!----> <div class="control has-icons-left">
+				<input role="combobox" maxlength="100" aria-autocomplete="list" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" id="ax-71" class="autocomplete-input input control has-icons-left is-full-width is-small" type="text" aria-expanded="false" aria-owns="ax-72-listbox" aria-activedescendant="" placeholder="Filter by title">
+
+				<span aria-hidden="true" class="icon is-small is-left">
+					<span class="has-text-primary docon docon-filter-settings"></span>
+				</span>
+
+				<span aria-hidden="true" class="autocomplete-loader loader has-text-primary " hidden=""></span>
+			</div>
+
+			<ul class="autocomplete-suggestions is-vertically-scrollable" role="listbox" id="ax-72-listbox" aria-label="ax-71-suggestions" hidden="">
+				
+				
+			</ul><!----></div></form><ul class="tree is-vertically-scrollable flex-grow-1 flex-shrink-1" role="tree" aria-label="Table of contents" data-bi-name="tree" data-is-collapsible="true"><li role="none"><a aria-setsize="4" aria-level="1" aria-posinset="1" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/cryptography-portal">Cryptography</a></li><li class="tree-item" aria-setsize="4" aria-level="1" aria-posinset="2" role="treeitem" tabindex="-1" id="title-2-1" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>About Cryptography</span></li><li class="tree-item" aria-setsize="4" aria-level="1" aria-posinset="3" role="treeitem" tabindex="-1" id="title-3-1" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Using Cryptography</span></li><li class="tree-item is-expanded" aria-setsize="4" aria-level="1" aria-posinset="4" role="treeitem" tabindex="-1" id="title-4-1" aria-expanded="true"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Cryptography Reference</span><ul class="tree-group" role="group"><li role="none"><a aria-setsize="11" aria-level="2" aria-posinset="1" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/cryptography-reference">Cryptography Reference</a></li><li class="tree-item" aria-setsize="11" aria-level="2" aria-posinset="2" role="treeitem" tabindex="-1" id="title-4-1_2-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Cryptography Constants</span></li><li class="tree-item is-expanded" aria-setsize="11" aria-level="2" aria-posinset="3" role="treeitem" tabindex="-1" id="title-4-1_3-2" aria-expanded="true"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Cryptography Data Types</span><ul class="tree-group" role="group"><li role="none"><a aria-setsize="11" aria-level="3" aria-posinset="1" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/cryptography-data-types">Cryptography Data Types</a></li><li role="none"><a aria-setsize="11" aria-level="3" aria-posinset="2" role="treeitem" tabindex="0" class="tree-item is-leaf has-external-link-indicator is-selected" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id" aria-current="page">ALG_ID</a></li><li role="none"><a aria-setsize="11" aria-level="3" aria-posinset="3" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/hcert-server-ocsp-response">HCERT_SERVER_OCSP_RESPONSE</a></li><li role="none"><a aria-setsize="11" aria-level="3" aria-posinset="4" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/hcrypthash">HCRYPTHASH</a></li><li role="none"><a aria-setsize="11" aria-level="3" aria-posinset="5" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/hcryptkey">HCRYPTKEY</a></li><li role="none"><a aria-setsize="11" aria-level="3" aria-posinset="6" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/hcryptoidfuncaddr">HCRYPTOIDFUNCADDR</a></li><li role="none"><a aria-setsize="11" aria-level="3" aria-posinset="7" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/hcryptoidfuncset">HCRYPTOIDFUNCSET</a></li><li role="none"><a aria-setsize="11" aria-level="3" aria-posinset="8" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/hcryptprov-legacy">HCRYPTPROV_LEGACY</a></li><li role="none"><a aria-setsize="11" aria-level="3" aria-posinset="9" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/hcryptprov-or-ncrypt-key-handle">HCRYPTPROV_OR_NCRYPT_KEY_HANDLE</a></li><li role="none"><a aria-setsize="11" aria-level="3" aria-posinset="10" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/hcryptprov">HCRYPTPROV</a></li><li role="none"><a aria-setsize="11" aria-level="3" aria-posinset="11" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/keysvcc-handle">KEYSVCC_HANDLE</a></li></ul></li><li class="tree-item" aria-setsize="11" aria-level="2" aria-posinset="4" role="treeitem" tabindex="-1" id="title-4-1_4-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Cryptography Enumerations</span></li><li class="tree-item" aria-setsize="11" aria-level="2" aria-posinset="5" role="treeitem" tabindex="-1" id="title-4-1_5-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Cryptography Functions</span></li><li class="tree-item" aria-setsize="11" aria-level="2" aria-posinset="6" role="treeitem" tabindex="-1" id="title-4-1_6-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Cryptography Interfaces</span></li><li class="tree-item" aria-setsize="11" aria-level="2" aria-posinset="7" role="treeitem" tabindex="-1" id="title-4-1_7-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Cryptography Objects</span></li><li class="tree-item" aria-setsize="11" aria-level="2" aria-posinset="8" role="treeitem" tabindex="-1" id="title-4-1_8-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Cryptography Return Values</span></li><li class="tree-item" aria-setsize="11" aria-level="2" aria-posinset="9" role="treeitem" tabindex="-1" id="title-4-1_9-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>Cryptography Structures</span></li><li class="tree-item" aria-setsize="11" aria-level="2" aria-posinset="10" role="treeitem" tabindex="-1" id="title-4-1_10-2" aria-expanded="false"><span data-bi-name="tree-expander" class="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>CryptoAPI Tools Reference</span></li><li role="none"><a aria-setsize="11" aria-level="2" aria-posinset="11" role="treeitem" tabindex="-1" class="tree-item is-leaf has-external-link-indicator" data-bi-name="tree-leaf" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/capicom-reference">CAPICOM Reference</a></li></ul></li></ul><a class="button is-small is-text justify-content-flex-start has-inner-focus has-margin-top-small border-top border-bottom flex-shrink-0" href="https://docs.microsoft.com/en-us/windows/win32/opbuildpdf/seccrypto/toc.pdf?branch=live" data-bi-name="downloadPdf" rel="nofollow"><!----> <span class="icon font-size-xs has-text-subtle">
+				<span aria-hidden="true" class="docon docon-dictionary-download"></span>
+			</span>
+			<span><!---->Download PDF<!----></span><!----></a></nav>
+			</div>
+
+			<!-- .primary-holder -->
+			<section class="primary-holder column is-two-thirds-tablet is-three-quarters-desktop">
+				<!--div.columns -->
+				<div class="columns is-gapless-mobile has-large-gaps ">
+
+
+					<div id="main-column" class="column  is-full is-four-fifths-desktop ">
+
+						<main id="main" role="main" class="content " data-bi-name="content" lang="en-us" dir="ltr">
+
+
+
+							<h1 id="alg_id">ALG_ID</h1>
+
+								<ul class="metadata page-metadata" data-bi-name="page info" lang="en-us" dir="ltr">
+									<li>
+										<time class="" data-article-date="" aria-label="Article review date" datetime="2018-05-31T00:00:00.000Z" data-article-date-source="ms.date">05/31/2018</time>
+									</li>
+											<li class="readingTime">5 minutes to read</li>
+										<li class="contributors-holder">
+											<ul class="facepile has-margin-left-none is-small" data-bi-name="contributors">
+																<li class="facepile-item">
+																	<a href="https://github.com/lastnameholiu" title="lastnameholiu" aria-label="lastnameholiuGithub profile" data-src="https://github.com/lastnameholiu.png?size=32" data-contributor-name="lastnameholiu" class="facepile-item-coin">
+																		<img class="facepile-item-coin-image durable-image" aria-hidden="true" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/lastnameholiu.png" role="presentation" onerror="this.className=&#39;facepile-item-coin-image durable-image has-error&#39;;">
+																		<span class="facepile-item-coin-text durable-image-fallback facepile-item-teal" aria-hidden="true">l</span>
+																	</a>
+																</li>
+																<li class="facepile-item">
+																	<a href="https://github.com/v-kents" title="v-kents" aria-label="v-kentsGithub profile" data-src="https://github.com/v-kents.png?size=32" data-contributor-name="v-kents" class="facepile-item-coin">
+																		<img class="facepile-item-coin-image durable-image" aria-hidden="true" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/v-kents.png" role="presentation" onerror="this.className=&#39;facepile-item-coin-image durable-image has-error&#39;;">
+																		<span class="facepile-item-coin-text durable-image-fallback facepile-item-red" aria-hidden="true">v</span>
+																	</a>
+																</li>
+																<li class="facepile-item">
+																	<a href="https://github.com/drewbatgit" title="drewbatgit" aria-label="drewbatgitGithub profile" data-src="https://github.com/drewbatgit.png?size=32" data-contributor-name="drewbatgit" class="facepile-item-coin">
+																		<img class="facepile-item-coin-image durable-image" aria-hidden="true" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/drewbatgit.png" role="presentation" onerror="this.className=&#39;facepile-item-coin-image durable-image has-error&#39;;">
+																		<span class="facepile-item-coin-text durable-image-fallback facepile-item-blue" aria-hidden="true">d</span>
+																	</a>
+																</li>
+																<li class="facepile-item">
+																	<a href="https://github.com/DCtheGeek" title="DCtheGeek" aria-label="DCtheGeekGithub profile" data-src="https://github.com/DCtheGeek.png?size=32" data-contributor-name="DCtheGeek" class="facepile-item-coin">
+																		<img class="facepile-item-coin-image durable-image" aria-hidden="true" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/DCtheGeek.png" role="presentation" onerror="this.className=&#39;facepile-item-coin-image durable-image has-error&#39;;">
+																		<span class="facepile-item-coin-text durable-image-fallback facepile-item-teal" aria-hidden="true">D</span>
+																	</a>
+																</li>
+																<li class="facepile-item">
+																	<a href="https://github.com/mijacobs" title="mijacobs" aria-label="mijacobsGithub profile" data-src="https://github.com/mijacobs.png?size=32" data-contributor-name="mijacobs" class="facepile-item-coin">
+																		<img class="facepile-item-coin-image durable-image" aria-hidden="true" src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/mijacobs.png" role="presentation" onerror="this.className=&#39;facepile-item-coin-image durable-image has-error&#39;;">
+																		<span class="facepile-item-coin-text durable-image-fallback facepile-item-red" aria-hidden="true">m</span>
+																	</a>
+																</li>
+													<li class="facepile-item">
+															<button aria-label="View all contributors" class="facepile-item-more" title="View all contributors">
+																<div class="facepile-item-coin" aria-hidden="true">
+																	<span class="facepile-item-coin-text" aria-hidden="true">
+																		+2
+																	</span>
+																</div>
+															</button>
+													</li>
+											</ul>
+										</li>
+								</ul>
+
+								<nav id="center-doc-outline" class="doc-outline is-hidden-desktop" data-bi-name="intopic toc" role="navigation" aria-label="Article Outline">
+									<h3>In this article</h3>
+								<ol><li><a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id#requirements">Requirements</a></li><li><a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id#see-also">See also</a></li></ol></nav>
+
+
+							<!-- <content> -->
+								<p>The <strong>ALG_ID</strong> data type specifies an algorithm identifier. Parameters of this data type are passed to most of the functions in CryptoAPI.</p>
+<div class="codeHeader" id="code-try-0" data-bi-name="code-header"><span class="language">C++</span><button type="button" class="action position-relative" data-bi-name="copy" aria-label="Copy code">
+				<span class="icon">
+					<span class="docon docon-edit-copy" role="presentation"></span>
+				</span>
+				<span>Copy</span>
+				<div class="successful-copy-alert position-absolute right-0 top-0 left-0 bottom-0 display-flex align-items-center justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden="true">
+					<span class="icon font-size-l">
+						<span class="docon docon-check-mark" role="presentation"></span>
+					</span>
+				</div>
+			</button></div><pre tabindex="0" class="has-inner-focus"><code class="lang-C++" data-author-content="typedef unsigned int ALG_ID;
+"><span><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> ALG_ID;
+</span></code></pre>
+<p>The following table lists the algorithm identifiers that are currently defined. Authors of custom <a href="https://docs.microsoft.com/en-us/windows/win32/secgloss/c-gly" data-linktype="relative-path"><em>cryptographic service providers</em></a> (CSPs) can define new values. Also, the <strong>ALG_ID</strong> used by custom CSPs for the key specifications <strong>AT_KEYEXCHANGE</strong> and <strong>AT_SIGNATURE</strong> are provider dependent. Current mappings follow the table.</p>
+<div class="table-scroll-wrapper"><table class="table"><caption class="visually-hidden">Table 1</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr class="header">
+<th>Identifier</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CALG_3DES</td>
+<td>0x00006603</td>
+<td><a href="https://docs.microsoft.com/en-us/windows/desktop/SecGloss/t-gly" data-linktype="absolute-path"><em>Triple DES</em></a> encryption algorithm.</td>
+</tr>
+<tr class="even">
+<td>CALG_3DES_112</td>
+<td>0x00006609</td>
+<td>Two-key <a href="https://docs.microsoft.com/en-us/windows/desktop/SecGloss/t-gly" data-linktype="absolute-path"><em>triple DES</em></a> encryption with effective key length equal to 112 bits.</td>
+</tr>
+<tr class="odd">
+<td>CALG_AES</td>
+<td>0x00006611</td>
+<td>Advanced Encryption Standard (AES). This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-aes-cryptographic-provider" data-linktype="relative-path">Microsoft AES Cryptographic Provider</a>.</td>
+</tr>
+<tr class="even">
+<td>CALG_AES_128</td>
+<td>0x0000660e</td>
+<td>128 bit AES. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-aes-cryptographic-provider" data-linktype="relative-path">Microsoft AES Cryptographic Provider</a>.</td>
+</tr>
+<tr class="odd">
+<td>CALG_AES_192</td>
+<td>0x0000660f</td>
+<td>192 bit AES. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-aes-cryptographic-provider" data-linktype="relative-path">Microsoft AES Cryptographic Provider</a>.</td>
+</tr>
+<tr class="even">
+<td>CALG_AES_256</td>
+<td>0x00006610</td>
+<td>256 bit AES. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-aes-cryptographic-provider" data-linktype="relative-path">Microsoft AES Cryptographic Provider</a>.</td>
+</tr>
+<tr class="odd">
+<td>CALG_AGREEDKEY_ANY</td>
+<td>0x0000aa03</td>
+<td>Temporary algorithm identifier for handles of Diffie-Hellman–agreed keys.</td>
+</tr>
+<tr class="even">
+<td>CALG_CYLINK_MEK</td>
+<td>0x0000660c</td>
+<td>An algorithm to create a 40-bit DES key that has parity bits and zeroed key bits to make its key length 64 bits. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id"></a><a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-cryptographic-provider" data-linktype="relative-path">Microsoft Base Cryptographic Provider</a>.</td>
+</tr>
+<tr class="odd">
+<td>CALG_DES</td>
+<td>0x00006601</td>
+<td>DES encryption algorithm.</td>
+</tr>
+<tr class="even">
+<td>CALG_DESX</td>
+<td>0x00006604</td>
+<td>DESX encryption algorithm.</td>
+</tr>
+<tr class="odd">
+<td>CALG_DH_EPHEM</td>
+<td>0x0000aa02</td>
+<td>Diffie-Hellman ephemeral key exchange algorithm.</td>
+</tr>
+<tr class="even">
+<td>CALG_DH_SF</td>
+<td>0x0000aa01</td>
+<td>Diffie-Hellman store and forward key exchange algorithm.</td>
+</tr>
+<tr class="odd">
+<td>CALG_DSS_SIGN</td>
+<td>0x00002200</td>
+<td>DSA <a href="https://docs.microsoft.com/en-us/windows/desktop/SecGloss/p-gly" data-linktype="absolute-path"><em>public key</em></a> signature algorithm.</td>
+</tr>
+<tr class="even">
+<td>CALG_ECDH</td>
+<td>0x0000aa05</td>
+<td>Elliptic curve Diffie-Hellman key exchange algorithm.
+<blockquote>
+[!Note]<br>
+This algorithm is supported only through <a href="https://docs.microsoft.com/en-us/windows/desktop/SecCNG/cng-portal" data-linktype="absolute-path">Cryptography API: Next Generation</a>.
+</blockquote>
+<br> <strong>Windows Server&nbsp;2003 and Windows&nbsp;XP:</strong> This algorithm is not supported.<br></td>
+</tr>
+<tr class="odd">
+<td>CALG_ECDH_EPHEM</td>
+<td>0x0000ae06</td>
+<td>Ephemeral elliptic curve Diffie-Hellman key exchange algorithm.
+<blockquote>
+[!Note]<br>
+This algorithm is supported only through <a href="https://docs.microsoft.com/en-us/windows/desktop/SecCNG/cng-portal" data-linktype="absolute-path">Cryptography API: Next Generation</a>.
+</blockquote>
+<br> <strong>Windows Server&nbsp;2003 and Windows&nbsp;XP:</strong> This algorithm is not supported.<br></td>
+</tr>
+<tr class="even">
+<td>CALG_ECDSA</td>
+<td>0x00002203</td>
+<td>Elliptic curve digital signature algorithm.
+<blockquote>
+[!Note]<br>
+This algorithm is supported only through <a href="https://docs.microsoft.com/en-us/windows/desktop/SecCNG/cng-portal" data-linktype="absolute-path">Cryptography API: Next Generation</a>.
+</blockquote>
+<br> <strong>Windows Server&nbsp;2003 and Windows&nbsp;XP:</strong> This algorithm is not supported.<br></td>
+</tr>
+<tr class="odd">
+<td>CALG_ECMQV</td>
+<td>0x0000a001</td>
+<td>Elliptic curve Menezes, Qu, and Vanstone (MQV) key exchange algorithm. This algorithm is not supported.</td>
+</tr>
+<tr class="even">
+<td>CALG_HASH_REPLACE_OWF</td>
+<td>0x0000800b</td>
+<td>One way function hashing algorithm.</td>
+</tr>
+<tr class="odd">
+<td>CALG_HUGHES_MD5</td>
+<td>0x0000a003</td>
+<td>Hughes MD5 hashing algorithm.</td>
+</tr>
+<tr class="even">
+<td>CALG_HMAC</td>
+<td>0x00008009</td>
+<td>HMAC keyed hash algorithm. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-cryptographic-provider" data-linktype="relative-path">Microsoft Base Cryptographic Provider</a>.</td>
+</tr>
+<tr class="odd">
+<td>CALG_KEA_KEYX</td>
+<td>0x0000aa04</td>
+<td>KEA key exchange algorithm (FORTEZZA). This algorithm is not supported.</td>
+</tr>
+<tr class="even">
+<td>CALG_MAC</td>
+<td>0x00008005</td>
+<td><a href="https://docs.microsoft.com/en-us/windows/desktop/SecGloss/m-gly" data-linktype="absolute-path"><em>MAC</em></a> keyed hash algorithm. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-cryptographic-provider" data-linktype="relative-path">Microsoft Base Cryptographic Provider</a>.</td>
+</tr>
+<tr class="odd">
+<td>CALG_MD2</td>
+<td>0x00008001</td>
+<td>MD2 hashing algorithm. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-cryptographic-provider" data-linktype="relative-path">Microsoft Base Cryptographic Provider</a>.</td>
+</tr>
+<tr class="even">
+<td>CALG_MD4</td>
+<td>0x00008002</td>
+<td>MD4 hashing algorithm.</td>
+</tr>
+<tr class="odd">
+<td>CALG_MD5</td>
+<td>0x00008003</td>
+<td>MD5 hashing algorithm. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-cryptographic-provider" data-linktype="relative-path">Microsoft Base Cryptographic Provider</a>.</td>
+</tr>
+<tr class="even">
+<td>CALG_NO_SIGN</td>
+<td>0x00002000</td>
+<td>No signature algorithm.</td>
+</tr>
+<tr class="odd">
+<td>CALG_OID_INFO_CNG_ONLY</td>
+<td>0xffffffff</td>
+<td>The algorithm is only implemented in CNG. The macro, IS_SPECIAL_OID_INFO_ALGID, can be used to determine whether a cryptography algorithm is only supported by using the CNG functions.</td>
+</tr>
+<tr class="even">
+<td>CALG_OID_INFO_PARAMETERS</td>
+<td>0xfffffffe</td>
+<td>The algorithm is defined in the encoded parameters. The algorithm is only supported by using CNG. The macro, IS_SPECIAL_OID_INFO_ALGID, can be used to determine whether a cryptography algorithm is only supported by using the CNG functions.</td>
+</tr>
+<tr class="odd">
+<td>CALG_PCT1_MASTER</td>
+<td>0x00004c04</td>
+<td>Used by the Schannel.dll operations system. This <strong>ALG_ID</strong> should not be used by applications.</td>
+</tr>
+<tr class="even">
+<td>CALG_RC2</td>
+<td>0x00006602</td>
+<td>RC2 block encryption algorithm. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-cryptographic-provider" data-linktype="relative-path">Microsoft Base Cryptographic Provider</a>.</td>
+</tr>
+<tr class="odd">
+<td>CALG_RC4</td>
+<td>0x00006801</td>
+<td>RC4 stream encryption algorithm. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-cryptographic-provider" data-linktype="relative-path">Microsoft Base Cryptographic Provider</a>.</td>
+</tr>
+<tr class="even">
+<td>CALG_RC5</td>
+<td>0x0000660d</td>
+<td>RC5 block encryption algorithm.</td>
+</tr>
+<tr class="odd">
+<td>CALG_RSA_KEYX</td>
+<td>0x0000a400</td>
+<td>RSA public key exchange algorithm. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-cryptographic-provider" data-linktype="relative-path">Microsoft Base Cryptographic Provider</a>.</td>
+</tr>
+<tr class="even">
+<td>CALG_RSA_SIGN</td>
+<td>0x00002400</td>
+<td>RSA public key signature algorithm. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-cryptographic-provider" data-linktype="relative-path">Microsoft Base Cryptographic Provider</a>.</td>
+</tr>
+<tr class="odd">
+<td>CALG_SCHANNEL_ENC_KEY</td>
+<td>0x00004c07</td>
+<td>Used by the Schannel.dll operations system. This <strong>ALG_ID</strong> should not be used by applications.</td>
+</tr>
+<tr class="even">
+<td>CALG_SCHANNEL_MAC_KEY</td>
+<td>0x00004c03</td>
+<td>Used by the Schannel.dll operations system. This <strong>ALG_ID</strong> should not be used by applications.</td>
+</tr>
+<tr class="odd">
+<td>CALG_SCHANNEL_MASTER_HASH</td>
+<td>0x00004c02</td>
+<td>Used by the Schannel.dll operations system. This <strong>ALG_ID</strong> should not be used by applications.</td>
+</tr>
+<tr class="even">
+<td>CALG_SEAL</td>
+<td>0x00006802</td>
+<td>SEAL encryption algorithm. This algorithm is not supported.</td>
+</tr>
+<tr class="odd">
+<td>CALG_SHA</td>
+<td>0x00008004</td>
+<td>SHA hashing algorithm. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-cryptographic-provider" data-linktype="relative-path">Microsoft Base Cryptographic Provider</a>.</td>
+</tr>
+<tr class="even">
+<td>CALG_SHA1</td>
+<td>0x00008004</td>
+<td>Same as <strong>CALG_SHA</strong>. This algorithm is supported by the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-cryptographic-provider" data-linktype="relative-path">Microsoft Base Cryptographic Provider</a>.</td>
+</tr>
+<tr class="odd">
+<td>CALG_SHA_256</td>
+<td>0x0000800c</td>
+<td>256 bit SHA hashing algorithm. This algorithm is supported by Microsoft Enhanced RSA and AES Cryptographic Provider..<strong>Windows&nbsp;XP with SP3:</strong> This algorithm is supported by the Microsoft Enhanced RSA and AES Cryptographic Provider (Prototype).<br> <strong>Windows&nbsp;XP with SP2, Windows&nbsp;XP with SP1 and Windows&nbsp;XP:</strong> This algorithm is not supported.<br></td>
+</tr>
+<tr class="even">
+<td>CALG_SHA_384</td>
+<td>0x0000800d</td>
+<td>384 bit SHA hashing algorithm. This algorithm is supported by Microsoft Enhanced RSA and AES Cryptographic Provider.<strong>Windows&nbsp;XP with SP3:</strong> This algorithm is supported by the Microsoft Enhanced RSA and AES Cryptographic Provider (Prototype).<br> <strong>Windows&nbsp;XP with SP2, Windows&nbsp;XP with SP1 and Windows&nbsp;XP:</strong> This algorithm is not supported.<br></td>
+</tr>
+<tr class="odd">
+<td>CALG_SHA_512</td>
+<td>0x0000800e</td>
+<td>512 bit SHA hashing algorithm. This algorithm is supported by Microsoft Enhanced RSA and AES Cryptographic Provider.<strong>Windows&nbsp;XP with SP3:</strong> This algorithm is supported by the Microsoft Enhanced RSA and AES Cryptographic Provider (Prototype).<br> <strong>Windows&nbsp;XP with SP2, Windows&nbsp;XP with SP1 and Windows&nbsp;XP:</strong> This algorithm is not supported.<br></td>
+</tr>
+<tr class="even">
+<td>CALG_SKIPJACK</td>
+<td>0x0000660a</td>
+<td>Skipjack block encryption algorithm (FORTEZZA). This algorithm is not supported.</td>
+</tr>
+<tr class="odd">
+<td>CALG_SSL2_MASTER</td>
+<td>0x00004c05</td>
+<td>Used by the Schannel.dll operations system. This <strong>ALG_ID</strong> should not be used by applications.</td>
+</tr>
+<tr class="even">
+<td>CALG_SSL3_MASTER</td>
+<td>0x00004c01</td>
+<td>Used by the Schannel.dll operations system. This <strong>ALG_ID</strong> should not be used by applications.</td>
+</tr>
+<tr class="odd">
+<td>CALG_SSL3_SHAMD5</td>
+<td>0x00008008</td>
+<td>Used by the Schannel.dll operations system. This <strong>ALG_ID</strong> should not be used by applications.</td>
+</tr>
+<tr class="even">
+<td>CALG_TEK</td>
+<td>0x0000660b</td>
+<td>TEK (FORTEZZA). This algorithm is not supported.</td>
+</tr>
+<tr class="odd">
+<td>CALG_TLS1_MASTER</td>
+<td>0x00004c06</td>
+<td>Used by the Schannel.dll operations system. This <strong>ALG_ID</strong> should not be used by applications.</td>
+</tr>
+<tr class="even">
+<td>CALG_TLS1PRF</td>
+<td>0x0000800a</td>
+<td>Used by the Schannel.dll operations system. This <strong>ALG_ID</strong> should not be used by applications.</td>
+</tr>
+</tbody>
+</table></div>
+<p>&nbsp;</p>
+<p>For the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-cryptographic-provider" data-linktype="relative-path">Microsoft Base Cryptographic Provider</a>, the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-strong-cryptographic-provider" data-linktype="relative-path">Microsoft Strong Cryptographic Provider</a>, and the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-enhanced-cryptographic-provider" data-linktype="relative-path">Microsoft Enhanced Cryptographic Provider</a>, the <strong>ALG_IDs</strong> used for the key specifications <strong>AT_KEYEXCHANGE</strong> and <strong>AT_SIGNATURE</strong> are as follows:</p>
+<ul>
+<li><strong>CALG_RSA_KEYX</strong> is used for <strong>AT_KEYEXCHANGE</strong>.</li>
+<li><strong>CALG_RSA_SIGN</strong> is used for <strong>AT_SIGNATURE</strong>.</li>
+</ul>
+<p>For the <a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/microsoft-base-dss-and-diffie-hellman-cryptographic-provider" data-linktype="relative-path">Microsoft Base DSS and Diffie-Hellman Cryptographic Provider</a>, the <strong>ALG_IDs</strong> used for the key specifications <strong>AT_KEYEXCHANGE</strong> and <strong>AT_SIGNATURE</strong> are as follows:</p>
+<ul>
+<li><strong>CALG_DH_SF</strong> is used for <strong>AT_KEYEXCHANGE</strong>.</li>
+<li><strong>CALG_DSS_SIGN</strong> is used for <strong>AT_SIGNATURE</strong>.</li>
+</ul>
+<h2 id="requirements" class="heading-anchor"><a class="anchor-link docon docon-link" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id#requirements" aria-labelledby="requirements"></a>Requirements</h2>
+<div class="table-scroll-wrapper"><table class="table"><caption class="visually-hidden">Requirements</caption>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Minimum supported client<br></td>
+<td>Windows&nbsp;XP [desktop apps only]<br></td>
+</tr>
+<tr>
+<td>Minimum supported server<br></td>
+<td>Windows Server&nbsp;2003 [desktop apps only]<br></td>
+</tr>
+<tr>
+<td>Header<br></td>
+<td><dl> <dt>Wincrypt.h</dt> </dl></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="see-also" class="heading-anchor"><a class="anchor-link docon docon-link" href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id#see-also" aria-labelledby="see-also"></a>See also</h2>
+<dl> <dt>
+<p><a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/cryptography-functions" data-linktype="relative-path">Cryptography Functions</a></p>
+</dt> <dt>
+<p><a href="https://docs.microsoft.com/en-us/windows/desktop/api/Wincrypt/ns-wincrypt-crypt_algorithm_identifier" data-linktype="absolute-path"><strong>CRYPT_ALGORITHM_IDENTIFIER</strong></a></p>
+</dt> <dt>
+<p><a href="https://docs.microsoft.com/en-us/windows/desktop/api/Wincrypt/nf-wincrypt-cryptfindoidinfo" data-linktype="absolute-path"><strong>CryptFindOIDInfo</strong></a></p>
+</dt> </dl>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+							<!-- </content> -->
+
+						</main>
+
+						<!-- page rating section -->
+								<div class="is-hidden-desktop border-top has-margin-top-large has-padding-top-large binary-rating-holder">
+									
+	
+	
+
+	<div class="feedback-verbatim border-bottom has-padding-bottom-large has-margin-bottom-small" data-bi-name="rating">
+    <div class="binary-rating">
+        <div class="binary-rating-buttons">
+				<h3 class="font-weight-semibold has-margin-top-none font-size-h4 margin-bottom-xs">Is this page helpful?</h3>
+			<div>
+                <button class="thumb-rating like has-inner-focus" title="Yes" data-bi-name="rating-yes" aria-expanded="false" data-bi-sat="1" aria-controls="rating-container-desktop">
+                    <span aria-hidden="true" class="icon docon docon-like"></span>
+                    <span>Yes</span>
+                </button>
+                <button class="thumb-rating dislike has-inner-focus" title="No" data-bi-name="rating-no" data-bi-sat="0" aria-expanded="false" aria-controls="rating-container-desktop">
+                    <span aria-hidden="true" class="icon docon docon-dislike"></span>
+                    <span>No</span>
+                </button>
+            </div>
+        </div>
+        <form class="feedback-verbatim-form is-hidden" id="rating-container-desktop">
+            <div class="verbatim-textarea box position-relative box-shadow-none border has-margin-top-small has-padding-extra-small font-size-xs">
+                <label for="rating-textarea-desktop" class="visually-hidden">Any additional feedback?</label>
+                <textarea id="rating-textarea-desktop" rows="4" maxlength="999" placeholder="Any additional feedback?" required="" class="textarea border-none box-shadow-none has-inner-focus"></textarea>
+		    </div>
+			<p class="font-size-xs has-line-height-reset">Feedback will be sent to Microsoft: By pressing the submit button, your feedback will be used to improve Microsoft products and services. <a href="https://privacy.microsoft.com/en-us/privacystatement">Privacy policy.</a></p>
+            <div class="buttons is-right margin-top-xs has-margin-right-extra-small">
+                <button class="skip-rating button is-transparent has-text-primary is-small border-none" type="button">Skip</button>
+                <button class="submit-rating button is-primary is-small" data-bi-name="rating-verbatim" disabled="" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="thankyou-rating is-hidden" tabindex="-1">
+        <p>Thank you.</p>
+    </div>
+</div>									</div>
+						<!-- end page rating section -->
+
+
+						<!-- recommendations section -->
+							<section id="recommendations-section" data-bi-name="recommendations"></section>
+						<!-- end recommendations section -->
+
+						<!-- feedback section -->
+						<!-- end feedback section -->
+
+						<!-- feedback report section -->
+						<!-- end feedback report section -->
+
+						<div class="border-top is-visible-interactive has-default-focus has-margin-top-large ">
+
+
+
+	<footer id="footer-interactive" data-bi-name="footer" class="footer-layout">
+	<div class="display-flex is-full-height has-padding-right-extra-large-desktop">
+			<a data-mscc-ic="false" class="locale-selector-link flex-shrink-0" href="https://docs.microsoft.com/en-us/locale?target=https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id" data-bi-name="select-locale"><span class="icon docon docon-world font-size-l has-margin-right-small" aria-hidden="true"></span><span class="local-selector-link-text">English (United States)</span></a>
+		<div class="margin-inline-xs flex-shrink-0">
+<div class="dropdown has-caret-up">
+	<button class="dropdown-trigger button is-transparent is-small is-icon-only-touch has-inner-focus theme-dropdown-trigger" aria-controls="theme-menu-interactive" aria-expanded="false" title="Theme" data-bi-name="theme">
+		<span class="icon">
+			<span class="docon docon-sun" aria-hidden="true"></span>
+		</span>
+		<span>Theme</span>
+	</button>
+	<div class="dropdown-menu" id="theme-menu-interactive" role="menu">
+		<ul class="theme-selector has-padding-small">
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth justify-content-flex-start is-selected" data-theme-to="light" aria-pressed="true">
+					<span class="theme-light has-margin-right-small">
+						<span class="theme-selector-icon css-variable-support border is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+Light					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth justify-content-flex-start" data-theme-to="dark" aria-pressed="false">
+					<span class="theme-dark has-margin-right-small">
+						<span class="border theme-selector-icon css-variable-support is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+Dark					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth justify-content-flex-start" data-theme-to="high-contrast" aria-pressed="false">
+					<span class="theme-high-contrast has-margin-right-small">
+						<span class="border theme-selector-icon css-variable-support is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+High contrast					</span>
+				</button>
+			</li>
+		</ul>
+	</div>
+</div>		</div>
+	</div>
+	<ul class="links" data-bi-name="footerlinks">
+		<li class="manage-cookies-holder" hidden=""></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/en-us/previous-versions/" data-bi-name="archivelink">Previous Version Docs</a></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/en-us/teamblog" data-bi-name="bloglink">Blog</a></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/en-us/contribute" data-bi-name="contributorGuide">Contribute</a></li>
+					<li><a data-mscc-ic="false" href="https://go.microsoft.com/fwlink/?LinkId=521839" data-bi-name="privacy">Privacy &amp; Cookies</a></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/en-us/legal/termsofuse" data-bi-name="termsofuse">Terms of Use</a></li>
+				<li><a data-mscc-ic="false" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" data-bi-name="trademarks">Trademarks</a></li>
+		<li>© Microsoft 2021</li>
+	</ul>
+</footer>
+						</div>
+					</div>
+					
+						<div class="font-size-s right-container column is-one-quarter is-one-fifth-desktop is-hidden-mobile is-hidden-tablet-only" data-bi-name="pageactions" role="complementary" aria-label="Page Actions">
+							<div id="affixed-right-container" class="doc-outline position-fixed is-vertically-scrollable" style="width: 164.038px; top: 24px; bottom: 24px;">
+									
+	
+	
+
+	<div class="feedback-verbatim border-bottom has-padding-bottom-small has-margin-bottom-small" data-bi-name="rating">
+    <div class="binary-rating">
+        <div class="binary-rating-buttons">
+
+				<h3 class="font-weight-semibold has-margin-top-none has-margin-bottom-small">Is this page helpful?</h3>
+			<div>
+                <button class="thumb-rating like has-inner-focus" title="Yes" data-bi-name="rating-yes" aria-expanded="false" data-bi-sat="1" aria-controls="rating-container-mobile">
+                    <span aria-hidden="true" class="icon docon docon-like"></span>
+                    <span>Yes</span>
+                </button>
+                <button class="thumb-rating dislike has-inner-focus" title="No" data-bi-name="rating-no" data-bi-sat="0" aria-expanded="false" aria-controls="rating-container-mobile">
+                    <span aria-hidden="true" class="icon docon docon-dislike"></span>
+                    <span>No</span>
+                </button>
+            </div>
+        </div>
+        <form class="feedback-verbatim-form is-hidden" id="rating-container-mobile">
+            <div class="verbatim-textarea box position-relative box-shadow-none border has-margin-top-small has-padding-extra-small font-size-xs">
+                <label for="rating-textarea-mobile" class="visually-hidden">Any additional feedback?</label>
+                <textarea id="rating-textarea-mobile" rows="4" maxlength="999" placeholder="Any additional feedback?" required="" class="textarea border-none box-shadow-none has-inner-focus"></textarea>
+		    </div>
+			<p class="font-size-xs has-line-height-reset">Feedback will be sent to Microsoft: By pressing the submit button, your feedback will be used to improve Microsoft products and services. <a href="https://privacy.microsoft.com/en-us/privacystatement">Privacy policy.</a></p>
+            <div class="buttons is-right margin-top-xs has-margin-right-extra-small">
+                <button class="skip-rating button is-transparent has-text-primary is-small border-none" type="button">Skip</button>
+                <button class="submit-rating button is-primary is-small" data-bi-name="rating-verbatim" disabled="" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div class="thankyou-rating is-hidden" tabindex="-1">
+        <p>Thank you.</p>
+    </div>
+</div>								<nav id="side-doc-outline" data-bi-name="intopic toc" role="navigation" aria-label="Article Outline">
+									<h3>In this article</h3>
+								<ol><li class="selected"><a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id#requirements">Requirements</a></li><li><a href="https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id#see-also">See also</a></li></ol></nav>
+							</div>
+						</div>
+
+				</div>
+				<!--end of div.columns -->
+
+			</section>
+			<!--end of .primary-holder -->
+
+			<!-- interactive container -->
+			<aside id="interactive-container" class="interactive-container is-visible-interactive column has-body-background-dark ">
+			</aside>
+			<!-- end of interactive container -->
+		</div>
+
+	</div>
+	<!--end of .mainContainer -->
+
+	<section class="border-top has-default-focus is-hidden-interactive has-margin-top-large ">
+
+
+
+	<footer id="footer" data-bi-name="footer" class="footer-layout uhf-container has-padding" role="contentinfo">
+	<div class="display-flex is-full-height has-padding-right-extra-large-desktop">
+			<a data-mscc-ic="false" class="locale-selector-link flex-shrink-0" href="https://docs.microsoft.com/en-us/locale?target=https://docs.microsoft.com/en-us/windows/win32/seccrypto/alg-id" data-bi-name="select-locale"><span class="icon docon docon-world font-size-l has-margin-right-small" aria-hidden="true"></span><span class="local-selector-link-text">English (United States)</span></a>
+		<div class="margin-inline-xs flex-shrink-0">
+<div class="dropdown has-caret-up">
+	<button class="dropdown-trigger button is-transparent is-small is-icon-only-touch has-inner-focus theme-dropdown-trigger" aria-controls="theme-menu" aria-expanded="false" title="Theme" data-bi-name="theme">
+		<span class="icon">
+			<span class="docon docon-sun" aria-hidden="true"></span>
+		</span>
+		<span>Theme</span>
+	</button>
+	<div class="dropdown-menu" id="theme-menu" role="menu">
+		<ul class="theme-selector has-padding-small">
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth justify-content-flex-start is-selected" data-theme-to="light" aria-pressed="true">
+					<span class="theme-light has-margin-right-small">
+						<span class="theme-selector-icon css-variable-support border is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+Light					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth justify-content-flex-start" data-theme-to="dark" aria-pressed="false">
+					<span class="theme-dark has-margin-right-small">
+						<span class="border theme-selector-icon css-variable-support is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+Dark					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth justify-content-flex-start" data-theme-to="high-contrast" aria-pressed="false">
+					<span class="theme-high-contrast has-margin-right-small">
+						<span class="border theme-selector-icon css-variable-support is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+High contrast					</span>
+				</button>
+			</li>
+		</ul>
+	</div>
+</div>		</div>
+	</div>
+	<ul class="links" data-bi-name="footerlinks">
+		<li class="manage-cookies-holder" hidden=""></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/en-us/previous-versions/" data-bi-name="archivelink">Previous Version Docs</a></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/en-us/teamblog" data-bi-name="bloglink">Blog</a></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/en-us/contribute" data-bi-name="contributorGuide">Contribute</a></li>
+					<li><a data-mscc-ic="false" href="https://go.microsoft.com/fwlink/?LinkId=521839" data-bi-name="privacy">Privacy &amp; Cookies</a></li>
+				<li><a data-mscc-ic="false" href="https://docs.microsoft.com/en-us/legal/termsofuse" data-bi-name="termsofuse">Terms of Use</a></li>
+				<li><a data-mscc-ic="false" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" data-bi-name="trademarks">Trademarks</a></li>
+		<li>© Microsoft 2021</li>
+	</ul>
+</footer>
+	</section>
+
+	<div id="action-panel" role="region" aria-label="Action Panel" class="action-panel has-default-focus" tabindex="-1"></div>
+
+
+<div class="usabilla_live_button_container" role="button" tabindex="0" style="right: 0px; top: 50%; margin-top: 0px; position: fixed; width: 0px; height: 0px; z-index: 99999990; display: none;" aria-label="Usabilla Feedback Button"><iframe src="./ALG_ID (Wincrypt.h) - Win32 apps _ Microsoft Docs_files/saved_resource(1).html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" data-tags="right" title="Usabilla Feedback Button" style="width: 0px; height: 0px; margin: 0px; padding: 0px; border: 0px; overflow: hidden; z-index: 9998; position: absolute; left: 0px; top: 0px; box-shadow: 0px 0px 0px; background-color: transparent;"></iframe></div></body></html>

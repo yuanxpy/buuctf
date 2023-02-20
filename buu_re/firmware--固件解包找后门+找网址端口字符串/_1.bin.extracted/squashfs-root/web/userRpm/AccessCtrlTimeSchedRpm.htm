@@ -1,0 +1,163 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="Javascript"><!--
+var LP = location.pathname;
+function doAll(val){if(val=="DelAll"){if(!confirm("删除所有条目?")) return;} location.href="AccessCtrlTimeSchedRpm.htm?doAll="+val+"&Page="+curPage;}
+function doAdd(nPage){location.href="AccessCtrlTimeSchedRpm.htm?Add=Add&Page="+nPage;}
+function doPage(nPage){location.href="AccessCtrlTimeSchedRpm.htm?Page="+nPage;}
+function doHelp(){location.href="/help/AccessCtrlTimeSchedHelpRpm.htm";}
+
+function ResetStatus(strInfo){window.status='';return true;}
+//--></script>
+</head>
+<body><center><form action="AccessCtrlTimeSchedRpm.htm" enctype="multipart/form-data" method="get" >
+<table width="602" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td><td width="580" align="left" valign="middle" class="title">日程计划设置</td></tr>
+<tr><td colspan="2">
+<table width="602" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+	<td class="vline" rowspan="15"><br></td>
+	<td width="600">
+	<table width="570" border="0" align="center" cellpadding="0" cellspacing="0" class="space"><tr><td>本页设置上网控制的日程计划</td></tr></table>
+	<table width="570" border="1" align="center" cellpadding="0" cellspacing="0" class="space">
+	<tr><td align="center">ID</td><td align="center" width="200">日程描述</td><td align="center" nowrap>星期</td><td align="center" nowrap>时间</td><td align="center" nowrap>配置</td></tr>
+	<script language="JavaScript">
+		function getDaysString(weekDaysArray)
+		{
+			var weekDaysStr = "";
+			if (weekDaysArray[0] == 1)
+			{
+				weekDaysStr = "每天";
+				return weekDaysStr;
+			}
+			if (weekDaysArray[1] == 1)
+			{
+				weekDaysStr += "周一"; 
+			}
+			if (weekDaysArray[2] == 1)
+			{
+				weekDaysStr += "&nbsp;周二"; 
+			}
+			if (weekDaysArray[3] == 1)
+			{
+				weekDaysStr += "&nbsp;周三"; 
+			}
+			if (weekDaysArray[4] == 1)
+			{
+				weekDaysStr += "&nbsp;周四"; 
+			}
+			if (weekDaysArray[5] == 1)
+			{
+				weekDaysStr += "&nbsp;周五"; 
+			}
+			if (weekDaysArray[6] == 1)
+			{
+				weekDaysStr += "&nbsp;周六"; 
+			}
+			if (weekDaysArray[7] == 1)
+			{
+				weekDaysStr += "&nbsp;周日"; 
+			}
+			return weekDaysStr;
+		}
+		function getHoursString(start, end)
+		{
+			var hoursStr = "";
+			if ((start == "0000") && (end=="2400"))
+			{
+				hoursStr = "00:00&nbsp;-&nbsp;24:00";
+			}
+			else
+			{
+				hoursStr = start.substr(0,2) + ":" + start.substr(2,2) + "&nbsp;-&nbsp;" + end.substr(0,2) + ":" + end.substr(2,2);
+			}
+			return hoursStr;
+		}
+	if (timeSchedPara[2] > 0)
+	{
+		var row = 0;
+		var statusString;
+		var weekDaysString = "";
+		var hoursString = "";
+		var idStart = (timeSchedPara[0] - 1) * 8;
+		var modifyId;
+		for(var i = 0; i < timeSchedPara[2]; i++)
+		{
+		modifyId = idStart;
+		idStart++;
+		row = i * timeSchedPara[3];
+		//statusString = (timeSchedList[row + 2] == 1)?"锁定":"未锁";
+		var dayArray = new Array(
+		timeSchedList[row + 1],timeSchedList[row + 2],
+		timeSchedList[row + 3],timeSchedList[row + 4],
+		timeSchedList[row + 5],timeSchedList[row + 6],
+		timeSchedList[row + 7],timeSchedList[row + 8]
+		);
+		weekDaysString = getDaysString(dayArray);
+		document.write('<tr id="tr'+idStart+'"><td align="center">' + idStart + '</td>');
+		document.write('<td align="center">' + timeSchedList[row] + '</td>');
+		document.write('<td align="center">'
+					 + weekDaysString + '&nbsp;</td>');
+		//var enableStatus = timeSchedList[row+2]?"checked":"";
+		//var modifyId = row + 2;
+		hoursString = getHoursString(timeSchedList[row + 10], timeSchedList[row + 11]);
+		document.write('<td align="center">' + 
+						hoursString +
+						'</td>');
+		document.write('<td align="center"><a href=\"AccessCtrlTimeSchedRpm.htm?Modify=' +
+						i+'&Page='+timeSchedPara[0]+
+						'\" OnMouseOver=\"return ResetStatus(\'modify\');\">编辑</a>&nbsp;<a href=\"AccessCtrlTimeSchedRpm.htm?Del='+
+					 	i+'&Page='+timeSchedPara[0]+
+						'\" OnMouseOver=\"return ResetStatus(\'delete\');\">删除</a></td></tr>');
+		}
+		}
+	else
+	{
+		document.write('<tr><td align="center" colspan=5>当前列表为空</td>');
+	}
+	</script>
+	</table>
+	<table width="570" align="center" border="0" cellpadding="0" cellspacing="0" class="space">
+	<tr><td colspan="3" width="570">
+	<input type="button" value="增加单个条目" name="Add" class="button" onClick="doAdd(curPage);">
+	<input type="button" value="删除所有条目" name="DelAll" class="button" onClick="doAll('DelAll');">
+	</td></tr>
+	</table>
+	</td>
+	<td class="vline" rowspan="15"><br></td>
+	</tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">&nbsp;
+<input name="previous" type="button" class="button" onClick="doPage(prePage);" value="上一页" Disabled>
+&nbsp;<input name="next" type="button" class="button" onClick="doPage(NextPage);" value="下一页" Disabled>
+&nbsp;当前第
+<select onchange="doPage(document.forms[0].selPage.value);" size="1" name="selPage" class="list">
+<script language="JavaScript">
+var pageNum = timeSchedPara[4]/8 + 1;
+var pIndex = 1;
+do
+{
+	document.write("<option value='" + pIndex + "' selected>"+ pIndex +"</option>");
+}while(++pIndex < pageNum)
+</script>
+</select>
+页
+&nbsp; <input name="Page" type="hidden" value="1">
+<input name="help" type="button" class="button" onClick="doHelp();" value="帮 助"></td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr></table></form></center>
+<script language="JavaScript">
+var curPage = timeSchedPara[0];
+var prePage = (timeSchedPara[0] == 1)?1:timeSchedPara[0]-1;
+var NextPage = timeSchedPara[0]+1;
+//document.forms[0].arpServer[0].checked = timeSchedPara[0]?0:1;
+document.forms[0].Page.value = curPage;
+document.forms[0].previous.disabled = (timeSchedPara[0] < 2)?true:false;
+document.forms[0].next.disabled = (timeSchedPara[1] >0)?false:true;
+//document.forms[0].EnAll.disabled = (timeSchedPara[2] >0)?false:true;
+document.forms[0].DelAll.disabled = (timeSchedPara[2] >0)?false:true;
+//document.forms[0].Find.disabled = (timeSchedPara[2] >0)?false:true;
+
+document.forms[0].selPage.value = curPage;
+</script>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>

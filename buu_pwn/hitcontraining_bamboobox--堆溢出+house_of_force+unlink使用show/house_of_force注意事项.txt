@@ -1,0 +1,3 @@
+注意本题使用house_of_force在本地和远程均打不通
+
+原因是buu上远程环境没有magic对应的flag目录，本地则是一开始我以为直接在home下创建即可，但是ubantu进入的home默认是/home/javayuan而不是/home，后在/home目录创建flag即可

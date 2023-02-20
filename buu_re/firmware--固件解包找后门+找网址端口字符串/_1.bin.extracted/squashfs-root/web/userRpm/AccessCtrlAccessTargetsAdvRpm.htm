@@ -1,0 +1,395 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="Javascript"><!--
+function doBack(nPage, nOtherPage)
+{
+	if (nOtherPage == 0)
+	location.href="AccessCtrlAccessTargetsRpm.htm?Page="+nPage;
+	else
+	location.href="AccessCtrlAccessRulesRpm.htm?Page="+nOtherPage;
+}
+
+function getValLen(val)
+{
+	var len = 0;
+	var i = 0;
+	for (i = 0; i < val.length; i ++)
+	{
+		var c = val.charAt(i);
+		len += ((c >= ' ') && (c <= '~')) ? 1 : 2;
+	}
+	return len;
+}
+
+function doSubmit()
+{
+	var desc_len = getValLen(document.forms[0].targets_lists_name.value);
+	if (desc_len == 0)
+	{
+		alert("请输入正确的访问目标描述！");
+		var element = document.forms[0].targets_lists_name;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	if (desc_len > 24)
+	{
+		alert("访问目标描述的长度不能超过24！");
+		var element = document.forms[0].targets_lists_name;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	
+	if (document.forms[0].target_type.value == 1)
+	{
+		if (document.forms[0].proto.value==3)
+		{
+			if ((!document.forms[0].dst_ip_start.value.length) && 
+			(!document.forms[0].dst_ip_end.value.length))
+			{
+			alert("请输入IP地址！");
+			var element = document.forms[0].dst_ip_start;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+			}
+		}
+		else
+		{
+			if ((!document.forms[0].dst_ip_start.value.length) && 
+			(!document.forms[0].dst_ip_end.value.length) && 
+			(!document.forms[0].dst_port_start.value.length) && 
+			(!document.forms[0].dst_port_end.value.length))
+			{
+				alert("请至少输入一个IP地址或者端口号！");
+				var element = document.forms[0].dst_ip_start;
+				if(element)
+				{
+					element.focus();
+					element.select();
+				}
+				return false;				
+			}
+			if (document.forms[0].dst_ip_start.value.length)
+			{
+				if (false == is_ipaddr(document.forms[0].dst_ip_start.value))
+				{
+					var element = document.forms[0].dst_ip_start;
+					if(element)
+					{
+						element.focus();
+						element.select();
+					}
+					return false;
+				}
+			}
+			if (document.forms[0].dst_ip_end.value.length)
+			{
+				if (false == is_ipaddr(document.forms[0].dst_ip_end.value))
+				{
+					var element = document.forms[0].dst_ip_end;
+					if(element)
+					{
+						element.focus();
+						element.select();
+					}
+					return false;
+				}
+			}
+		}
+		if (document.forms[0].proto.value!=3)
+		{
+			if (document.forms[0].dst_port_start.value.length)
+				{
+					if (false == is_port(document.forms[0].dst_port_start.value))
+					{
+						var element = document.forms[0].dst_port_start;
+						if(element)
+						{
+							element.focus();
+							element.select();
+						}
+						return false;
+					}
+				}
+			if (document.forms[0].dst_port_end.value.length)
+			{
+				if (false == is_port(document.forms[0].dst_port_end.value))
+				{
+					var element = document.forms[0].dst_port_end;
+					if(element)
+					{
+						element.focus();
+						element.select();
+					}
+					return false;
+				}
+			}
+		}
+	}
+	else
+	{
+	if (
+	(document.forms[0].url_0.value=="") && 
+	(document.forms[0].url_1.value=="") && 
+	(document.forms[0].url_2.value=="") && 
+	(document.forms[0].url_3.value=="")
+	)
+	{
+		alert("请至少输入一个网站域名！");
+		var element = document.forms[0].url_0;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	else
+	{
+		if (document.forms[0].url_0.value!="")
+		{
+		if (false == is_domain(document.forms[0].url_0.value))
+		{
+			var element = document.forms[0].url_0;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		}
+		if (document.forms[0].url_1.value!="")
+		{
+		if (false == is_domain(document.forms[0].url_1.value))
+		{
+			var element = document.forms[0].url_1;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		}
+		if (document.forms[0].url_2.value!="")
+		{
+		if (false == is_domain(document.forms[0].url_2.value))
+		{
+			var element = document.forms[0].url_2;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		}
+		if (document.forms[0].url_3.value!="")
+		{
+		if (false == is_domain(document.forms[0].url_3.value))
+		{
+			var element = document.forms[0].url_3;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		}
+	}
+	}
+	return true;
+}
+function style_display_on()
+{
+	if (window.ActiveXObject)
+	{ // IE
+		return "block";
+	}
+	else if (window.XMLHttpRequest)
+	{ // Mozilla, Safari,...
+		return "table-row";
+	}
+}
+function doSwitchTr()
+{
+	str=style_display_on();
+	document.getElementById("ip_dst").style.display=(document.forms[0].target_type.value==1)?str:"none";
+	document.getElementById("port").style.display=(document.forms[0].target_type.value==1)?str:"none";
+	document.getElementById("proto_area").style.display=(document.forms[0].target_type.value==1)?str:"none";
+	document.getElementById("spaceline").style.display=(document.forms[0].target_type.value==1)?str:"none";
+	document.getElementById("commonportlist").style.display=(document.forms[0].target_type.value==1)?str:"none";
+	doSwitchProto();
+	document.getElementById("url0").style.display=(document.forms[0].target_type.value==1)?"none":str;
+	document.getElementById("url1").style.display=(document.forms[0].target_type.value==1)?"none":str;
+	document.getElementById("url2").style.display=(document.forms[0].target_type.value==1)?"none":str;
+	document.getElementById("url3").style.display=(document.forms[0].target_type.value==1)?"none":str;
+	
+}
+function doSwitchProto()
+{
+	str=style_display_on();
+	if (document.forms[0].target_type.value==1)
+	{
+	document.getElementById("port").style.display=(document.forms[0].proto.value==3)?"none":str;
+	document.getElementById("spaceline").style.display=(document.forms[0].proto.value==3)?"none":str;
+	document.getElementById("commonportlist").style.display=(document.forms[0].proto.value==3)?"none":str;
+}
+}
+var commonportlist = new Array(
+0, "", "--请选择--", 0,
+1, 53, "DNS", 2,
+2, 21, "FTP", 1,
+3, 70, "GOPHER", 1,
+4, 80, "HTTP", 1,
+5, 119, "NNTP", 1,
+6, 110, "POP3", 1,
+7, 1723, "PPTP", 0,
+8, 25, "SMTP", 1,
+9, 1080, "SOCK", 0,
+10, 23, "TELNET", 1
+);
+function doCommonPortChange()
+{
+	var n = document.forms[0].Commonport.selectedIndex;
+	if(n > 0)
+	{
+		document.forms[0].dst_port_start.value = commonportlist[(n*4)+1];
+		document.forms[0].proto.value = commonportlist[(n*4)+3];
+	}
+}
+function doHelp(){location.href="/help/AccessCtrlAccessTargetsHelpRpm.htm";}
+//--></script></head>
+<BODY onload="doSwitchTr();">
+<center><form action="AccessCtrlAccessTargetsRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="500" align="left" valign="middle" class="title">访问目标列表设置</td>
+</tr>
+<tr><td colspan="2"><table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="518">
+<table width="470" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<TR>
+<TD colspan=2>&nbsp;&nbsp;本页设置一条访问目标列表条目</TD>
+</TR>
+<tr><td>
+<table width="420" border="0" align="center" cellpadding="2" cellspacing="0" class="space">
+<TR>
+	<TD width="105">请选择模式：</TD>
+	<TD width="305">
+		<select size="1" name="target_type" class="list" onchange="doSwitchTr()">
+			<option value="0">网站域名</option>
+			<option value="1" Selected>IP 地址</option>
+		</select>
+	</TD>
+</TR>
+<TR>
+	<TD>目标描述：</TD><TD><input name="targets_lists_name" type="text" class="text" value="" size="25" maxlength="24"></TD>
+</TR>
+<!--IPSSSSSSSS-->
+<tr id="ip_dst" style="display:none">
+	<TD width="105">目标IP地址：</TD>
+	<TD width="305"><input type="text" name="dst_ip_start" value="" size="15" maxlength="15" class="text">&nbsp;-&nbsp;<input type="text" name="dst_ip_end" value="" size="15" maxlength="15" class="text"></TD>
+</tr>
+<TR id="port" style="display:none"><TD>目标端口：</TD><TD><input type="text" name="dst_port_start" value="" size="5" maxlength="5" class="text"> - <input type="text" name="dst_port_end" value="" size="5" maxlength="5" class="text"></TD></TR>
+<TR id="proto_area" style="display:none">
+	<TD >协  议：</TD>
+	<TD><select size="1" name="proto" class="list" onchange="doSwitchProto()">
+		<option value="0"  >ALL</option>
+		<option value="1"  >TCP</option>
+		<option value="2"  >UDP</option>
+		<option value="3"  >ICMP</option>
+		</select>
+	</TD>
+</TR>
+<tr id="spaceline" style="display:none"><td height="20" colspan="2"></td></tr>
+<tr id="commonportlist" style="display:none"><td >常用服务端口号：</td>
+<td><select name="Commonport" class="list" onChange="doCommonPortChange()">
+<script language="JavaScript">
+for (i=0;i<11;i++)
+{
+document.write('<option value='+i+'>'+ commonportlist[(i*4)+2] +'<\/option>');
+}
+</script>
+</select></td></tr>
+<!--URLS***-->
+	<tr id="url0" style="display:none">
+	<TD width="105">网站域名：</TD>
+	<TD width="305"><input name="url_0" type="text" class="text" value="" size="32" maxlength="30"></TD>
+	</tr>
+	<tr id="url1" style="display:none">
+	<TD>&nbsp;</TD>
+	<TD><input name="url_1" type="text" class="text" value="" size="32" maxlength="30"></TD>
+	</tr>
+	<tr id="url2" style="display:none">
+	<TD>&nbsp;</TD>
+	<TD><input name="url_2" type="text" class="text" value="" size="32" maxlength="30"></TD>
+	</tr>
+	<tr id="url3" style="display:none">
+	<TD>&nbsp;</TD>
+	<TD><input name="url_3" type="text" class="text" value="" size="32" maxlength="30"></TD>
+	</tr>
+</table>
+</td></tr>
+</table>
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+<input name="Changed" type="hidden" value="">
+<input name="SelIndex" type="hidden" value="">
+<input name="Page" type="hidden" value="">
+&nbsp;<input name="Save" type="submit" class="button" value="保 存">
+&nbsp;<input type="button" value="返 回" name="Return" class="button" onClick="doBack(access_targetss_adv_dyn_array[13], access_targetss_adv_dyn_array[14]);">
+&nbsp;<input name="Help" type="button" class="button" value="帮 助" onClick="doHelp();"></TD></TR>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr>
+</TABLE>
+<script language="JavaScript">
+	document.forms[0].target_type.value = access_targetss_adv_dyn_array[0];
+	document.forms[0].targets_lists_name.value = access_targetss_adv_dyn_array[1];
+	str=style_display_on();
+	document.getElementById("ip_dst").style.display=(access_targetss_adv_dyn_array[0])?str:"none";
+	document.getElementById("port").style.display=(access_targetss_adv_dyn_array[0])?str:"none";
+	document.getElementById("proto_area").style.display=(access_targetss_adv_dyn_array[0])?str:"none";
+	document.getElementById("spaceline").style.display=(access_targetss_adv_dyn_array[0])?str:"none";
+	document.getElementById("commonportlist").style.display=(access_targetss_adv_dyn_array[0])?str:"none";
+	//document.getElementById("port").style.display=(document.forms[0].proto.value==3)?"none":str;
+	document.getElementById("url0").style.display=(access_targetss_adv_dyn_array[0])?"none":str;
+	document.getElementById("url1").style.display=(access_targetss_adv_dyn_array[0])?"none":str;
+	document.getElementById("url2").style.display=(access_targetss_adv_dyn_array[0])?"none":str;
+	document.getElementById("url3").style.display=(access_targetss_adv_dyn_array[0])?"none":str;
+	if (access_targetss_adv_dyn_array[0] == 1)
+	{
+		document.forms[0].dst_ip_start.value = access_targetss_adv_dyn_array[2];
+		if (access_targetss_adv_dyn_array[2] != access_targetss_adv_dyn_array[3])
+		document.forms[0].dst_ip_end.value = access_targetss_adv_dyn_array[3];
+		document.forms[0].proto.value = access_targetss_adv_dyn_array[4];
+		document.forms[0].dst_port_start.value = access_targetss_adv_dyn_array[5];
+		if (access_targetss_adv_dyn_array[5] != access_targetss_adv_dyn_array[6])
+		document.forms[0].dst_port_end.value = access_targetss_adv_dyn_array[6];
+	}
+	else
+	{
+		document.forms[0].url_0.value = access_targetss_adv_dyn_array[7];
+		document.forms[0].url_1.value = access_targetss_adv_dyn_array[8];
+		document.forms[0].url_2.value = access_targetss_adv_dyn_array[9];
+		document.forms[0].url_3.value = access_targetss_adv_dyn_array[10];
+	}
+	document.forms[0].Changed.value = access_targetss_adv_dyn_array[11];
+	document.forms[0].SelIndex.value = access_targetss_adv_dyn_array[12];
+	document.forms[0].Page.value = access_targetss_adv_dyn_array[13];
+</script>
+</form></center></BODY><head><meta http-equiv="pragma" content="no-cache"></head></HTML>

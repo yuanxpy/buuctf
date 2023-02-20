@@ -1,0 +1,49 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doRefresh(){location.href="/userRpm/MiscShowRpm.htm";}
+function doPrev(){location.href="/userRpm/AdvScrRpm.htm";}
+function doSubmit(){if(confirm("您确定要将该列表清空吗？")) {return true;}else {return false};}
+//--></script></head>
+
+<BODY >
+<center><form action="MiscShowRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="500" align="left" valign="middle" class="title">DoS被禁止主机列表</td></tr>
+<tr><td colspan="2"><table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="518">
+<table width="450" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<td>下表显示因为DoS攻击而禁止的主机列表。</td></table>
+<table width="470" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<TR><TD><table border=1 width="450" align="center" cellpadding="0" cellspacing="0">
+<TR><TD width = "50" align="center">Index</TD><TD width="180" align="center">主机IP地址</TD><td width="180" align="center">主机MAC地址</TD><TD>修改</TD></TR>
+<script language="JavaScript">
+if (dosPara[0] > 0)	
+{
+	var row = 0;
+	for(var i = 1; i <= dosPara[0]; i++)
+	{
+		row = (i-1) * dosPara[1];
+		document.write('<tr><td align="center">' + i + '</td>');
+		document.write('<td align="center">'
+					 + dosList[row] + '</td>');
+		document.write('<td align="center">' 
+					 + dosList[row+1] + '</TD>');
+	document.write('<td><a href=\"MiscShowRpm.htm?Del=' + i + '\">删除</a></TD></TR>');}
+}
+else	
+{
+	document.write('<TR><TD align="center" colspan=4>没有被阻止的DoS主机。</TD></TR>');
+}
+</script>
+</table></TD></TR>
+</table>
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+&nbsp;&nbsp;<input name="Refresh" type="button" class="button" value="刷 新" onclick="doRefresh()";>&nbsp;&nbsp;<input name="Clear" type="submit" class="button" value="清 空">&nbsp;&nbsp;<input name="Back" type="button" class="button" value="返 回" onClick="doPrev();">
+</TD></TR><tr><td height="3" class="hline"><img src="/images/empty.gif" width="1" height="1"></td>
+ </tr></table></td></tr>
+</TABLE>
+</form></center></BODY><head><meta http-equiv="pragma" content="no-cache"></head></HTML>

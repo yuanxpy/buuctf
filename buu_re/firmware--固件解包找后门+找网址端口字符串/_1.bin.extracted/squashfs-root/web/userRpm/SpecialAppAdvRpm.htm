@@ -1,0 +1,208 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doHelp(){location.href="/help/SpecialAppHelpRpm.htm";}
+function doBack(nPage)
+{
+	location.href="/userRpm/SpecialAppRpm.htm?Page="+nPage;
+}
+function doChange()
+{
+	var n = document.forms[0].Commonapp.selectedIndex;
+	if(n > 0)
+	{
+		document.forms[0].trPort.value = commonapplist[(n*4)+1];
+		document.forms[0].inPort.value = commonapplist[(n*4)+2];
+	}
+}
+function is_portcharacter(port_string,ch){
+	var c;
+	for (var i = 0; i < port_string.length; i++)
+	{
+		c = port_string.charAt(i);
+		if (ch.indexOf(c) == -1)
+			return false;
+	}
+	return true;
+}
+function is_num(port_string){
+	var c;
+	var ch = "0123456789";
+	for (var i = 0; i < port_string.length; i++)
+	{
+		c = port_string.charAt(i);
+		if (ch.indexOf(c) == -1)
+			return false;
+	}
+	return true;
+}
+
+function is_port(port_string){
+	if (!portverify(port_string))
+	{
+		alert("端口号输入错误，请重新输入（1 - 65535）！");
+		return false;
+	}	
+	return true;
+}
+function sub_is_port(port_string)
+{
+	if (!is_portcharacter(port_string,ch=",-0123456789"))
+	{
+		alert("输入中包含非法字符，请重新输入！");
+		return false;
+	}
+	var sub_port_array;
+	var re;
+	re = new RegExp("-|,");
+	sub_port_array = port_string.split(re);
+	for (i=0;i<sub_port_array.length;i++)
+	{
+		if (sub_port_array[i] == "" )
+		{
+			alert("端口号输入无效，请重新输入！");
+			return false;
+		}
+		if (!is_port(sub_port_array[i]))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+function doSubmit()
+{
+	if(document.forms[0].trPort.value=="") 
+	{
+		alert("请输入端口号！");
+		 return false;
+	}
+	if(!is_port(document.forms[0].trPort.value))
+	{
+		var element =document.forms[0].trPort;
+		if(element)
+		{
+			element.focus();element.select();
+		}
+		return false;
+	}
+	//check incomming port input
+	if(document.forms[0].inPort.value=="") 
+	{
+		alert("请输入端口号！");
+		 return false;
+	}
+	if(is_num(document.forms[0].inPort.value))
+	{
+		if(!is_port(document.forms[0].inPort.value))
+		{
+			return false;
+		}
+		return true;
+	}
+	if(!sub_is_port(document.forms[0].inPort.value))
+	{
+		var element =document.forms[0].inPort;
+		if(element)
+		{
+			element.focus();element.select();
+		}
+		return false;
+	}
+	return true;
+}
+
+
+var protocolList = new Array(
+"",
+"ALL",
+"TCP",
+"UDP"
+);
+//id trigger port    incoming port    name
+var commonapplist =new Array(
+0, "", "", "--请选择--",
+1, "6112", "6112", "Battle.net",
+2, "7175", "51200-51201,51210", "Dialpad",
+3, "2019", "2000-2038,2050-2051,2069,2085,3010-3030", "ICU II",
+4, "47624", "2300-2400,28800-29000", "MSN Gaming Zone",
+5, "12053", "12120,12122,24150-24220", "PC-to-Phone",
+6, "554", "6970-6999", "Quick Time 4",
+7, "47624", "2300-2400,28800-29000", "AOE II Client",
+8, "47624", "2300-2400", "Sudden Strike",
+9, "47624", "2300-2400", "Baldurs Gate II"
+);
+//--></script></head>
+
+<body>
+<center>
+<form action="SpecialAppRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">特殊应用程序</td>
+</tr><tr>
+<td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"></td>
+<td width="500"><table width="480" border="0" align="center" cellpadding="0" cellspacing="0" class="
+space">
+<td>某些程序需要多条连接，如Internet游戏，视频会议，网络电话等。由于防火墙的存在，这些程序无法在简单的NAT路由下工作。特殊应用程序使得某些这样的应用程序能够在NAT路由下工作。</td></tr></table>
+<table width="430" border="0" align="center" cellpadding="2" cellspacing="2" class="space">
+<TR><TD>触发端口：</TD><TD><input name="trPort" type="text" class="text" value="" size="6" maxlength="5"></TD></TR>
+<TR><TD>触发协议：</TD>
+<TD><select name="trProtocol" class="list">
+<script language="JavaScript"><!-- 
+for (i=1;i<4;i++)
+{
+document.write('<option value='+i+'>'+ protocolList[i] +'</option>');
+}
+--></script>
+</select></td></tr>
+<TR><TD>开放端口：</TD><TD><input name="inPort" type="text" class="text" value="" size="24" maxlength="64"></TD></tr>
+<TR><TD>开放协议：</TD>
+<TD><select name="inProtocol" class="list">
+<script language="JavaScript"><!-- 
+for (i=1;i<4;i++)
+{
+document.write('<option value='+i+'>'+ protocolList[i] +'</option>');
+}
+--></script>
+</select></td></tr>
+<TR><TD>状态：</TD>
+<TD><select size="1" name="State" class="list">
+<option value="0" selected>失效&nbsp;</option>
+<option value="1" >生效&nbsp;</option>
+</select></TD>
+</TR>
+<tr><td height="20" colspan="2"></td></tr>
+<tr><td>常用应用程序：</td>
+<td><select name="Commonapp" class="list" onChange="doChange()">
+<script language="JavaScript">
+for (i=0;i<10;i++)
+{
+document.write('<option value='+i+'>'+ commonapplist[(i*4)+3] +'</option>');
+}
+</script>
+</select></td></tr>
+
+<TR><TD colspan=2></TD></TR></table>
+</td>
+<td class="vline" rowspan="15"></td></tr><tr>
+<td class="hline"><img src="../images/empty.gif" width="1" height="1"></td>
+</tr><tr><td class="tail" height="30">
+<input name="Changed" type="hidden" value=1><input name="SelIndex" type="hidden" value="1"><input name="Page" type="hidden" value="1">&nbsp;&nbsp;<input name="Save" type="submit" class="button" value="保 存">
+&nbsp;<input type="button" value="返 回" name="Back" class="button" onClick="doBack(specappEditInf[7]);">
+&nbsp;<input name="Help" type="button" class="button" value="帮 助" onClick="doHelp();">
+</tr><tr><td class="hline"><img src="../images/empty.gif" width="1" height="1"></td>
+</tr></table></td></tr></table>
+</form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript">
+document.forms[0].trPort.value =(specappEditInf[0]==0)?"":specappEditInf[0];
+document.forms[0].trProtocol.value =(specappEditInf[1]==0)?1:specappEditInf[1];
+document.forms[0].inPort.value =specappEditInf[2];
+document.forms[0].inProtocol.value =(specappEditInf[3]==0)?1:specappEditInf[3];
+document.forms[0].State.value = specappEditInf[4];
+document.forms[0].Changed.value = specappEditInf[5];
+document.forms[0].SelIndex.value = specappEditInf[6];
+document.forms[0].Page.value = specappEditInf[7];
+</script>

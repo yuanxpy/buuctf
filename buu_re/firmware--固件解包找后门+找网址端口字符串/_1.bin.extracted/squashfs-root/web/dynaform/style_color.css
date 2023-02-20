@@ -1,0 +1,36 @@
+body {
+	position: relative;
+	z-index: 0;
+	background: rgb(200,200,200);
+	font-size: 12px;
+	font-family: Arial;
+	margin: 0px;
+} 
+.btnNormol {
+	cursor: pointer;
+	border: none;
+	background:transparent;
+	width:40px;
+	height:24px;
+	z-index:2;
+}
+.btnMouseOver {
+	cursor: hand;
+	border: solid; 
+	border-width:1;	
+	border-color:#136393; 
+	background:#136393;
+	width:40px;
+	height:24px;
+	z-index:2;
+}
+.btnAct {
+	cursor: pointer;
+	border: solid; 
+	border-width:1;	
+	border-color:#336393; 
+	background:#336393;
+	width:40px;
+	height:24px;
+	z-index:2;
+}

@@ -1,0 +1,197 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="Javascript"><!--
+function doBack(nPage, nOtherPage)
+{
+	if (nOtherPage == 0)
+		location.href="AccessCtrlHostsListsRpm.htm?Page="+nPage;
+	else
+		location.href="AccessCtrlAccessRulesRpm.htm?Page="+nOtherPage;
+}
+function getValLen(val)
+{
+	var len = 0;
+	var i = 0;
+	for (i = 0; i < val.length; i ++)
+	{
+		var c = val.charAt(i);
+		len += ((c >= ' ') && (c <= '~')) ? 1 : 2;
+	}
+	return len;
+}
+
+function doSubmit()
+{
+	var desc_len = getValLen(document.forms[0].hosts_lists_name.value);
+	if (desc_len == 0)
+	{
+		alert("请输入正确的主机列表名！");
+		var element = document.forms[0].hosts_lists_name;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	if (desc_len > 24)
+	{
+		alert("主机列表名的长度不能超过24！");
+		var element = document.forms[0].hosts_lists_name;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+		
+	if (document.forms[0].addr_type.value == 1)
+	{
+		if (!(document.forms[0].src_ip_start.value.length) && (!document.forms[0].src_ip_end.value.length))
+		{
+			alert("请输入IP地址！");
+			var element = document.forms[0].src_ip_start;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		else
+		{
+			if (document.forms[0].src_ip_start.value.length)
+			{
+				if (false == is_ipaddr(document.forms[0].src_ip_start.value))
+				{
+					var element = document.forms[0].src_ip_start;
+					if(element)
+					{
+						element.focus();
+						element.select();
+					}
+					return false;
+				}
+			}
+			if (document.forms[0].src_ip_end.value.length)
+			{
+				if (false == is_ipaddr(document.forms[0].src_ip_end.value))
+				{
+					var element = document.forms[0].src_ip_end;
+					if(element)
+					{
+						element.focus();
+						element.select();
+					}
+					return false;
+				}
+			}
+		}
+	}
+	else if (document.forms[0].addr_type.value == 0)
+	{
+		if (false == is_macaddr(document.forms[0].mac_addr.value))
+		{
+			var element = document.forms[0].mac_addr;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+	}
+	return true;
+}
+function style_display_on()
+{
+	if (window.ActiveXObject)
+	{ // IE
+		return "block";
+	}
+	else if (window.XMLHttpRequest)
+	{ // Mozilla, Safari,...
+		return "table-row";
+	}
+}
+function doSwitchTr()
+{
+	str=style_display_on();
+	document.getElementById("ip_area").style.display=(document.forms[0].addr_type.value==1)?str:"none";
+	document.getElementById("mac_area").style.display=(document.forms[0].addr_type.value==1)?"none":str;
+}
+function doHelp(){location.href="/help/AccessCtrlHostsListsHelpRpm.htm";}
+//--></script></head>
+<BODY onload="doSwitchTr()">
+<center><form action="AccessCtrlHostsListsRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="500" align="left" valign="middle" class="title">主机列表设置</td>
+</tr>
+<tr><td colspan="2"><table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="518">
+<table width="470" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<TR>
+<TD colspan=2>&nbsp;&nbsp;本页设置一条主机列表条目</TD>
+</TR>
+<tr><td>
+<table width="420" border="0" align="center" cellpadding="2" cellspacing="0" class="space">
+<TR>
+	<TD width="90">请选择模式：</TD>
+	<TD width="320">
+		<select size="1" name="addr_type" class="list" onchange="doSwitchTr()">
+			<option value="0">MAC 地址</option>
+			<option value="1" Selected>IP 地址</option>
+		</select>
+	</TD>
+</TR>
+<TR>
+	<TD>主机名：</TD><TD><input name="hosts_lists_name" type="text" class="text" value="" size="25" maxlength="24"></TD>
+</TR>
+<TR id="ip_area" style="display:none">
+	<TD width="90">局域网IP地址：</TD>
+	<TD width="320"><input type="text" name="src_ip_start" value="" size="15" maxlength="15" class="text">&nbsp;-&nbsp;<input type="text" name="src_ip_end" value="" size="15" maxlength="15" class="text"></TD>
+</TR>
+<TR id="mac_area" style="display:none">
+	<TD width="90">MAC地址：</TD>
+	<TD width="320"><input name="mac_addr" type="text" class="text" value="" size="17" maxlength="17"></TD>
+</TR>
+</table>
+</table>
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+<input name="Changed" type="hidden" value="">
+<input name="SelIndex" type="hidden" value="">
+<input name="Page" type="hidden" value="">
+&nbsp;<input name="Save" type="submit" class="button" value="保 存">
+&nbsp;<input type="button" value="返 回" name="Return" class="button" onClick="doBack(hosts_lists_adv_dyn_array[7], hosts_lists_adv_dyn_array[8]);">
+&nbsp;<input name="Help" type="button" class="button" value="帮 助" onClick="doHelp();"></TD></TR>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr>
+</TABLE>
+<script language="JavaScript">
+	document.forms[0].addr_type.value = hosts_lists_adv_dyn_array[0];
+	document.forms[0].hosts_lists_name.value = hosts_lists_adv_dyn_array[1];
+	str=style_display_on();
+	document.getElementById("ip_area").style.display=(hosts_lists_adv_dyn_array[0])?str:"none";
+	document.getElementById("mac_area").style.display=(hosts_lists_adv_dyn_array[0])?"none":str;
+	if (hosts_lists_adv_dyn_array[0] == 1)
+	{
+		if (hosts_lists_adv_dyn_array[2] == hosts_lists_adv_dyn_array[3])
+		{document.forms[0].src_ip_start.value = hosts_lists_adv_dyn_array[2];
+		document.forms[0].src_ip_end.value = "";}
+		else{
+		document.forms[0].src_ip_start.value = hosts_lists_adv_dyn_array[2];
+		document.forms[0].src_ip_end.value = hosts_lists_adv_dyn_array[3];}
+	}
+	else
+	{
+		document.forms[0].mac_addr.value = hosts_lists_adv_dyn_array[4];
+	}
+	document.forms[0].Changed.value = hosts_lists_adv_dyn_array[5];
+	document.forms[0].SelIndex.value = hosts_lists_adv_dyn_array[6];
+	document.forms[0].Page.value = hosts_lists_adv_dyn_array[7];
+</script>
+</form></center></BODY><head><meta http-equiv="pragma" content="no-cache"></head></HTML>

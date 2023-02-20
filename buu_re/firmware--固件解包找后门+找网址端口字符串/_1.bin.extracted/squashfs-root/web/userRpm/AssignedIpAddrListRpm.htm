@@ -1,0 +1,51 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+</head>
+<body>
+<center><form action="AssignedIpAddrListRpm.htm" enctype="multipart/form-data" method="get">
+<!--外框表格-->
+<table width="540" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="530" align="left" valign="middle" class="title">客户端列表</td>
+</tr><tr><td colspan="2"><table width="540" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td>
+<td width="538">
+<!--内容开始-->
+<table width="500" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td align="center" width="500">
+<!-- added, -->
+<script language="JavaScript">
+if (DHCPDynPara[0] > 0)	{
+var row = 0;
+var i = 0;
+var j;
+document.write('<TR><TD><table border=1 align="center" cellpadding="0" cellspacing="0" class="space">');
+document.write('<TR align="center"><TD  width="30">ID</TD><TD >客户端名</TD><td  width="120" nowrap>MAC 地址</td><TD  width="90" nowrap>IP 地址</TD><TD >有效时间</TD></TR>');
+for(i = 0; i < DHCPDynPara[0]; i++)
+{	
+	j = i+1;
+	row = i * DHCPDynPara[1];
+	document.write('<tr align="center"><td >' + j + '</td>');
+	document.write('<td >' + DHCPDynList[row] + '</td>');
+	document.write('<td >' + DHCPDynList[row+1] + '</td>');
+	document.write('<td >' + DHCPDynList[row+2] + '</td>');
+	if (DHCPDynList[row+3] != "Permanent" )
+		document.write('<td >' + DHCPDynList[row+3] + '</TD></TR>');
+	else
+		document.write('<td >永 久</TD></TR>');
+}
+document.write('</table></TD></TR>');
+}
+else	{
+document.write('<TR><TD class=info1>当前客户端列表为空</TD></TR>');}
+</script>
+</td><tr>
+</table>
+<!--内容结束-->
+</td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td  class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+&nbsp;<input name="Refresh" type="submit" class="button" value="刷 新">
+</td></tr><tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td>
+</tr></table></td></tr></table>
+</form></center></body><head><meta http-equiv="pragma" content="no-cache"></head></html>

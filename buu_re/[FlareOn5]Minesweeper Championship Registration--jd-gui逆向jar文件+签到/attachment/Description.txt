@@ -1,0 +1,3 @@
+Welcome to the Fifth Annual Flare-On Challenge! The Minesweeper World Championship is coming soon and we found the registration app. You weren't *officially* invited but if you can figure out what the code is you can probably get in anyway. Good luck!
+
+Hint:本题解出相应字符串后请用flag{}包裹，形如：flag{123456@flare-on.com}

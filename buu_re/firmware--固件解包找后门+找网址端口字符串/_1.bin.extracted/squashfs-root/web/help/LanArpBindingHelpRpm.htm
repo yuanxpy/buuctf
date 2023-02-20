@@ -1,0 +1,39 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body><center><form action="#" enctype="multipart/form-data" method="get">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">
+帮助－静态ARP绑定设置</td>
+</tr><tr><td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0"><tr><td class="vline" rowspan="15"><br></td>
+<td><table width="430" border="0" align="center" cellpadding="0" cellspacing="0" class="space"><tr>
+<td>为了更好的对网络中的计算机进行管理，您可以通过ARP绑定功能来控制网络中计算机间的访问。</td></tr></table> <table width="430" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr><td>MAC地址：</td><td>网络中被控制的计算机的MAC地址。</td></tr>
+<tr><td>IP地址：</td><td>设定被控制计算机MAC地址的主机的IP地址。</td></tr>
+<tr><td>绑定：</td><td>是否使能改MAC和IP的绑定匹配。</td></tr>
+<tr><td>编辑：</td><td>可以对条目进行修改或者直接删除。</td></tr>
+</table><table width="430" border="0" align="center" cellpadding="0" cellspacing="0" class="space"><tr>
+<td>举例说明：如果您希望限制局域网中MAC地址为00-E0-4C-00-07-BE的计算机其IP地址为192.168.1.4，而局域网中的其它计算机都不能以192.168.1.4的IP地址存在，这时您需要指定如下的ARP绑定表：</td></tr></table>
+<table width="430" border="0" align="center" cellpadding="0" cellspacing="0"><tr>
+<td width="424">首先在“ARP绑定”中启用绑定功能。然后，按照以下数据添加新的过滤条目：</td></tr></table>
+<table width="432" align="center" border="0" cellpadding="0" cellspacing="0" class="space">
+<tr align="center">
+<td>ID</td>
+<td>MAC地址</td>
+<td>IP地址</td>
+<td>绑定</td>
+<td>配置</td>
+</tr>
+<tr align="center"><td width="26">1</td>
+<td width="150">00-E0-4C-00-07-BE</td>
+<td width="130">192.168.1.4</td>
+<td width="52"><input disabled type="checkbox" checked></td>
+<td width="74">编辑&nbsp;删除</td>
+</tr>
+</table>
+</td><td class="vline" rowspan="15"><br></td>
+</tr><tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr><tr><td height="30" class="tail">&nbsp;
+<input name="back" type="button" class="button" id="back" onClick="doPrev();" value="返 回"></td></tr><tr>
+<td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr></table></td></tr></table></form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>

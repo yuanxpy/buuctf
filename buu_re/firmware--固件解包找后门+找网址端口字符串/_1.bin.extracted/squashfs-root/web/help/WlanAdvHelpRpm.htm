@@ -1,0 +1,21 @@
+
+<SCRIPT language=javascript src="/dynaform/help.js" type=text/javascript></SCRIPT>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<SCRIPT type="text/javascript">
+dohelp("帮助－无线高级设置");
+	begin();
+		writeline("传输功率：", "设置无线的传输功率，可以设置高、中、低三种级别。");
+		writeline("Beacon时槽：", "设置Beacon帧的发包间隔，可以设置为(40～1000)内的值，单位为毫秒(ms)，默认值为100。");
+		//writeline("RTS时槽：", "为数据包指定RTS阈值，当数据包长度超过RTS阈值时，路由器就会发送RTS到目的站点来进行协商，默认值为2346。");
+		//writeline("分片阈值：", "为数据包指定分段阈值。当数据包的长度超过分段阈值时，会被自动分成多个数据包。过多的数据包将会造成网络性能降低，所以分段阈值不应设置过低，默认值为2346。");
+		//writeline("DTIM阈值：", "该值在 1 至 15 毫秒之间，指定传输指示消息(DTIM)的间隔，默认值为1。");
+		writeline("开启 WMM ：", "选择该选项将使路由器可以处理带有优先级信息的数据包，建议选择此选项。");
+		//writeline("开启 Short GI：", "打开Short GI，选择此项可以使路由器具有较高的数据传输速率，建议选择此选项。");
+		writeline("开启AP隔离：", "打开AP隔离，选择此项可以隔离关联到AP的各个无线站点。");
+	end();				
+done();
+</SCRIPT>
+</body></html>
+

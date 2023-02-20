@@ -1,0 +1,22 @@
+<html><head></head>
+<script>
+//如果URL已经带有问号，则不应该再加问号
+function doSubmit(){var url = window.location.href; 
+var sep;
+if (url.lastIndexOf("?") == -1) sep = "?";
+else sep = "&";
+if (document.getElementById("TPCheck").checked)
+window.location.href = url+sep+"TPWlanWarnChecked=1";
+else window.location.href = url+sep+"TPWlanWarnChecked=0";}
+</script>
+<body><center><form method="get">
+<TABLE width=650 height=200 STYLE="position:relative;top:10%%;">
+<tr><td style='FONT-SIZE:35px;COLOR:#6699ff;FONT-WEIGHT:bold'>安全提示</td></tr>
+<tr><td>无线网络处于未加密或安全级别较低的加密状态，为保障网络安全，强烈推荐将无线网络设置为<span style='FONT-WEIGHT:bold'>WPA-PSK/WPA2-PSK AES</span>加密。点击 <a href="%s">此处</a> 进入路由器管理界面进行设置。</td></tr>
+<tr><td>
+<table><tr><td>保留现有的加密状态，<INPUT TYPE=button value=' 继续 ' onclick="doSubmit()"> 访问网络。</td></tr>
+<tr><td><INPUT TYPE=checkbox id="TPCheck"><span style="FONT-SIZE:13px"> 后续不再显示此页面</span></td></tr></table>
+</td></tr></table></form>
+<center>
+</body>
+</html>

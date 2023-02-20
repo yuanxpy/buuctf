@@ -1,0 +1,20 @@
+
+<SCRIPT language=javascript src="/dynaform/help.js" type=text/javascript></SCRIPT>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<SCRIPT type="text/javascript">
+dohelp("帮助－安全设置");
+	begin();
+		writeline("您可以对以下安全功能的开启与关闭进行设置：");
+	end();
+	begin();
+		writeline("状态包检测防火墙<BR>(SPI)：", "SPI 防火墙当开启时拒绝所有来自外网的请求，只有是对内网请求回应的连接并符合已建立状态数据库的包才能通过防火墙进入内网。SPI 默认打开。如果您需要将内网中的所有主机暴露给外网，那么可将其关闭。");
+		blank();
+		writeline("虚拟专用网络<BR>(VPN)：", "VPN 提供了通过广域网 (WAN) ( 例如，互联网) 在远程计算机间安全通信的方法。如果内网主机需要使用VPN协议(如PPTP、L2TP、IPSec)通过路由器连接到远程 VPN 网络，那么应开启相应的 VPN 穿透功能。");
+		blank();
+		writeline("应用层网关<BR>(ALG)：", "ALG 支持某些采用“控制/数据”模式的应用层协议(如 FTP、TFTP、H323 等)在通过 NAT 网关时作网络地址和端口的转换。推荐打开。");
+	end();				
+done();
+</SCRIPT>
+</body></html>

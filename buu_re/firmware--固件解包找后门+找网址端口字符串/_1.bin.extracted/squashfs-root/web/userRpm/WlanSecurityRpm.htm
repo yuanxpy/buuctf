@@ -1,0 +1,980 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<SCRIPT language="JavaScript"><!-- 
+var key1dis = 0;
+var key2dis = 0;
+var key3dis = 0;
+var key4dis = 0;
+var keylength1 = 10;
+var keylength2 = 10;
+var keylength3 = 10;
+var keylength4 = 10;
+var is_Hex = true;
+function checkWEP()
+{
+	var cf = document.forms[0];
+	if (key1dis && key2dis && key3dis && key4dis)
+		return 0;
+	if (key1dis == 0 &&!(cf.key1.value=="" && !cf.secType[3].checked))	{if (checkkey(cf.key1.value,keylength1) == false)	return 1;}
+	if (key2dis == 0 &&!(cf.key2.value=="" && !cf.secType[3].checked))	{if (checkkey(cf.key2.value,keylength2) == false)	return 2;}
+	if (key3dis == 0 &&!(cf.key3.value=="" && !cf.secType[3].checked))	{if (checkkey(cf.key3.value,keylength3) == false)	return 3;}
+	if (key4dis == 0 &&!(cf.key4.value=="" && !cf.secType[3].checked))	{if (checkkey(cf.key4.value,keylength4) == false)	return 4;}
+	return 5;
+}
+function checkAuth()
+{
+	var cf = document.forms[0];
+	var len;
+	var st = 0;
+	
+	//WPARadius JS
+	if (cf.secType[3].checked)
+	{
+		st = 1;
+	}
+	else if (cf.secType[2].checked)
+	{
+		st = 2;
+	}
+	else if (cf.secType[1].checked)
+	{
+		st = 3;
+	}
+
+	{
+		if (!ipverify(cf.radiusIp.value))
+		{
+			if ((st == 2) || ("" != cf.radiusIp.value) )
+			{
+				alert("Radius服务器IP地址输入错误，请重新输入！");
+				cf.radiusIp.focus();
+				cf.radiusIp.select();
+				return false;
+			}
+		}
+		len = getValLen(cf.radiusSecret.value);
+		if (len <= 0)
+		{
+			if ((st == 2))
+			{
+				alert("请输入Radius服务器密码！")
+				cf.radiusSecret.focus();
+				cf.radiusSecret.select();
+				return false;
+			}
+		}
+		else if (len > 64)
+		{
+			alert("Radius服务器密码长度不能大于64（中文字符占用2字节），请重新输入！");
+			cf.radiusSecret.focus();
+			cf.radiusSecret.select();
+			return false;
+		}
+		len = getValLen(cf.radiusPort.value);
+		if (len <= 0)
+			cf.radiusPort.value = 1812;
+		if (!is_number(cf.radiusPort.value) || (0 > cf.radiusPort.value) || (65535 < cf.radiusPort.value))
+		{
+			alert("Radius端口输入错误，请重新输入！");
+			cf.radiusPort.focus();
+			cf.radiusPort.select();
+			return false;
+		}
+		len = getValLen(cf.interval.value);
+		if (len <= 0)
+			cf.interval.value = 0;
+		if (!is_number(cf.interval.value) || ((0 != cf.interval.value) && (cf.interval.value < 30)))
+		{
+			alert("组密钥更新周期不合法，请重新输入！");
+			cf.interval.focus();
+			cf.interval.select();
+			return false;
+		}
+		len = getValLen(cf.intervalWpa.value);
+		if (len <= 0)
+			cf.intervalWpa.value = 0;
+		if (!is_number(cf.intervalWpa.value) || ((0 != cf.intervalWpa.value) && (cf.intervalWpa.value < 30)))
+		{
+			alert("组密钥更新周期不合法，请重新输入！");
+			cf.intervalWpa.focus();
+			cf.intervalWpa.select();
+			return false;
+		}
+	}
+
+	//WAPPSK JS
+	{
+		len = getValLen(cf.pskSecret.value);
+		if ((st == 3) && (len <= 0))
+		{
+			alert("WPA-PSK/WPA2-PSK 密码不能为空, 请输入密码！");
+			cf.pskSecret.focus();
+			return false;
+		}
+		if ((len > 0) && (len < 8))
+		{
+			alert("PSK密码长度不能小于8，请重新输入！");
+			cf.pskSecret.focus();
+			cf.pskSecret.select();
+			return false;
+		}
+        //added by ZQQ, 修改为最长64个 16进制字符或者63个ASC字符
+       /*
+		if (len > 64)
+		{
+			alert("PSK密码长度不能大于64（中文字符占用2字节），请重新输入！");
+			cf.pskSecret.focus();
+			cf.pskSecret.select();
+			return false;
+		}
+               */
+       if(len >= 64)
+        {
+            var ch="ABCDEFabcdef0123456789";
+            var c;
+            for(i = 0; i < len; i++)
+            {
+                c = cf.pskSecret.value.charAt(i);
+                if(ch.indexOf(c) == -1)
+                {
+                    alert("您输入的64位PSK密码中包含非16进制字符，请重新输入。");
+                    cf.pskSecret.focus();
+                    cf.pskSecret.select();
+                    return false;
+                }
+            }
+        }       
+        
+        
+		if ((0 != cf.interval.value) && (cf.interval.value < 30))
+		{
+			if ((st == 3) || ("" != cf.interval.value))
+			{
+				alert("组密钥更新周期不合法，请重新输入！");
+				return false;
+			}
+		}
+		if ((0 != cf.intervalWpa.value) && (cf.intervalWpa.value < 30))
+		{
+			if ((st == 3) || ("" != cf.intervalWpa.value))
+			{
+				alert("组密钥更新周期不合法，请重新输入！");
+				return false;
+			}
+		}
+	}
+
+	//WEP
+	{
+		var renum;
+		renum = checkWEP();
+		if (0 == renum && st == 1)
+		{
+			if (!confirm("您没有设置WEP密钥，继续吗？"))
+				return false;
+		}
+		if (renum < 5 && renum >0)
+		{
+			if (is_Hex == true)
+			{
+				alert ("当前您设置的密钥格式为16进制！\n请确保您输入的密钥字符均为16进制数字符(不能为全0)，并且密钥长度等于页面要求长度！");
+			}
+			else
+			{
+				alert ("当前您设置的密钥格式为ASCII码！\n请确保您输入的密钥字符均为ASCII字符（不包含中文及其它字符），并且密钥长度等于页面要求长度！");
+			}
+			
+			if (renum == 1 &&cf.key1.disabled == false)				{	cf.key1.focus();	cf.key1.select();	}
+			else if (renum == 2 &&cf.key2.disabled == false)		{	cf.key2.focus();	cf.key2.select();	}
+			else if (renum == 3 &&cf.key3.disabled == false)		{	cf.key3.focus();	cf.key3.select();	}
+			else if (renum == 4 &&cf.key4.disabled == false)		{	cf.key4.focus();	cf.key4.select();	}
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function setKey()
+{
+	var cf = document.forms[0];
+	getdisable();
+	auto_disable();
+	auto_length();
+}
+function setAuth()
+{
+	if(wlanPara[2] == 1 )
+		return setKey();
+}
+function getdisable()
+{
+	var cf = document.forms[0];
+	key1dis = (cf.length1.selectedIndex == 0);
+	key2dis = (cf.length2.selectedIndex == 0);
+	key3dis = (cf.length3.selectedIndex == 0);
+	key4dis = (cf.length4.selectedIndex == 0);
+}
+function auto_disable()
+{
+	var cf = document.forms[0];
+	var keychoosed;
+	cf.key1.disabled = cf.keynum[0].disabled = key1dis;
+	cf.key2.disabled = cf.keynum[1].disabled = key2dis;
+	cf.key3.disabled = cf.keynum[2].disabled = key3dis;
+	cf.key4.disabled = cf.keynum[3].disabled = key4dis;
+	for (i = 0; i < cf.keynum.length; i ++)
+	{
+		if (cf.keynum[i].checked)
+		{
+			keychoosed = cf.keynum[i].value;
+			break;
+		}
+	}
+	if ((0 == key1dis) || (0 == key2dis) || (0 == key3dis) || (0 == key4dis))
+	{
+		if ((keychoosed == 1 && cf.length1.selectedIndex == 0) ||
+			(keychoosed == 2 && cf.length2.selectedIndex == 0) ||
+			(keychoosed == 3 && cf.length3.selectedIndex == 0) ||
+			(keychoosed == 4 && cf.length4.selectedIndex == 0))
+		{
+			if (0 == key1dis)
+				cf.keynum[0].checked = 1;
+			else if (0 == key2dis)
+				cf.keynum[1].checked = 1;
+			else if (0 == key3dis)
+				cf.keynum[2].checked = 1;
+			else
+				cf.keynum[3].checked = 1;
+		}
+	}
+}
+
+function disable_wep()
+{
+	document.getElementById("weptable").disabled=true;
+	var cf = document.forms[0];
+	cf.secType[3].disabled = true;
+	cf.keytype.disabled = true;
+	cf.wepSecOpt.disabled = true;
+	cf.key1.disabled = true;
+	cf.key2.disabled = true;
+	cf.key3.disabled = true;
+	cf.key4.disabled = true;
+	cf.length1.disabled = true;
+	cf.length2.disabled = true;
+	cf.length3.disabled = true;
+	cf.length4.disabled = true;
+	cf.keynum[0].disabled = true;
+	cf.keynum[1].disabled = true;
+	cf.keynum[2].disabled = true;
+	cf.keynum[3].disabled = true;
+}
+
+function auto_length()
+{
+	var cf = document.forms[0];
+
+	keylength1 =(1 == key1dis) ? keylength1 :(((3 == cf.length1.selectedIndex) ? 16 : ((2 == cf.length1.selectedIndex) ? 13 : 5)) *((0 == cf.keytype.selectedIndex) ? 2 : 1));
+	keylength2 =(1 == key2dis) ? keylength2 :(((3 == cf.length2.selectedIndex) ? 16 : ((2 == cf.length2.selectedIndex) ? 13 : 5)) *((0 == cf.keytype.selectedIndex) ? 2 : 1));
+	keylength3 =(1 == key3dis) ? keylength3 :(((3 == cf.length3.selectedIndex) ? 16 : ((2 == cf.length3.selectedIndex) ? 13 : 5)) *((0 == cf.keytype.selectedIndex) ? 2 : 1));
+	keylength4 =(1 == key4dis) ? keylength4 :(((3 == cf.length4.selectedIndex) ? 16 : ((2 == cf.length4.selectedIndex) ? 13 : 5)) *((0 == cf.keytype.selectedIndex) ? 2 : 1));
+
+	if ((cf.key1.value.length > keylength1) && (key1dis != 1))cf.key1.value = cf.key1.value.substring(0,keylength1);
+	if ((cf.key2.value.length > keylength2) && (key2dis != 1))cf.key2.value = cf.key2.value.substring(0,keylength2);
+	if ((cf.key3.value.length > keylength3) && (key3dis != 1))cf.key3.value = cf.key3.value.substring(0,keylength3);
+	if ((cf.key4.value.length > keylength4) && (key4dis != 1))cf.key4.value = cf.key4.value.substring(0,keylength4);
+
+	cf.key1.maxLength =  keylength1;
+	cf.key2.maxLength =  keylength2;
+	cf.key3.maxLength =  keylength3;
+	cf.key4.maxLength =  keylength4;
+
+	if (cf.keytype.selectedIndex == 0)
+		is_Hex = true;
+	else
+		is_Hex = false;
+}
+function checkkey(szname,strlength)
+{
+	var c;
+	var zeronum = 0;
+	var ch = "0123456789ABCDEFabcdefGHIJKLMNOPQRSTUVWXYZghijklmnopqrstuvwxyz`~!@#$^&*()-=_+[]{};:\'\"\\|/?.,<>/% ";
+	if (szname.length != strlength)
+		return false;
+	if	(is_Hex == 1)
+		ch = ch.substring(0,22);
+	for (var i = 0; i < szname.length; i++)
+	{
+		c = szname.charAt(i);
+		if (c =="0")
+			zeronum ++;
+		if (ch.indexOf(c) == -1)
+			return false;
+		if (zeronum == strlength && is_Hex == 1)
+			return false;
+	}
+	return true;
+}
+function checkpwd()
+{
+    var c;
+    var obj = document.forms[0];
+    var ch = "0123456789ABCDEFabcdefGHIJKLMNOPQRSTUVWXYZghijklmnopqrstuvwxyz`~!@#$^&*()-=_+[]{};:\'\"\\|/?.,<>/% ";
+    var pwd;
+    var chr;
+    if(obj.secType[3].checked == true)
+    {
+        return true;
+    }
+    if(obj.secType[2].checked == true)
+    {
+        
+        pwd = obj.radiusSecret.value;
+        for(var i =0; i < pwd.length; i++)
+        {
+            chr = pwd.charAt(i);
+            if(ch.indexOf(chr) == -1)
+            {
+                alert("密码中存在非法字符！");
+                return false;
+            }
+        }
+    }
+    if(obj.secType[1].checked == true)
+    {
+        pwd = obj.pskSecret.value;
+        for(var i = 0; i < pwd.length; i++)
+        {
+            chr = pwd.charAt(i);
+            if(ch.indexOf(chr) == -1)
+            {
+                alert("密码中存在非法字符！");
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+function checkWdsWep()
+{
+	var cf = document.forms[0];
+	
+	if ((wlanPara[19]==1) || (wlanPara[19]==4) || (wlanPara[19] == 0))
+		return true;
+	
+	if (cf.keynum[wlanPara[20]- 1].checked == false)
+		return true;
+	
+	if ((wlanPara[19] == 2) && (cf.keytype.value == 1))
+	{
+		return false;	
+	}
+	
+	if ((wlanPara[19] == 3) && (cf.keytype.value == 2))
+	{
+		return false;
+	}
+
+ 
+	var APLen;
+	var localKey;
+  if (wlanPara[20] == 1)
+  		localKey = cf.key1.value;
+     else if (wlanPara[20] == 2)
+  			localKey = cf.key2.value;
+  			else if (wlanPara[20] == 3)
+  				localKey = cf.key3.value;
+  				else
+  					localKey = cf.key4.value;
+  
+  APLen = getValLen(localKey);
+	var STALen = getValLen(wlanPara[21]);
+
+	if (APLen != STALen)
+		return false;
+	
+	for (i=0; i<APLen; i++)
+	{
+		if (localKey.charAt(i) != wlanPara[21].charAt(i))
+			return false;
+	}
+	
+	return true;
+	
+}
+
+function doSubmit()
+{
+	var cf = document.forms[0];
+
+	if (!checkAuth())
+		return false;
+        
+    if( !checkpwd() )
+    {
+        return false;
+    }
+	for (var i =0; i<document.forms[0].elements.length; i++)
+	{
+		cf.elements[i].disabled = false;
+	}   
+	if ((wlanPara[19] == 4) && (cf.secType[3].checked == true) && (cf.keynum[0].checked == false))
+	{
+		alert(js_sec_error_set="您设置的桥的加密方式是WPA_PSK，所以如果你要使用WEP作为您AP的加密方式的话，index必须为1");
+		return false;
+	}
+	if (cf.secType[3].checked == true)
+	{
+		if (checkWdsWep() == false)
+		{
+			alert(js_sec_wep_notsame = "如果你AP和WDS的加密方式都选为WEP且Index相同的话，wep密钥必须要保持一致！");
+			return false;
+		}
+	}
+	
+	/* 1、WEP、WPA/WPA2加密时，关闭WPS */
+	/* 2、WPA/WPA-PSK加密时，如果加密类型是WPA-PSK或者加密算法是TKIP，关闭WPS */
+	if(wlanPara[22])
+	{
+		var bContinue = true;
+		if(cf.secType[3].checked)
+		{
+			bContinue = window.confirm(js_current_enc="QSS功能已开启，如果您选择WEP加密，将会导致QSS功能被关闭，是否继续？");
+			if(!bContinue)
+			{
+				return false;
+			}
+		}
+		if(cf.secType[2].checked)
+		{
+			bContinue = window.confirm(js_current_enc="QSS功能已开启，如果您选择WPA/WPA2加密，将会导致QSS功能被关闭，是否继续？");
+			if(!bContinue)
+			{
+				return false;
+			}
+		}
+		if(cf.secType[1].checked && cf.pskSecOpt.value == 1)
+		{
+			bContinue = window.confirm(js_current_enc="QSS功能已开启，如果您的认证类型选择WPA-PSK，将会导致QSS功能被关闭，是否继续？");
+			if(!bContinue)
+			{
+				return false;
+			}
+		}
+		if(cf.secType[1].checked && cf.pskCipher.value == 2)
+		{
+			bContinue = window.confirm(js_current_enc="QSS功能已开启，如果您的加密算法选择TKIP，将会导致QSS功能被关闭，是否继续？");
+			if(!bContinue)
+			{
+				return false;
+			}
+		}
+	}
+	 
+    alert("注意：只有在您重启路由器后，无线网络安全设置更改才能生效！");
+	return true;
+}
+function getValLen(val)
+{
+	var len = 0;
+	var i = 0;
+	for (i = 0; i < val.length; i ++)
+	{
+		var c = val.charAt(i);
+		len += ((c >= ' ') && (c <= '~')) ? 1 : 2;
+	}
+	return len;
+}
+function onChangeMbssid()
+{
+	location.href="/userRpm/WlanSecurityRpm.htm?vapIdx="+document.forms[0].vapIdx.value;
+}
+function doHelp()
+{
+    location.href="/help/WlanSecurityHelpRpm.htm";
+}
+function changeInfo()
+{
+    var secTypes = document.forms[0].secType;
+    if (secTypes[3].checked)
+    {
+        document.getElementById("tag_notice1").style.display = "block";
+        document.getElementById("tag_notice2").style.display = "none";
+        document.getElementById("tag_notice3").style.display = "none";
+    }
+    //added by ZQQ,08.08.13
+    else if(secTypes[2].checked && (document.getElementById('wpaCipher').value==2))
+    {
+        document.getElementById("tag_notice1").style.display = "none";
+        document.getElementById("tag_notice2").style.display = "none";
+        document.getElementById("tag_notice3").style.display = "block";
+    }
+    else if (secTypes[1].checked && (document.getElementById("pskCipher").value==2))
+    {
+        document.getElementById("tag_notice1").style.display = "none";
+        document.getElementById("tag_notice2").style.display = "block";
+        document.getElementById("tag_notice3").style.display = "none";
+    }
+    else
+    {
+        document.getElementById("tag_notice1").style.display = "none";
+        document.getElementById("tag_notice2").style.display = "none";
+        document.getElementById("tag_notice3").style.display = "none";
+    }
+}
+--></SCRIPT>
+</HEAD>
+<BODY>
+<CENTER>
+	<FORM action="WlanSecurityRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+		<TABLE width="502" border="0" cellpadding="0" cellspacing="0">
+			<TR>
+				<TD width="7" class="title">
+					<IMG src="/images/arc.gif" width="7" height="24">
+				</TD>
+				<TD width="495" align="left" valign="middle" class="title">
+					无线网络安全设置
+				</TD>
+			</TR>
+			<TR>
+				<TD colspan="2">
+					<TABLE width="502" border="0" cellspacing="0" cellpadding="0">
+						<TR>
+							<TD width="1" rowspan="15" class="vline">
+								<BR>
+							</TD>
+							<TD width="500">
+								<TABLE width="420" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+									<TR>
+										<TD colspan=3>
+											本页面设置路由器无线网络的安全认证选项。<BR>
+											<FONT  color=#FF0000>安全提示：为保障网络安全，强烈推荐开启安全设置，并使用WPA-PSK/WPA2-PSK AES加密方法。</FONT>
+										</TD>
+									</TR>
+								</TABLE>
+								<TABLE align="center" width="420" border="0" cellpadding="2" cellspacing="0" class="space" id="line_wlMssid">
+									<TR>
+										<TD width ="140">
+											多SSID索引：
+										</TD>
+										<TD width = "200">
+											<SELECT name="vapIdx" class=list onChange="onChangeMbssid();">
+												<OPTION value=1>ssid1</OPTION>
+												<OPTION value=2>ssid2</OPTION>
+												<OPTION value=3>ssid3</OPTION>
+												<OPTION value=4>ssid4</OPTION>
+											</SELECT>
+										</TD>
+										<TD width = "40">&nbsp;
+										</TD>
+									</TR>
+								</TABLE>
+								<TABLE align="center" width="420" border="0" cellpadding="2" cellspacing="0" class="space">
+									<TR>
+										<TD colspan=3>
+											<INPUT name="secType" type="radio" value="0" onclick = "changeInfo()">
+											不开启无线安全
+										</TD>
+									</TR>
+								</TABLE>
+								<TABLE align="center" width="420" border="0" cellpadding="2" cellspacing="0" class="space">
+									<TR>
+										<TD colspan=3>
+											<INPUT name="secType" type="radio" value="3" onClick="changeInfo()">
+											WPA-PSK/WPA2-PSK
+										</TD>
+									</TR>
+									<TR>
+										<TD width="140" >
+											认证类型：
+										</TD>
+										<TD width="200">
+											<SELECT name=pskSecOpt class=list >
+												<OPTION value="3" >自动</OPTION>
+												<OPTION value="1">WPA-PSK</OPTION>
+												<OPTION value="2">WPA2-PSK</OPTION>
+											</SELECT>
+										</TD>
+										<TD width = "25">&nbsp;
+										</TD>
+									</TR>
+									<TR>
+										<TD width="140">
+											加密算法：
+										</TD>
+										<TD width="200">
+											<SELECT name="pskCipher" id="pskCipher" class="list" onChange="changeInfo()">
+												<SCRIPT language="JavaScript">
+		if(wlanPara[18] != 3)
+		{
+			document.write('<option value="1" id="t_auto">自动<\/option>');
+			document.write('<option value="2">TKIP<\/option>');
+		}
+		</SCRIPT>
+												<OPTION value="3">AES</OPTION>
+											</SELECT>
+										</TD>
+									</TR>
+									<TR>
+										<TD width="140">
+											PSK密码：
+										</TD>
+										<TD width="200">
+											<INPUT name=pskSecret  class=text value="" size="40" maxlength="64">
+										</TD>
+									</TR>
+									<TR>
+										<TD width="140">&nbsp;
+										</TD>
+										<TD colspan=2>（8-63个ASCII码字符或8-64个十六进制字符）</TD>
+									</TR>
+									<TR>
+										<TD width="140">
+											组密钥更新周期：
+										</TD>
+										<TD width="200" colspan=2>
+											<INPUT name=interval type=text class=text value="" size="9" maxlength="9">
+										</TD>
+									</TR>
+									<TR>
+										<TD width="140">&nbsp;
+										</TD>
+										<TD width="240" colspan=2>
+											（单位为秒，最小值为30，不更新则为0）
+										</TD>
+									</TR>
+								</TABLE>
+								<TABLE align="center" width="420" border="0" cellpadding="2" cellspacing="0" class="space">
+									<TR>
+										<TD id="tag_notice2" colspan=3 style="display:none;color:red">
+											注意：您选择的TKIP加密算法经常在老的无线网卡上使用，新的802.11n不支持此加密算法。所以，如果您选择了此加密算法，路由器可能工作在较低的传输速率上。建议使用AES加密算法。
+										</TD>
+									</TR>
+								</TABLE>
+								<TABLE align="center" width="420" border="0" cellpadding="2" cellspacing="0" class="space">
+									<TR>
+										<TD colspan=3>
+											<INPUT name="secType" type="radio" value="2" onClick="changeInfo()">
+											WPA/WPA2
+										</TD>
+									</TR>
+									<TR>
+										<TD width="140">
+											认证类型：
+										</TD>
+										<TD width = "200">
+											<SELECT name=wpaSecOpt class=list >
+												<OPTION value="3">自动</OPTION>
+												<OPTION value="1">WPA</OPTION>
+												<OPTION value="2">WPA2</OPTION>
+											</SELECT>
+										</TD>
+										<TD width = "40">&nbsp;
+										</TD>
+									</TR>
+									<TR>
+										<TD >
+											加密算法：
+										</TD>
+										<TD>
+											<SELECT name=wpaCipher class=list id="wpaCipher" ONCLICK="changeInfo()">
+												<SCRIPT language="JavaScript">
+		if(wlanPara[18] != 3)
+		{
+			document.write('<option value="1" id="t_auto">自动<\/option>');
+			document.write('<option value="2" id="t_tkip">TKIP<\/option>');
+		}
+		</SCRIPT>
+												<OPTION value="3">AES</OPTION>
+											</SELECT>
+										</TD>
+										<TD width = "40">&nbsp;
+										</TD>
+									</TR>
+									<TR>
+										<TD >
+											Radius服务器IP：
+										</TD>
+										<TD>
+											<INPUT name="radiusIp" type="text" class="text" value="" size="15" maxlength="15">
+										</TD>
+										<TD width = "40">&nbsp;
+										</TD>
+									</TR>
+									<TR>
+										<TD>
+											Radius端口：
+										</TD>
+										<TD colspan = "2">
+											<INPUT name="radiusPort" type="text" class="text" value="" size="5" maxlength="5">
+											&nbsp;（1－65535，0表示默认端口：1812）
+										</TD>
+									</TR>
+									<TR>
+										<TD>
+											Radius密码：
+										</TD>
+										<TD>
+											<INPUT name="radiusSecret"  class="text" value="" size="32" maxlength="64">
+										</TD>
+										<TD width = "40">&nbsp;
+										</TD>
+									</TR>
+									<TR>
+										<TD >
+											组密钥更新周期：
+										</TD>
+										<TD>
+											<INPUT name=intervalWpa type=text class=text value="" size="9" maxlength="9">
+										</TD>
+										<TD width = "80">&nbsp;
+										</TD>
+									</TR>
+									<TR>
+										<TD>&nbsp;
+										</TD>
+										<TD colspan = "2" >
+											（单位为秒，最小值为30，不更新则为0）
+										</TD>
+									</TR>
+								</TABLE>
+								<TABLE align="center" width="420" border="0" cellpadding="2" cellspacing="0" class="space">
+									<TR>
+										<TD id="tag_notice3" colspan=3 style="display:none;color:red">
+											注意：您选择的TKIP加密算法经常在老的无线网卡上使用，新的802.11n不支持此加密算法。所以，如果您选择了此加密算法，路由器可能工作在较低的传输速率上。建议使用AES加密算法。
+										</TD>
+									</TR>
+								</TABLE>
+								<TABLE align="center" width="420" border="0" cellpadding="2" cellspacing="0" class="space" id=weptable>
+									<TR>
+										<TD colspan=3>
+											<INPUT  id="secType1" name="secType" type="radio" value="1" onclick = "changeInfo()">
+											WEP
+										</TD>
+									</TR>
+									<TR>
+										<TD width ="140">
+											认证类型：
+										</TD>
+										<TD width = "200">
+											<SELECT name="wepSecOpt" class=list>
+												<OPTION value="3">自动</OPTION>
+												<OPTION value="1">开放系统</OPTION>
+												<OPTION value="2">共享密钥</OPTION>
+											</SELECT>
+										</TD>
+										<TD width = "40">&nbsp;
+										</TD>
+									</TR>
+									<TR>
+										<TD width = "140">
+											WEP密钥格式：
+										</TD>
+										<TD width = "220">
+											<SELECT name=keytype onChange="setKey();" class=list >
+												<OPTION value=1>十六进制</OPTION>
+												<OPTION value=2>ASCII码</OPTION>
+											</SELECT>
+										</TD>
+										<TD width = "20">&nbsp;
+										</TD>
+									</TR>
+									<TR>
+										<TD width="140">
+											密钥选择
+										</TD>
+										<TD width=220>
+											WEP密钥
+										</TD>
+										<TD width=60>
+											密钥类型
+										</TD>
+									</TR>
+								
+									<SCRIPT language="JavaScript">
+        		var j;
+        		for (var i=1; i<5; i++)
+        		{
+        			j = i-1;
+        			document.write('<TR><TD width=140>密钥 '+i+'：&nbsp;<input type=radio name=keynum value='+i+'><\/td>');
+        			document.write('<TD width=220><input type=text class=text name=key'+i+' maxLength=32 size=32 value="" onfocus="if(key'+i+'dis) this.blur();else this.form.keynum['+j+'].checked=true;"><\/td>');
+        			document.write('<TD width = "20"><select name=length'+i+' class=list id=length'+i+' onchange="setKey();">');
+        			document.write('<option value=0 >禁用<\/option>');
+        			document.write('<option value=5 >64位<\/option>');
+        			document.write('<option value=13>128位<\/option>');
+        			document.write('<option value=16>152位<\/option>');
+        			document.write('<\/select><\/td><\/tr>');
+        		}
+        	</SCRIPT>
+								</TABLE>
+								<TABLE align="center" width="420" border="0" cellpadding="2" cellspacing="0" class="space">
+									<TR>
+										<TD id="tag_notice1" colspan=3 style="display:none;color:red">
+											注意：您选择的WEP加密经常在老的无线网卡上使用，新的802.11n不支持此加密方式。所以，如果您选择了此加密方式，路由器可能工作在较低的传输速率上。建议使用WPA2-PSK等级的AES加密。
+										</TD>
+									</TR>
+								</TABLE>
+
+
+								
+								<SCRIPT language = "Javascript">
+        if(wlanPara[16] == 1)
+        {
+			document.write('<TABLE align=\"center\" width=\"420\" border=\"0\" cellpadding=\"2\" cellspacing=\"0\" class=\"space\">');
+            document.write('<TR><TD colspan=3><\/TD><\/TR>');
+            document.write('<TR><TD COLSPAN=3><FONT color=#FF0000>您已经更改了无线设置，<\/FONT><\/span><A href="../userRpm/SysRebootRpm.htm" id="t_click">重启<\/A><span id="t_to_reboot" style="color:#FF0000"><FONT color=#FF0000>后生效。<\/FONT> <\/TD><\/TR><\/TABLE>'); 
+        }
+    </SCRIPT>
+								<SCRIPT language="JavaScript">
+    	if (apMode != code_disabled && apMode != code_ap)
+    	{
+    		document.forms[0].secType[1].disabled = true;
+    		document.forms[0].secType[2].disabled = true;
+    		if (wlanPara[2] > 1)
+    		{
+    			wlanPara[2]  = 1;
+    			wlanPara[12] = 1;
+    		}
+    	}
+    </SCRIPT>
+	
+								<TABLE align="center" width="420" border="0" cellpadding="2" cellspacing="0" class="space">
+									<TR id="line_reboot">
+										<TD colspan=3>
+											<INPUT name="reboot" type="checkbox" value="2">
+											&nbsp;重启路由器
+										</TD>
+									</TR>
+								</TABLE>
+							</TD>
+							<TD class="vline" rowspan="15">
+								<BR>
+							</TD>
+						</TR>
+						<TR>
+							<TD class="hline"><IMG src="/images/empty.gif" width="1" height="1"></TD>
+						</TR>
+						<TR>
+							<TD height="30" class="tail">
+								&nbsp;&nbsp;
+								<INPUT name="Save" type="submit" class="button" id="Save" value="保 存">
+								&nbsp;
+								<INPUT name="help" type="button" class="button" id="help" value="帮 助" onClick="doHelp();">
+							</TD>
+						</TR>
+						<TR>
+							<TD class="hline"><IMG src="/images/empty.gif" width="1" height="1"></TD>
+						</TR>
+					</TABLE>
+				</TD>
+			</TR>
+		</TABLE>
+	</FORM>
+</CENTER>
+</BODY>
+</HTML>
+<SCRIPT language="JavaScript">
+switch (wlanPara[2])
+{
+	case 0:
+		document.forms[0].secType[0].checked = true;
+		break;
+	case 1:
+		document.forms[0].secType[3].checked = true;
+		break;
+	case 2:
+		document.forms[0].secType[2].checked = true;
+		break;	
+	case 3:
+		document.forms[0].secType[1].checked = true;
+		break;	
+	default:
+		document.forms[0].secType[1].checked = true;
+		break;	
+}
+	document.forms[0].wepSecOpt.value = wlanPara[3].charAt(0);
+	document.forms[0].wpaSecOpt.value = wlanPara[3].charAt(1);
+	document.forms[0].pskSecOpt.value = wlanPara[3].charAt(2);
+	document.forms[0].keytype.value = wlanPara[4];
+	// if (1 == wlanPara[2])
+	{
+		var keySelected = wlanPara[10]-1;
+		document.forms[0].keynum[keySelected].checked = true;
+	}
+	document.forms[0].key1.value = wlanList[0];
+	document.forms[0].key2.value = wlanList[2];
+	document.forms[0].key3.value = wlanList[4];
+	document.forms[0].key4.value = wlanList[6];
+	document.forms[0].length1.value = wlanList[1];
+	document.forms[0].length2.value = wlanList[3];
+	document.forms[0].length3.value = wlanList[5];
+	document.forms[0].length4.value = wlanList[7];
+	document.forms[0].radiusIp.value = wlanPara[6];
+	document.forms[0].radiusPort.value = wlanPara[7];
+	document.forms[0].radiusSecret.value = wlanPara[8];
+	document.forms[0].pskSecret.value = wlanPara[9];
+	document.forms[0].interval.value = wlanPara[11];
+	document.forms[0].wpaCipher.value = wlanPara[13];
+	document.forms[0].pskCipher.value = wlanPara[14];
+	document.forms[0].intervalWpa.value = wlanPara[15];
+	setKey();
+	
+	// If router type is 8/9 , don't display reboot check box !
+	if (8 == wlanPara[0])
+	{
+		var rbt = document.getElementById("line_reboot");
+		var rbtMsg = document.getElementById("line_rebootMsg");
+
+		if (rbt)
+		{
+			rbt.style.display="none";
+		}
+		if (rbtMsg)
+		{
+			// The write line after reboot message
+			var rbtMsg2 = document.getElementById("line_rebootMsg2");
+			rbtMsg.style.display="none";
+			rbtMsg2.style.display="none";
+		}
+		if (0 == wlanPara[17])
+		{
+			document.getElementById("line_wlMssid").style.display="none";
+			document.forms[0].vapIdx.value=1;
+		}
+		else
+		{
+			document.forms[0].vapIdx.value=wlanPara[17];
+			if (wlanPara[17] > 1)
+			{
+				disable_wep();
+			}
+		}
+	}
+    //added by zqq,08.07.24
+    if(wlanPara[2]==1)
+    {
+         document.getElementById("tag_notice1").style.display = "block";
+    }
+     if(wlanPara[14]==2&&wlanPara[2]==3)
+    {
+         document.getElementById("tag_notice2").style.display = "block";
+    }
+    if(wlanPara[13]==2&&wlanPara[2]==2)
+    {
+         document.getElementById("tag_notice3").style.display = "block";
+    }
+    
+   	//if mode==11n only ,disabled wep
+	if(wlanPara[18] == 3)
+	{
+		document.forms[0].secType[3].disabled = true;//disabled wep cipher
+		if((wlanPara[2] != 2) || (wlanPara[2] != 3))
+		{
+			document.forms[0].wpaCipher.value = 3;
+			document.forms[0].pskCipher.value = 3;
+		}
+	}
+	//end add
+</SCRIPT>

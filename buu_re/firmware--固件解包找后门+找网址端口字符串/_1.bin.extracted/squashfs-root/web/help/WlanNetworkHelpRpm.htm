@@ -1,0 +1,35 @@
+
+<script language="JavaScript" src="../dynaform/custom.js" type="text/JavaScript"></script>
+<SCRIPT language=javascript src="/dynaform/help.js" type=text/javascript></SCRIPT>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+</head>
+<body>
+<SCRIPT type="text/javascript">
+dohelp("帮助－无线网络基本设置");
+	begin();
+		writeline("您需要设置的无线设置条目如下：");
+	end();
+	begin();
+		writeline("SSID号：", "无线局域网用于身份验证的登录名，只有通过身份验证的用户才可以访问本无线网络。");
+		writeline("信道：", "以无线信号作为传输媒体的数据信号传送的通道，选择范围从1到13。如果您选择的是自动，则AP会自动根据周围的环境选择一个最好的信道！");
+		writeline("无线模式：", "选择不同的无线模式，无线路由器将选择不同的传输模式，如果所有与无线路由器连接的无线设备都使用同一种传输模式(例如802.11b)，可以选择only模式(例如11b only),否则需要选择mixed模式。");
+		writeline("频段带宽：", "可以选择20M带宽、40M带宽和自动适应。");
+		writeline("SSID广播：", "如果开启，本无线路由器将向无线网络中的主机广播SSID。");
+	end();
+if (wlan_wds)
+{
+	begin();
+		writeline("开启WDS：", "可以选择这一项开启WDS功能，通过这个功能您可以桥接多个无线局域网。注意：如果您开启了这个功能，最好要确保以下的信息输入正确。");
+		writeline("桥接的SSID：", "您要桥接的AP的SSID。");
+		writeline("桥接的BSSID：", "您要桥接的AP的BSSID。");
+		writeline("扫描：", "可以通过这个按钮扫描您路由器周围的无线局域网。");
+		writeline("无线地址格式：", "自动探测，探测您要桥接的AP支持的无线数据包地址格式；3地址，与您要桥接的AP通信时使用3地址格式无线数据包；4地址，与您要桥接的AP通信时使用4地址格式无线数据包。建议默认选择自动探测选项。");
+		writeline("密钥类型：", "这个选项需要根据您桥接的AP的加密类型来设定，注意：最好情况下应该保持这个加密方式和您AP设定的加密方式相同。");
+		writeline("WEP密钥序号：", "如果是WEP加密的情况，这个选项需要根据您桥接的AP的WEP密钥的序号来设定。");
+		writeline("认证类型：", "如果是WEP加密的情况，这个选项需要根据您桥接的AP的认证类型来设定。");
+		writeline("密钥：", "根据您桥接的AP的密钥设置来设置该项。");
+	end();
+}
+done();
+</SCRIPT>
+</body></html>

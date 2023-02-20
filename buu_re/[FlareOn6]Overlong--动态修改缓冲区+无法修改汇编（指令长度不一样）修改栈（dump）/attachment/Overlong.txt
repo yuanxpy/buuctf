@@ -1,0 +1,3 @@
+The secret of this next challenge is cleverly hidden. However, with the right approach, finding the solution will not take an <b>overlong</b> amount of time.
+
+Hint:本题解出相应字符串请用flag{}包裹，形如：flag{123456@flare.com}。

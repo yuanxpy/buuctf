@@ -1,0 +1,342 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="Javascript"><!--
+function doBack(nPage)
+{
+	location.href="ParentCtrlRpm.htm?Page="+nPage;
+}
+
+function getValLen(val)
+{
+	var len = 0;
+	var i = 0;
+	for (i = 0; i < val.length; i ++)
+	{
+		var c = val.charAt(i);
+		len += ((c >= ' ') && (c <= '~')) ? 1 : 2;
+	}
+	return len;
+}
+
+function doSubmit()
+{
+	if (document.forms[0].child_mac.value != "")
+	{
+	if (false == is_macaddr(document.forms[0].child_mac.value))
+	{
+		var element = document.forms[0].child_mac;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	}
+
+	var desc_len = getValLen(document.forms[0].url_comment.value);
+	
+	if (desc_len == 0)
+	{
+		alert("请给允许小孩访问的网站列表一个描述！");
+		var element = document.forms[0].url_comment;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	if (desc_len > 16)
+	{
+		alert("网站列表描述的长度不能超过16！");
+		var element = document.forms[0].url_comment;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	
+	if (
+	(document.forms[0].url_0.value=="") && 
+	(document.forms[0].url_1.value=="") && 
+	(document.forms[0].url_2.value=="") && 
+	(document.forms[0].url_3.value=="") && 
+	(document.forms[0].url_4.value=="") && 
+	(document.forms[0].url_5.value=="") && 
+	(document.forms[0].url_6.value=="") && 
+	(document.forms[0].url_7.value=="")
+	)
+	{
+		alert("请至少输入一个网站域名！");
+		var element = document.forms[0].url_0;
+		if(element)
+		{
+			element.focus();
+			element.select();
+		}
+		return false;
+	}
+	else
+	{
+		if (document.forms[0].url_0.value!="")
+		{
+		if (false == is_domain(document.forms[0].url_0.value))
+		{
+			var element = document.forms[0].url_0;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		}
+		if (document.forms[0].url_1.value!="")
+		{
+		if (false == is_domain(document.forms[0].url_1.value))
+		{
+			var element = document.forms[0].url_1;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		}
+		if (document.forms[0].url_2.value!="")
+		{
+		if (false == is_domain(document.forms[0].url_2.value))
+		{
+			var element = document.forms[0].url_2;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		}
+		if (document.forms[0].url_3.value!="")
+		{
+		if (false == is_domain(document.forms[0].url_3.value))
+		{
+			var element = document.forms[0].url_3;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		}
+		if (document.forms[0].url_4.value!="")
+		{
+		if (false == is_domain(document.forms[0].url_4.value))
+		{
+			var element = document.forms[0].url_4;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		}
+		if (document.forms[0].url_5.value!="")
+		{
+		if (false == is_domain(document.forms[0].url_5.value))
+		{
+			var element = document.forms[0].url_5;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		}
+		if (document.forms[0].url_6.value!="")
+		{
+		if (false == is_domain(document.forms[0].url_6.value))
+		{
+			var element = document.forms[0].url_6;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		}
+		if (document.forms[0].url_7.value!="")
+		{
+		if (false == is_domain(document.forms[0].url_7.value))
+		{
+			var element = document.forms[0].url_7;
+			if(element)
+			{
+				element.focus();
+				element.select();
+			}
+			return false;
+		}
+		}
+	}
+	return true;
+}
+function style_display_on()
+{
+	if (window.ActiveXObject)
+	{ // IE
+		return "block";
+	}
+	else if (window.XMLHttpRequest)
+	{ // Mozilla, Safari,...
+		return "table-row";
+	}
+}
+
+function printfSchedsLists()
+{
+	var i;
+	if (parent_ctrl_adv_dyn_array[4] == 0)
+	{
+		return;
+	}
+	else
+	{
+		for (i=0; i<parent_ctrl_adv_dyn_array[4]; ++i)
+		{
+			document.write('<option value=\"' + i + '\">' + schedule_name_list_dyn_array[i] + '</option>');
+		}
+	}
+}
+function printfLanLists()
+{
+	var i;
+	for (i=0; i<lan_pc_mac_dyn_array.length-2; i=i+2)
+	{
+		document.write('<option value=\"' + i + '\">' + lan_pc_mac_dyn_array[i] + '(' + lan_pc_mac_dyn_array[i+1] + ')' + '</option>');
+	}
+}
+function fillChildMac()
+{
+	if (document.forms[0].lan_lists.value != 888)
+		document.forms[0].child_mac.value=lan_pc_mac_dyn_array[document.forms[0].lan_lists.value];
+}
+
+function doHelp(){location.href="/help/ParentCtrlAdvHelpRpm.htm";}
+//--></script></head>
+<BODY>
+<center><form action="ParentCtrlRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="500" align="left" valign="middle" class="title">家长控制规则设置</td>
+</tr>
+<tr><td colspan="2"><table width="520" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td><td width="518">
+<table width="420" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<TR>
+<TD colspan=2>本页设置一条家长控制条目</TD>
+</TR>
+<TR>
+<TD colspan=2>&nbsp;&nbsp;</TD></TR>
+<tr><td colspan=2>本页面中的日程计划基于路由器的系统时间，您可以在“系统工具-><a href="DateTimeCfgRpm.htm"><font color="#FF0000">时间设置</font></a>”中查看和设置系统时间。</td></tr>
+<tr><td>
+<table width="420" border="0" align="center" cellpadding="2" cellspacing="0" class="space">
+<!--
+<TR>
+	<TD width="160">当前模式：</TD>
+	<TD width="240">
+	<script language="JavaScript">
+		if (parent_ctrl_adv_dyn_array[0]==1)
+		document.write('由我设置受控小孩PC的MAC地址');
+		else
+		document.write('我已设置家长PC的MAC地址');
+	</script>
+	</TD>
+</TR>
+-->
+<TR id="cmac">
+	<TD width="160">小孩PC的MAC地址：</TD><TD width="240"><input name="child_mac" type="text" class="text" value="" size="17" maxlength="17"></TD>
+</TR>
+<tr>
+	<td>当前局域网中PC的MAC地址：</td>
+	<td><select size="1" name="lan_lists" class="list" onchange="fillChildMac()">
+		<option value="888"  >--请选择--</option>
+		<script language="JavaScript">printfLanLists();</script>
+		</select>
+		</td>
+</tr>
+<TR>
+	<TD>给允许的网站列表一个描述：</TD><TD><input name="url_comment" type="text" class="text" value="" size="17" maxlength="16"></TD>
+</TR>
+<TR><TD>允许小孩访问的网站域名：</TD><TD><input name="url_0" type="text" class="text" value="" size="31" maxlength="30"></TD></TR>
+<TR><TD>&nbsp;</TD><TD><input name="url_1" type="text" class="text" value="" size="31" maxlength="30"></TD></TR>
+<TR><TD>&nbsp;</TD><TD><input name="url_2" type="text" class="text" value="" size="31" maxlength="30"></TD></TR>
+<TR><TD>&nbsp;</TD><TD><input name="url_3" type="text" class="text" value="" size="31" maxlength="30"></TD></TR>
+<TR><TD>&nbsp;</TD><TD><input name="url_4" type="text" class="text" value="" size="31" maxlength="30"></TD></TR>
+<TR><TD>&nbsp;</TD><TD><input name="url_5" type="text" class="text" value="" size="31" maxlength="30"></TD></TR>
+<TR><TD>&nbsp;</TD><TD><input name="url_6" type="text" class="text" value="" size="31" maxlength="30"></TD></TR>
+<TR><TD>&nbsp;</TD><TD><input name="url_7" type="text" class="text" value="" size="31" maxlength="30"></TD></TR>
+</TR>
+<tr>
+	<td>希望在哪些时候生效：</td>
+	<td><select size="1" name="scheds_lists" class="list" onchange="">
+		<option value="255"  >任何时间</option>
+		<script language="JavaScript">printfSchedsLists();</script>
+		</select>
+		</td>
+</tr>
+<tr><td>&nbsp;</td><td>您可以在“上网控制-><a href="AccessCtrlTimeSchedRpm.htm?Add=Add&Page=1"><font color="#FF0000">日程计划</font></a>”中设置时间列表</td></tr>
+<tr>
+	<td>状态：</td>
+	<td><select size="1" name="enable" class="list" onchange="">
+		<option value="0"  >失效</option>
+		<option value="1"  >生效</option>
+		</select></td>
+</tr>
+</table>
+</table>
+</td><td class="vline" rowspan="15"><br> </td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+<input name="Changed" type="hidden" value="">
+<input name="SelIndex" type="hidden" value="">
+<input name="Page" type="hidden" value="">
+<input name="rule_mode" type="hidden" value="">
+&nbsp;<input name="Save" type="submit" class="button" value="保 存">
+&nbsp;<input type="button" value="返 回" name="Return" class="button" onClick="doBack(parent_ctrl_adv_dyn_array[8]);">
+&nbsp;<input name="Help" type="button" class="button" value="帮 助" onClick="doHelp();"></TD></TR>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+</table></td></tr>
+</TABLE>
+<script language="JavaScript">
+/*	if (parent_ctrl_adv_dyn_array[0]==1)
+	{
+	document.getElementById("cmac").style.display = style_display_on();
+	document.forms[0].child_mac.value = parent_ctrl_adv_dyn_array[2];
+	}*/
+	document.forms[0].child_mac.value = parent_ctrl_adv_dyn_array[2];
+	document.forms[0].url_comment.value = parent_ctrl_adv_dyn_array[3];
+	document.forms[0].url_0.value = parent_ctrl_adv_dyn_array[9];
+	document.forms[0].url_1.value = parent_ctrl_adv_dyn_array[10];
+	document.forms[0].url_2.value = parent_ctrl_adv_dyn_array[11];
+	document.forms[0].url_3.value = parent_ctrl_adv_dyn_array[12];
+	document.forms[0].url_4.value = parent_ctrl_adv_dyn_array[13];
+	document.forms[0].url_5.value = parent_ctrl_adv_dyn_array[14];
+	document.forms[0].url_6.value = parent_ctrl_adv_dyn_array[15];
+	document.forms[0].url_7.value = parent_ctrl_adv_dyn_array[16];
+	document.forms[0].enable.value = parent_ctrl_adv_dyn_array[1];
+	document.forms[0].scheds_lists.value = parent_ctrl_adv_dyn_array[5];
+	document.forms[0].Changed.value = parent_ctrl_adv_dyn_array[6];
+	document.forms[0].SelIndex.value = parent_ctrl_adv_dyn_array[7];
+	document.forms[0].Page.value = parent_ctrl_adv_dyn_array[8];
+	document.forms[0].rule_mode.value = parent_ctrl_adv_dyn_array[0];
+</script>
+</form></center></BODY>
+</HTML>

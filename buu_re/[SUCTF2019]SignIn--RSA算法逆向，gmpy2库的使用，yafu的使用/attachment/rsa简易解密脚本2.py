@@ -1,0 +1,14 @@
+import gmpy2
+import rsa
+
+e = 65537
+n = 103461035900816914121390101299049044413950405173712170434161686539878160984549
+p = 366669102002966856876605669837014229419
+q = 282164587459512124844245113950593348271
+d = gmpy2.invert(e,(p-1)*(q-1))
+key = rsa.PrivateKey(n,e,int(d),p,q)
+c = 0xad939ff59f6e70bcbfad406f2494993757eee98b91bc244184a377520d06fc35
+m = pow(c,d,n)
+de_data = bytes.fromhex(hex(m)[2:])
+print(de_data)
+# print(rsa.decrypt(en_data,key))

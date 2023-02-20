@@ -1,0 +1,3 @@
+﻿  exp.cpp
+D:\desktop\ctf题目\buu_re\[GWCTF 2019]xxor\c_exp\exp\exp\exp.cpp(20,26): warning C4307: “*”: 有符号整型常量溢出
+  exp.vcxproj -> D:\desktop\ctf题目\buu_re\[GWCTF 2019]xxor\c_exp\exp\Debug\exp.exe

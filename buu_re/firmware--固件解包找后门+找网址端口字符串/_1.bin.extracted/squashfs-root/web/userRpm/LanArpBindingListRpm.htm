@@ -1,0 +1,86 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<body>
+<center><form enctype="multipart/form-data" method="get">
+<table width="480" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="470" align="left" valign="middle" class="title">ARP映射表</td>
+</tr><tr><td colspan="2"><table width="480" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td>
+<td width="478">
+<table width="440" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td align="center" width="440">
+<SCRIPT language=JavaScript>
+var LP = location.pathname;
+function doHelp(){location.href="/help/LanArpBindingListHelpRpm.htm";}
+function OnCapture()
+{
+	location.href = LP + "?ArpLock=ArpLocked";
+	return true;
+}
+function fresh(){
+	return true;
+}
+function DoR(a,b,c)
+{
+	location.href = LP + "?reserve=1&ip="+ b +"&mac="+ a + "&lock=" + c;
+	return true;
+}
+function DoDelete(a,b,c)
+{
+	location.href = LP + "?delete=1&ip="+ b +"&mac="+ a + "&lock=" + c;
+	return true;
+}
+document.write('<TR><TD><table border=1 align="center" cellpadding="0" cellspacing="0" class="space">');
+document.write('<TR align="center"><TD width="32" class=ListTC1>ID</TD>'
+				+ '<td width="120" class=ListTC2>MAC地址</td>'
+				+ '<TD width="110" class=ListTC2>IP地址</TD>'
+				+ '<TD width="58" class=ListTC2>状态</TD> '
+				+ '<TD width="80" class=ListTC2 nowrap>配置</TD>'
+				+ '</TR>');
+if (arpClientDyn[0] > 0)	{
+var row = 0;
+var i = 0;
+var j;
+for(i = 0; i < arpClientDyn[0]; i++)
+{
+	j = i+1;
+	row = i * arpClientDyn[1];
+	document.write('<tr align="center"><td class=ListC1>' + j + '</td>');
+	document.write('<td class=ListC2>' + arpClientListDyn[row+1] + '</td>');
+	document.write('<td class=ListC2>' + arpClientListDyn[row+2] + '</td>');
+	if(arpClientListDyn[row] == 1)//locked
+		document.write('<td class=ListC2>' + '已绑定' + '</td>');
+	else
+		document.write('<td class=ListC2>' + '未绑定' + '</td>');
+	document.write('<td class=ListC2 nowrap>' + '<INPUT class=button type=button value=导入 '
+					+'onclick=DoR("'+ arpClientListDyn[row+1]+'","'+ arpClientListDyn[row+2]+ '","'+ arpClientListDyn[row] +'");'
+					+' name=reserve>'
+					+ '&nbsp;'
+					+ '<INPUT class=button type=button value=删除 '
+					+ 'onclick=DoDelete("'+ arpClientListDyn[row+1]+'","'+ arpClientListDyn[row+2]+ '","'+ arpClientListDyn[row] +'");'
+					+ ' name=delete>'
+					+ '</TD>');
+}
+}
+else	{
+document.write('<TR align="center"><TD class=info1 colspan="5">当前列表为空</TD></TR>');}
+document.write('</table></TD></TR>');
+</script>
+</td><tr>
+</table>
+</td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+&nbsp;<INPUT class="button" type=submit value='全部绑定'  name=Capture>
+&nbsp;<INPUT class="button" type=submit value='全部导入'  name=ResAll>
+&nbsp;<INPUT class="button" type=submit value='刷 新' name=Refresh>
+&nbsp;<input name="help" type="button" class="button" onClick="doHelp();" value="帮 助">
+</td></tr>
+<tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td>
+</tr></table></td></tr></table>
+</form></center></body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<SCRIPT language=JavaScript>
+document.forms[0].Capture.disabled = ((arpClientDyn[0] == 0)||(arpClientDyn[2]))?true:false;
+document.forms[0].ResAll.disabled = (arpClientDyn[0] == 0)?true:false;
+</SCRIPT>

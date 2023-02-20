@@ -1,0 +1,88 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+function doSubmit(){
+	if(document.forms[0].lanip.value=="") {
+		alert("请输入IP地址！"); return false;
+	}
+	if(!is_ipaddr(document.forms[0].lanip.value)){
+		var element =document.forms[0].lanip;
+		if(element){
+			element.focus();
+            element.select();
+		}
+		return false;
+	}
+	if(document.forms[0].lanip.value==lanPara[1] &&
+		document.forms[0].lanmask.value==lanPara[2] &&
+		document.forms[0].inputMask.value==lanPara[3])
+	{
+		return false;
+	}
+    if(!confirm("LAN口IP地址的更改将导致路由器的重新启动，确定？"))
+    {   
+        return false;
+    }
+	return true;
+}
+function doOnchange()
+{
+    if(3==document.getElementById("lanmask").value)
+    {
+        document.getElementById("otherMask").style.display="block";
+    }   
+    else
+    {
+        document.getElementById("otherMask").style.display="none";
+    }
+}
+function doHelp(){location.href="/help/NetworkCfgHelpRpm.htm";}
+
+//--></script>
+</head>
+<body onload="doOnchange();">
+<center><form action="NetworkCfgRpm.htm" enctype="multipart/form-data" method="get" onSubmit="return doSubmit();">
+<table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="495" align="left" valign="middle" class="title">LAN口设置</td></tr>
+<tr><td colspan="2"><table width="502" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15"><br></td>
+<td width="500">
+<table width="400" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td>本页设置LAN口的基本网络参数。</td></tr></table>
+<table width="400" border="0" align="center" class="space" cellspacing="2" cellpadding="2">
+<tr><td width="100">MAC地址：</td><td width="300" colspan="2"><DIV ID="MAC"></DIV></td></tr>
+<tr><td>IP地址：</td>
+<td colspan="2"><input name="lanip" type="text" class="text" id="lanip" value="192.168.1.1" size="15" maxlength="15"></td>
+</tr><tr><td valign="bottom">子网掩码：</td>
+<TD width="120">
+    <select name="lanmask" class="list" id="lanmask" onchange="doOnchange(this.value)">
+        <option value="0">255.0.0.0</option>
+        <option value="1">255.255.0.0</option>
+        <option value="2">255.255.255.0</option>
+        <option value="3" id="t_other_mask">其它掩码</option>
+    </select>
+</TD>
+<TD id="otherMask" style="display:none" width="120"><input name="inputMask" type="text" class="text" value="255.255.255.0" size="15" maxlength="15"></TD>
+</tr>
+</table>
+<br></td><td class="vline" rowspan="15"><br></td></tr>
+<tr><td  class="hline"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail">
+&nbsp;&nbsp;<input name="Save" type="submit" class="button" value="保 存">
+&nbsp;<input name="help" type="button" class="button" id="help" value="帮 助" onClick="doHelp();">
+</td></tr><tr><td class="hline"><img src="/images/empty.gif" width="1" height="1"></td>
+</tr></table></td></tr></table></form></center>
+</body><head><meta http-equiv="pragma" content="no-cache"></head></html>
+<script language="JavaScript">
+document.getElementById("MAC").innerHTML = lanPara[0];
+document.forms[0].lanip.value =lanPara[1];
+document.forms[0].lanmask.value =lanPara[2];
+if(3==lanPara[2])
+{
+    var obj;
+    obj=document.getElementById("otherMask");
+    obj.style.display="block";
+    document.forms[0].inputMask.value=lanPara[3];
+}
+</script>

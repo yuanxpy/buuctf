@@ -1,0 +1,172 @@
+
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<script language="JavaScript"><!-- 
+var bRefreshFlag = 1;
+
+function doChange()
+{
+    if(bRefreshFlag == 1)
+    {
+		document.sysStatic.submit();
+	}
+}
+
+function doFocus()
+{
+	bRefreshFlag = 0;
+}
+function doOnblur()
+{
+    bRefreshFlag=1;
+    doChange();
+}
+
+
+function changNumPerPage(){
+var _NumPerPage = document.forms[0].Num_per_page.value;
+location.href="SystemStatisticRpm.htm?NumPerPage="+_NumPerPage;
+}
+function goPage(){
+var nPage = document.forms[0].Goto_page.selectedIndex + 1;
+location.href="SystemStatisticRpm.htm?Page="+nPage;
+}
+
+function ResetAll()
+{if(!confirm("Are you sure to reset all statistics?")) return false;
+location.href="SystemStatisticRpm.htm?ResetAll=All&interval="+StatRulePara[1]+"&autoRefresh="+StatRulePara[2]+"&sortType="+StatRulePara[3];}
+function DeleteAll()
+{
+if(!confirm("Are you sure to delete all entries?"))
+	return false;
+location.href="SystemStatisticRpm.htm?DeleteAll=All&interval="+StatRulePara[1]+"&autoRefresh="+StatRulePara[2]+"&sortType="+StatRulePara[3];
+}
+function doHelp()
+{
+    location.href="/help/SystemStatisticHelpRpm.htm";
+}
+//--></script>
+</HEAD>
+<body>
+<center><form name="sysStatic" action="SystemStatisticRpm.htm" enctype="multipart/form-data" method="get"  >
+<table width="640" border="0" cellspacing="0" cellpadding="0">
+<tr><td width="7" class="title"><img src="/images/arc.gif" width="7" height="24"></td>
+<td width="638" align="left" valign="middle" class="title">流量统计</td>
+</tr><tr><td colspan="2">
+<table width="640" border="0" cellspacing="0" cellpadding="0">
+<tr><td class="vline" rowspan="15" width="1px"><br></td>
+<td width="638">
+<table width="620" border="0" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td colspan="3">本页分别对路由器总的数据流量以及最近 <font color="#0000FF"><script language="JavaScript">var rftime =  StatRulePara[1];document.write(rftime);</script></font> 秒钟内的数据流量进行了统计。</td></tr>
+<tr><td colspan="3" style="display:none">注意：由于“安全设置”-“高级安全设置”中“DoS攻击防范”的部分功能是以相关数据包的统计为依据的，因此，如果流量统计功能被关闭，那么将会导致这部分功能失效。</td></tr>
+<tr><td height="40" >&nbsp;&nbsp;当前流量统计状态： &nbsp;&nbsp;  </td> <td><b><DIV ID="statisticStatus">-</DIV></b></td>
+<td align="left"><input name="statOn" type="submit" class="button" value = "开启流量统计" style = "display:none" >
+<input name="statOff" type="submit" class="button" value = "关闭流量统计"  style = "display:none"></td></tr>
+<tr><td width="204">&nbsp;&nbsp;数据包统计时间间隔：（5～60）</td>
+<td width="137"><select name="interval" class="list" id="interval" onChange="doChange()" onblur = "doOnblur()" onFocus = "doFocus()">
+<option value="5">  5 </option>
+<option value="10"> 10 </option>
+<option value="15"> 15 </option>
+<option value="20"> 20 </option>
+<option value="25"> 25 </option>
+<option value="30"> 30 </option>
+<option value="35"> 35 </option>
+<option value="40"> 40 </option>
+<option value="45"> 45 </option>
+<option value="50"> 50 </option>
+<option value="55"> 55 </option>
+<option value="60"> 60 </option>
+</select>&nbsp;秒</td>
+<td width="275"></td></tr>
+<tr><td colspan="3">&nbsp;</td></tr>
+<tr><td width="204">
+&nbsp; <select name="sortType" class="list" id="sortType" onChange="doChange()" onblur = "doOnblur()" onFocus = "doFocus()">
+<option value="1" Selected>按IP地址排序</option>
+<option value="2">按总流量数据包排序</option>
+<option value="3">按总流量字节数排序</option>
+<option value="4">按当前流量数据包排序</option>
+<option value="5">按当前流量字节数排序</option></select></td>
+<td width="137">自动刷新 <input type="checkbox" name="autoRefresh" value="2" onClick="doChange();"></td>
+<td width="275"><input name="Refresh" type="submit" class="button" value="刷 新"></td></tr></table>
+<table width="617" border="1" align="center" cellpadding="0" cellspacing="0" class="space">
+<tr><td align="center" width="112">&nbsp;</td>
+<td align="center" colspan="2">总流量</td>
+<td align="center" colspan="5">当前流量</td>
+<TD align="center" rowspan="2">修改</TD></TR>
+<tr><td align="center">IP地址</td>
+<td align="center">数据包数</td>
+<td align="center">字节数</td>
+<td align="center">数据包数</td>
+<td align="center">字节数</td>
+<td align="center">ICMP Tx</td>
+<td align="center">UDP Tx</td>
+<td align="center">SYN Tx</td></tr>
+<script language="JavaScript">
+if (StatRulePara[4] > 0)	
+{
+	var row = 0;
+	for(var i = 0; i < StatRulePara[4]; i++)	
+	{
+		row = i * StatRulePara[5];
+		document.write('<TR align="center"><TD >' + statList[row+1] + '<br>'+statList[row+2]+'</td>');
+		document.write('<TD >' + statList[row+3] + '</td>');
+		document.write('<TD >' + statList[row+4] + '</td>');
+		document.write('<TD >' + statList[row+5] + '</td>');
+		document.write('<TD >' + statList[row+6] + '</td>');
+		document.write('<TD >' + statList[row+7] + '/' + statList[row+8] + '</td>');
+		document.write('<TD >' + statList[row+9] + '/' + statList[row+10] + '</td>');
+		document.write('<TD >' + statList[row+11] + '/' + statList[row+12] + '</TD>');
+		document.write('<TD class=Listm><a href=\"SystemStatisticRpm.htm?resetone=' + statList[row] + '&interval='+StatRulePara[1]+'&autoRefresh='+StatRulePara[2]+'&sortType='+StatRulePara[3]+'&Num_per_page='+PageListPara[2] + "&Goto_page=" + PageListPara[1]+'\">重置</a>'+'&nbsp;<a href=\"SystemStatisticRpm.htm?delone='+ statList[row] + '&interval='+StatRulePara[1]+'&autoRefresh='+StatRulePara[2]+'&sortType='+StatRulePara[3]+'&Num_per_page='+PageListPara[2] + "&Goto_page=" + PageListPara[1]+'\">删除</a></TD></TR>');
+	}
+}
+else
+{
+	document.write('<tr><td colspan=9 align=center height=30>当 前 统 计 数 据 为 空</td></tr>');
+}
+</script>
+</table>
+</td><td class="vline" rowspan="15" width="1px"><br></td></tr>
+<tr><td class="hline" width="638"><img src="/images/empty.gif" width="1" height="1"></td></tr>
+<tr><td height="30" class="tail" width="638"><div align="left">&nbsp;&nbsp;
+每页显示 <SELECT onChange="doChange()" onblur = "doOnblur()" onFocus = "doFocus()" name="Num_per_page" class="list">
+<OPTION value="5">5</option>
+<OPTION value="10">10</option>
+<OPTION value="20">20</option>
+<OPTION value="50">50</option>
+<OPTION value="100">100</OPTION>
+</SELECT> 行&nbsp;
+<input name="PrevPage" type="submit" class="button"  value="上一页">&nbsp;
+<input name="NextPage" type="submit" class="button"  value="下一页">&nbsp;
+当前第 <SELECT onChange="doChange()" onblur = "doOnblur()" onFocus = "doFocus()" name="Goto_page" class="list">
+<script language="JavaScript">for (i=1;i<=PageListPara[0];i++){document.write('<option value="'+i+'">'+i+'</option>');
+}
+</script>
+</SELECT> 页&nbsp;
+<input name="Help" type="button" class="button" id="Help" onClick="doHelp();" value="帮 助"></div>
+</td></tr><tr><td class="hline" width="638"><img src="/images/empty.gif" width="1" height="1"></td>
+</tr></table></td></tr></table></form>
+</center></BODY><head><meta http-equiv="pragma" content="no-cache"></head></HTML>
+<script language="JavaScript">
+document.getElementById("statisticStatus").innerHTML = (StatRulePara[0] == 1)?"已开启":"已关闭";
+if(StatRulePara[0] == 0)
+{
+	document.forms[0].statOn.style.display = 'block';
+}
+else
+{
+	document.forms[0].statOff.style.display = 'block';
+}
+document.forms[0].interval.value =StatRulePara[1];
+document.forms[0].autoRefresh.checked = StatRulePara[2];
+document.forms[0].autoRefresh.disabled =(StatRulePara[0] == 1)?false:true;
+document.forms[0].sortType.value =StatRulePara[3];
+//added by ZQQ ,08.04.14
+document.forms[0].Num_per_page.value = PageListPara[2];
+document.forms[0].Goto_page.value = PageListPara[1];
+document.forms[0].PrevPage.disabled = PageListPara[1]<2?1:0;
+document.forms[0].NextPage.disabled = PageListPara[4];
+if (StatRulePara[2] && StatRulePara[0] && bRefreshFlag == 1)
+{   
+ 
+	window.setTimeout("doChange()",10000);
+}
+</script>

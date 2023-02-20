@@ -1,0 +1,7 @@
+本题目难倒是不难，就是用win的函数地址覆盖exit或put的got表
+
+主要要注意本题的输入 sprintf(s, "Okay, now what value would you like to write to 0x%x", v3);
+
+是把输入数据当作十六进制处理，所以一开始我使用io.sendlineafter(b'value?',p32(exit_got))失败，必须要输入十六进制字节流才行，即b'0x1234'这种，
+
+所以采用io.sendlineafter(b'value?',int2bytes(hex(exit_got)))
